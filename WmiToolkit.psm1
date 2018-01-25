@@ -619,7 +619,7 @@ Function Get-WmiNameSpace {
                     .DESCRIPTION
                         This function is used to get wmi namespaces recursively and return a custom object.
                         As this is a recursive function it will run multiple times so you might want to assign it to a variable for sorting.
-                        You also might want to disable logging when running this function. 
+                        You also might want to disable logging when running this function.
                     .PARAMETER NamespaceRoot
                         Specifies the root namespace path from which to start searching.
                     .EXAMPLE
@@ -637,32 +637,32 @@ Function Get-WmiNameSpace {
                             [ValidateNotNullorEmpty()]
                             [string]$NamespaceRoot
                         )
-                    
+
                         Begin {
                             ## Initialize/Reset resutl object
                             [PSCustomObject]$GetNamespaceRecursive = @()
                         }
                         Process {
                             Try {
-                    
+
                                 ## Get all namespaces in the current root namespace
                                 $Namespaces = Get-WmiNameSpace -Namespace "$NamespaceRoot\*" -ErrorAction 'SilentlyContinue'
-                    
+
                                 ## Search in the current namespace for other namespaces
                                 ForEach ($Namespace in $Namespaces) {
-                                
+
                                     #  Assemble the result object
                                     $GetNamespaceRecursive += [PsCustomObject]@{
                                         Name = $Namespace.Name
                                         Path = $Namespace.Path
                                         FullName = $Namespace.FullName
                                     }
-                    
+
                                     #  Call the function again for the next namespace
                                     Get-WmiNamespaceRecursive -Namespace $Namespace.FullName
                                 }
                             }
-                            Catch { 
+                            Catch {
                                 Write-Log -Message "Failed to retrieve wmi namespace [$NamespaceRoot] recursively. `n$(Resolve-Error)" -Severity 3 -Source ${CmdletName}
                                 Break
                             }
@@ -703,7 +703,7 @@ Function Get-WmiNameSpace {
                             Path = $Namespace.Trim('*')
                             FullName =  "$($Namespace.Trim('\*'))`\$($_.Name)"
                         }
-                    } 
+                    }
                 }
             }
         }
@@ -782,7 +782,7 @@ Function Get-WmiClass {
                 Write-Error -Message $NamespaceNotFoundErr -Category 'ObjectNotFound'
             }
 
-            ## Get all class details 
+            ## Get all class details
             If ($QualifierName) {
                 $WmiClass = Get-CimClass -Namespace $Namespace -Class $ClassName -QualifierName $QualifierName -ErrorAction 'SilentlyContinue'
             }
@@ -1205,10 +1205,10 @@ Function Get-WmiInstance {
 
                     #  Get Property Names from function input to be used for filtering
                     [string[]]$InputPropertyNames =  $($Property.GetEnumerator().Name)
-        
+
                     #  Convert Property hashtable to PSCustomObject for comparison
                     [PSCustomObject]$InputProperty = [PSCustomObject]$Property
-            
+
                     #  -ErrorAction 'SilentlyContinue' does not seem to work correctly with the Compare-Object commandlet so it needs to be set globaly
                     $OriginalErrorActionPreference = $ErrorActionPreference
                     $ErrorActionPreference = 'SilentlyContinue'
@@ -1282,7 +1282,7 @@ Function New-WmiNameSpace {
         [string]$Namespace,
         [Parameter(Mandatory=$false,Position=1)]
         [ValidateNotNullorEmpty()]
-        [switch]$CreateSubTree = $false       
+        [switch]$CreateSubTree = $false
     )
 
     Begin {
@@ -1295,10 +1295,10 @@ Function New-WmiNameSpace {
 
             ## Check if the namespace exists
             $WmiNamespace = Get-WmiNameSpace -Namespace $Namespace -ErrorAction 'SilentlyContinue'
-            
+
             ## Create Namespace if it does not exist
             If (-not $WmiNamespace) {
-               
+
                 #  Split path into it's components
                 $NamespacePaths = $Namespace.Split('\')
 
@@ -1315,8 +1315,8 @@ Function New-WmiNameSpace {
                     #  Assembing path props and add them to the NamspacePathsObject
                     $PathProps = [ordered]@{ Name = $(Split-Path -Path $Path) ; Value = $(Split-Path -Path $Path -Leaf) }
                     $NamespacePathsObject += $PathProps
-                }            
-                
+                }
+
                 #  Split path into it's components
                 $NamespacePaths = $Namespace.Split('\')
 
@@ -1331,8 +1331,8 @@ Function New-WmiNameSpace {
                     $Path += '\' + $NamespacePaths[$i]
 
                     #  Assembing path props and add them to the NamspacePathsObject
-                    $PathProps = [ordered]@{ 
-                        'NamespacePath' = $(Split-Path -Path $Path) 
+                    $PathProps = [ordered]@{
+                        'NamespacePath' = $(Split-Path -Path $Path)
                         'NamespaceName' = $(Split-Path -Path $Path -Leaf)
                         'NamespaceTest' = [boolean]$(Get-WmiNameSpace -Namespace $Path -ErrorAction 'SilentlyContinue')
                     }
@@ -1350,7 +1350,7 @@ Function New-WmiNameSpace {
                             #  Create namespace object and assign namespace name
                             $NameSpaceObject = (New-Object -TypeName 'System.Management.ManagementClass' -ArgumentList "\\.\$($_.NameSpacePath)`:__NAMESPACE").CreateInstance()
                             $NameSpaceObject.Name = $_.NamespaceName
-            
+
                             #  Write the namespace object
                             $NewNamespace = $NameSpaceObject.Put()
                             $NameSpaceObject.Dispose()
@@ -1470,7 +1470,7 @@ Function New-WmiClass {
             ElseIf (-not $NamespaceTest) {
                 $NamespaceNotFoundErr = "Namespace [$Namespace] does not exist. Use the -CreateDestination switch to create namespace."
                 Write-Log -Message $NamespaceNotFoundErr -Severity 3 -Source ${CmdletName}
-                Write-Error -Message $NamespaceNotFoundErr -Category 'ObjectNotFound'  
+                Write-Error -Message $NamespaceNotFoundErr -Category 'ObjectNotFound'
             }
 
             ## Create class if it does not exist
@@ -2011,7 +2011,7 @@ Function Remove-WmiNameSpace {
     Param (
         [Parameter(Mandatory=$true,Position=0)]
         [ValidateNotNullorEmpty()]
-        [string]$Namespace,     
+        [string]$Namespace,
         [Parameter(Mandatory=$false,Position=2)]
         [ValidateNotNullorEmpty()]
         [switch]$Force = $false,
@@ -2050,7 +2050,7 @@ Function Remove-WmiNameSpace {
                 ElseIf ($ClassTest) {
                     $NamespaceHasClassesErr = "Classes [$($ClassTest.Count)] detected in namespace [$Namespace]. Use the -Force switch to remove classes."
                     Write-Log -Message $NamespaceHasClassesErr -Severity 2 -Source ${CmdletName} -DebugMessage
-                    Write-Error -Message $NamespaceHasClassesErr -Category 'InvalidOperation'        
+                    Write-Error -Message $NamespaceHasClassesErr -Category 'InvalidOperation'
                 }
 
                 #  Create the Namespace Object
@@ -2064,7 +2064,7 @@ Function Remove-WmiNameSpace {
             ElseIf ($ChildNamespaceTest) {
                 $ChildNamespaceDetectedErr = "Child namespace [$ChildNamespaceTest] detected in namespace [$Namespace]. Use the -Recurse switch to remove Child namespaces."
                 Write-Log -Message $ChildNamespaceDetectedErr -Severity 2 -Source ${CmdletName} -DebugMessage
-                Write-Error -Message $ChildNamespaceDetectedErr -Category 'InvalidOperation'  
+                Write-Error -Message $ChildNamespaceDetectedErr -Category 'InvalidOperation'
             }
         }
         Catch {
@@ -2149,7 +2149,7 @@ Function Remove-WmiClass {
 
                     #  Create the class object
                     [wmiclass]$ClassObject = New-Object -TypeName 'System.Management.ManagementClass' -ArgumentList @("\\.\$Namespace`:$_")
-                    
+
                     #  Remove class
                     $null = $ClassObject.Delete()
                     $ClassObject.Dispose()
@@ -2242,7 +2242,7 @@ Param (
 
             ## Remove qualifiers by name
             If ($RemoveClassQualifier) {
-                
+
                 #  Create the ManagementClass object
                 [wmiclass]$ClassObject = New-Object -TypeName 'System.Management.ManagementClass' -ArgumentList @("\\.\$Namespace`:$ClassName")
 
@@ -2257,7 +2257,7 @@ Param (
                 Write-Log -Message $PropertyNotFoundErr -Severity 2 -Source ${CmdletName} -DebugMessage
                 Write-Error -Message $PropertyNotFoundErr -Category 'ObjectNotFound'
             }
-          
+
             ## Write class object
             $null = $ClassObject.Put()
             $ClassObject.Dispose()
@@ -2524,7 +2524,7 @@ Function Remove-WmiInstance {
 .PARAMETER ClassName
     Specifies the class name from which to remove the instances.
 .PARAMETER Property
-    The class instance property to match. Can be piped. If there is more than one matching instance and the RemoveAll switch is not specified, an error will be thrown. 
+    The class instance property to match. Can be piped. If there is more than one matching instance and the RemoveAll switch is not specified, an error will be thrown.
 .PARAMETER RemoveAll
     Removes all matching or existing instances.
 .EXAMPLE
@@ -2579,7 +2579,7 @@ Function Remove-WmiInstance {
                 #  Remove instances one by one
                 $RemoveInstances | ForEach-Object { Remove-CimInstance -InputObject $_ -ErrorAction 'Stop' }
             }
-            
+
             ## Otherwise if more than one instance is detected, write debug message and optionally throw error if -ErrorAction 'Stop' is specified
             ElseIf ($RemoveInstances.Count -gt 1) {
                 $MultipleInstancesFoundErr  = "Failed to remove instance. Multiple instances [$($RemoveInstances.Count)] found in class [$Namespace`:$ClassName]."
@@ -2674,7 +2674,7 @@ Function Copy-WmiClass {
             If ((-not $NamespaceDestinationTest) -and $CreateDestination) {
 
                 #  Create destination namespace
-                New-WmiNameSpace -Namespace $NamespaceDestination -CreateSubTree -ErrorAction 'Stop' 
+                New-WmiNameSpace -Namespace $NamespaceDestination -CreateSubTree -ErrorAction 'Stop'
             }
             ElseIf (-not $NamespaceDestinationTest) {
                 $DestinationNamespaceNotFoundErr = "Destination namespace [$NamespaceDestination] not found. Use -CreateDestination switch to create the destination automatically."
@@ -2692,13 +2692,13 @@ Function Copy-WmiClass {
 
             ## Copy matching classes otherwise throw error if -ErrorAction Stop is specified
             If ($CopyClass) {
-                
+
                 #  Parse the $Copyclasse object one class at a time
                 $CopyClass | ForEach-Object {
 
                     #  Initialize the $ShouldCopy variable with $true value
-                    [boolean]$ShouldCopy = $true 
-                    
+                    [boolean]$ShouldCopy = $true
+
                     #  Set class name to copy in a more readable format
                     $ClassNameToCopy = $_
 
@@ -2708,20 +2708,20 @@ Function Copy-WmiClass {
                     #  If the class already exists in the destination and the -Force switch is specified remove it, otherwise set the $ShouldCopy variable to $false
                     If ($ClassNameDestinationTest -and $Force) {
                         $null = Remove-WmiClass -Namespace $NamespaceDestination -ClassName $ClassNameToCopy -ErrorAction 'Stop'
-                    } 
-                    ElseIf ($ClassNameDestinationTest) {
-                        $ShouldCopy = $false 
                     }
-                    
+                    ElseIf ($ClassNameDestinationTest) {
+                        $ShouldCopy = $false
+                    }
+
                     #  Copy the class if the $ShouldCopy variable is set to $true
                     If ($ShouldCopy) {
-                        
+
                         #  Copy source class to destination namespace
                         Copy-WmiProperty -ClassPathSource "$NamespaceSource`:$ClassNameToCopy" -ClassPathDestination "$NamespaceDestination`:$ClassNameToCopy" -CreateDestination -ErrorAction 'Stop'
-                        
+
                         #  Check if source class has instances
                         $ClassInstanceSourceTest = Get-WmiInstance -Namespace $NamespaceSource -ClassName $ClassNameToCopy -ErrorAction 'SilentlyContinue'
-                        
+
                         #  Copy source class instances if any are found
                         If ($ClassInstanceSourceTest) {
                             Copy-WmiInstance -ClassPathSource  "$NamespaceSource`:$ClassNameToCopy" -ClassPathDestination "$NamespaceDestination`:$ClassNameToCopy" -ErrorAction 'Stop'
@@ -2736,7 +2736,7 @@ Function Copy-WmiClass {
                 $ClassNotFoundErr = "No matching class [$ClassName] found in source namespace [$NamespaceSource]."
                 Write-Log -Message $ClassNotFoundErr -Severity 2 -Source ${CmdletName} -DebugMessage
                 Write-Error -Message $ClassNotFoundErr -Category 'ObjectNotFound'
-            }            
+            }
         }
         Catch {
             Write-Log -Message "Failed to copy class. `n$(Resolve-Error)" -Severity 3 -Source ${CmdletName}
@@ -2767,7 +2767,7 @@ Function Copy-WmiInstance {
 .PARAMETER Property
     Specifies the instance property to copy. If this parameter is not specified all instances are copied.(Optional)
 .PARAMETER MatchAll
-    This switch is used to specify wether to match all or any of the specified instance properties. If this switch is specified you must enter all data 
+    This switch is used to specify wether to match all or any of the specified instance properties. If this switch is specified you must enter all data
     present in the desired source class instance in order to have a succesfull match. Default is: $false.
 .PARAMETER CreateDestination
     This switch is used to create the destination if it does not exist. Default is: $false.
@@ -2777,7 +2777,7 @@ Function Copy-WmiInstance {
     [hashtable]$Property = @{ Description = 'SCCMZone WebSite' }
     Copy-WmiInstance -ClassPathSource 'ROOT\SCCM:SCCMZone' -ClassPathDestination 'ROOT\SCCM:SCCMZoneBlog' -Property $Property -CreateDestination
 .EXAMPLE
-    [hashtable]$Property = @{ 
+    [hashtable]$Property = @{
         SCCMZoneWebSite = 'https:\SCCM-Zone.com'
         Description = 'SCCMZone WebSite'
     }
@@ -2815,7 +2815,7 @@ Function Copy-WmiInstance {
     }
     Process {
         Try {
-            
+
             ## Set source and destination paths and name variables
             #  Set NamespaceSource
             $NamespaceSource = (Split-Path -Path $ClassPathSource -Qualifier).TrimEnd(':')
@@ -2888,7 +2888,7 @@ Function Copy-WmiInstance {
                     $InputPropertyObj = [PSCustomObject]$Property
                     $InstancePropertyObj = [PSCustomObject]$InstanceProperty
 
-                    #  If Property parameter is specified check if instance Property matches the Input Property. If no match is found set the $ShouldCopy value to $false 
+                    #  If Property parameter is specified check if instance Property matches the Input Property. If no match is found set the $ShouldCopy value to $false
                     If ($Property -and $MatchAll) {
                         $ShouldCopy = [boolean]$(Compare-Object -ReferenceObject $InputPropertyObj -DifferenceObject $InstancePropertyObj -Property $ClassPropertiesSource.Name -IncludeEqual -ExcludeDifferent)
                     }
@@ -2898,7 +2898,7 @@ Function Copy-WmiInstance {
 
                     #  Check if instance already in destination class
                     $ClassInstanceTest = Get-WmiInstance -Namespace $NamespaceDestination -ClassName $ClassNameDestination -Property $InstanceProperty -ErrorAction 'SilentlyContinue'
-                    
+
                     #  Create instance if no instance is found in destination class and $ShouldCopy value is $True
                     If ((-not $ClassInstanceTest) -and $ShouldCopy) {
                         $CopyInstance += New-WmiInstance -Namespace $NamespaceDestination -ClassName $ClassNameDestination -Property $InstanceProperty -ErrorAction 'Stop'
@@ -3008,13 +3008,13 @@ Function Copy-WmiClassQualifier {
                 Write-Error -Message $DestinationClassErr -Category 'ObjectNotFound'
             }
 
-            ## Check if there are any qualifers in the source class 
+            ## Check if there are any qualifers in the source class
             If ($ClassQualifiersSource) {
-                
+
                 ## Copy all qualifiers if not specified otherwise
                 If (-not $QualifierName) {
-                
-                    #  Set destination class qualifiers 
+
+                    #  Set destination class qualifiers
                     $ClassQualifiersSource | ForEach-Object {
                         #  Set class qualifiers one by one
                         $CopyClassQualifier = Set-WmiClassQualifier -Namespace $NamespaceDestination -ClassName $ClassNameDestination -Qualifier @{ Name = $_.Name; Value = $_.Value } -ErrorAction 'Stop'
@@ -3022,7 +3022,7 @@ Function Copy-WmiClassQualifier {
                 }
                 Else {
 
-                    ## Copy class qualifier if it exists in source class, otherwise log the error and continue 
+                    ## Copy class qualifier if it exists in source class, otherwise log the error and continue
                     $ClassQualifiersSource | ForEach-Object {
                         If ($_.Name -in $QualifierName) {
                             $CopyClassQualifier = Set-WmiClassQualifier -Namespace $NamespaceDestination -ClassName $ClassNameDestination -Qualifier @{ Name = $_.Name; Value = $_.Value } -ErrorAction 'Stop'
@@ -3096,7 +3096,7 @@ Function Copy-WmiProperty {
         [ValidateNotNullorEmpty()]
         [switch]$CreateDestination = $false
     )
-    
+
     Begin {
         ## Get the name of this function and write header
         [string]${CmdletName} = $PSCmdlet.MyInvocation.MyCommand.Name
@@ -3135,11 +3135,11 @@ Function Copy-WmiProperty {
             }
 
             ## Check if there are any properties in if not specified otherwiser
-            If ($ClassPropertiesSource) {       
+            If ($ClassPropertiesSource) {
 
                 ## Copy all class properties if not specified otherwise
                 If (-not $PropertyName) {
-                    
+
                     #  Create destination property and property qualifiers one by one
                     $ClassPropertiesSource | ForEach-Object {
                         #  Create property
@@ -3151,8 +3151,8 @@ Function Copy-WmiProperty {
                     }
                 }
                 Else {
-                    
-                    ## Copy specified property and property qualifier if it exists in source class, otherwise log the error and continue 
+
+                    ## Copy specified property and property qualifier if it exists in source class, otherwise log the error and continue
                     $ClassPropertiesSource | ForEach-Object {
                         If ($_.Name -in $PropertyName) {
                             #  Create property
@@ -3255,7 +3255,7 @@ Function Copy-WmiNamespace {
                 ElseIf ($NamespaceDestinationTest) {
                     $ShouldCopy = $false
                 }
-         
+
                 #  Copy the namespace if the $ShouldCopy variable is set to $true
                 If ($ShouldCopy) {
 
@@ -3264,7 +3264,7 @@ Function Copy-WmiNamespace {
 
                     #  Get current source namespace classes
                     $ClassNameSource = Get-WmiClass -Namespace $NamespaceToCopy -ErrorAction 'SilentlyContinue'
-                    
+
                     #  Copy classes if present in the current source namespace
                     If ($ClassNameSource) {
                         #  Copy classes one by one
@@ -3447,7 +3447,7 @@ Function Rename-WmiClass {
             If ((-not $NamespaceDestinationTest) -and $CreateDestination) {
 
                 #  Create destination namespace
-                New-WmiNameSpace -Namespace $NamespaceDestination -CreateSubTree -ErrorAction 'Stop' 
+                New-WmiNameSpace -Namespace $NamespaceDestination -CreateSubTree -ErrorAction 'Stop'
             }
             ElseIf (-not $NamespaceDestinationTest) {
                 $DestinationNamespaceNotFoundErr = "Destination namespace [$NamespaceDestination] not found. Use -CreateDestination switch to create the destination automatically."
@@ -3457,12 +3457,12 @@ Function Rename-WmiClass {
 
             ## Check if the destination class exists
             $ClassNameDestinationTest = Get-WmiClass -Namespace $NamespaceDestination -ClassName $ClassNameDestination -ErrorAction 'SilentlyContinue'
-            
+
             ## Copy class if it does not already exist in destination namespace, otherwise throw an error if -ErrorAction 'Stop' is specified
             If (-not $ClassNameDestinationTest) {
-                
+
                 $ClassPathSource
-                $ClassPathDestination 
+                $ClassPathDestination
 
                 #  Copy class to destination namespace
                 Copy-WmiProperty -ClassPathSource $ClassPathSource -ClassPathDestination $ClassPathDestination -CreateDestination -ErrorAction 'Stop'
