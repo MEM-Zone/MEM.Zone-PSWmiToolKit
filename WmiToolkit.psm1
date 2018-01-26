@@ -1,30 +1,10 @@
 ﻿<#
 *********************************************************************************************************
-* Created by Ioan Popovici   | Requires PowerShell 4.0                                                  *
+* Requires          | PowerShell 4.0                                                                    *
 * ===================================================================================================== *
-* Modified by     |    Date    | Revision | Comments                                                    *
+* Created by        |    Date    | Comments                                                             *
 * _____________________________________________________________________________________________________ *
-* Octavian Cordos | 2017-11-09 | v0.0.1     | First version                                             *
-* Ioan Popovici   | 2017-11-09 | v0.0.2     | Created functions                                         *
-* Ioan Popovici   | 2017-11-27 | v0.0.3     | All planned functions added                               *
-* Ioan Popovici   | 2017-11-27 | v0.0.4     | Fully functional and tested, copy and rename do not work  *
-* Ioan Popovici   | 2017-12-17 | v0.0.5     | Complete re-write, to convoluted and overdesigned         *
-* Ioan Popovici   | 2017-12-20 | v0.0.6     | Scrapped about 60% should be readable now                 *
-* Ioan Popovici   | 2017-12-22 | v0.0.7     | Implemented default PS cmdlet ErrorHandling               *
-* Ioan Popovici   | 2017-12-23 | v0.0.8     | Fixed/Simplified input/output where possible              *
-* Ioan Popovici   | 2017-12-27 | v0.0.9     | Get/Set/New except Set-WmiInstance, working and tested    *
-* Ioan Popovici   | 2017-12-27 | v0.1.0     | Remove-WmiInstance re-written and working                 *
-* Ioan Popovici   | 2017-01-07 | v0.1.1     | Get-WmiClass output fix, Remove class, namespace working  *
-* Ioan Popovici   | 2017-01-08 | v0.1.2     | Remove class qualifiers working working                   *
-* Ioan Popovici   | 2017-01-09 | v0.1.3     | Fixed namespace functions input, only path input now      *
-* Ioan Popovici   | 2017-01-09 | v0.1.4     | Fixed Get-WmiPropertyQualifier output                     *
-* Ioan Popovici   | 2017-01-09 | v0.1.5     | All Remove functions working correctly now                *
-* Ioan Popovici   | 2017-01-10 | v0.1.6     | Fix namespace recurse deletion and creation               *
-* Ioan Popovici   | 2017-01-10 | v0.1.7     | Fix Copy-WmiClassQualifiers                               *
-* Ioan Popovici   | 2017-01-11 | v0.1.8     | Fix New-WmiClass namespace detection bug                  *
-* Ioan Popovici   | 2017-01-12 | v0.1.9     | Copy-WmiInstance, WmiClass, WmiProperty working           *
-* Ioan Popovici   | 2017-01-12 | v0.1.10    | Created Get-NamespacesRecursive, fixed a ton of bugs      *
-* Ioan Popovici   | 2017-01-13 | v0.1.11    | Added recursove to Get-WmiNamespaces, bugfixes            *
+* Ioan Popovici     | 2017-11-09 |                                                                      *
 * ===================================================================================================== *
 *                                                                                                       *
 *********************************************************************************************************
@@ -574,9 +554,11 @@ Function Get-WmiNameSpace {
 .DESCRIPTION
     This function is used to get the details of one or more WMI namespaces.
 .PARAMETER Namespace
-    Specifies the namespace path. Supports wildcards only when not using the -Recurse switch.
+    Specifies the namespace path. Supports wildcards only when not using the -Recurse or -List switch.
+.PARAMETER List
+    This switch is used to list all namespaces in the specified path.
 .PARAMETER Recurse
-    This swirch is used to get the whole WMI namespace tree recursively.
+    This switch is used to get the whole WMI namespace tree recursively.
 .EXAMPLE
     Get-WmiNameSpace -NameSpace 'ROOT\SCCM'
 .EXAMPLE
@@ -597,6 +579,17 @@ Function Get-WmiNameSpace {
         [string]$Namespace,
         [Parameter(Mandatory=$false,Position=1)]
         [ValidateNotNullorEmpty()]
+        [ValidateScript({ 
+            If ($Namespace -match '\*') { Throw "Wildcards are not supported with this switch." }
+            Return $true
+        })]
+        [switch]$List = $false,
+        [Parameter(Mandatory=$false,Position=2)]
+        [ValidateNotNullorEmpty()]
+        [ValidateScript({
+            If ($Namespace -match '\*') { Throw "Wildcards are not supported with this switch." }
+            Return $true
+        })] 
         [switch]$Recurse = $false
     )
 
@@ -604,6 +597,9 @@ Function Get-WmiNameSpace {
         ## Get the name of this function and write header
         [string]${CmdletName} = $PSCmdlet.MyInvocation.MyCommand.Name
         Write-FunctionHeaderOrFooter -CmdletName ${CmdletName} -CmdletBoundParameters $PSBoundParameters -Header
+
+        ## Initialize result variable
+        [PSCustomObject]$GetNamespace = $null
     }
     Process {
         Try {
@@ -646,7 +642,11 @@ Function Get-WmiNameSpace {
                             Try {
 
                                 ## Get all namespaces in the current root namespace
+<<<<<<< HEAD
                                 $Namespaces = Get-WmiNameSpace -Namespace "$NamespaceRoot\*" -ErrorAction 'SilentlyContinue'
+=======
+                                $Namespaces = Get-WmiNameSpace -Namespace "$NamespaceRoot" -List -ErrorAction 'SilentlyContinue'
+>>>>>>> development
 
                                 ## Search in the current namespace for other namespaces
                                 ForEach ($Namespace in $Namespaces) {
@@ -680,7 +680,7 @@ Function Get-WmiNameSpace {
 
                 ## If namespace is 'ROOT' or -List is specified get namespace else get Parent\Leaf namespace
                 If ($List -or ($Namespace -eq 'ROOT')) {
-                    $WmiNamespace = Get-CimInstance -Namespace $Namespace -ClassName '__Namespace'
+                    $WmiNamespace = Get-CimInstance -Namespace $Namespace -ClassName '__Namespace' -ErrorAction 'SilentlyContinue' -ErrorVariable Err
                 }
                 Else {
                     #  Set namespace path and name
@@ -691,17 +691,22 @@ Function Get-WmiNameSpace {
                 }
 
                 ## If no namespace is found, write debug message and optionally throw error is -ErrorAction 'Stop' is specified
-                If (-not $WmiNamespace) {
+                If (-not $WmiNamespace -and $List -and (-not $Err)) {
+                    $NamespaceChildrenNotFoundErr = "Namespace [$Namespace] has no children."
+                    Write-Log -Message $NamespaceChildrenNotFoundErr -Severity 2 -Source ${CmdletName} -DebugMessage
+                    Write-Error -Message $NamespaceChildrenNotFoundErr -Category 'ObjectNotFound'
+                }
+                ElseIf (-not $WmiNamespace) {
                     $NamespaceNotFoundErr = "Namespace [$Namespace] not found."
                     Write-Log -Message $NamespaceNotFoundErr -Severity 2 -Source ${CmdletName} -DebugMessage
                     Write-Error -Message $NamespaceNotFoundErr -Category 'ObjectNotFound'
                 }
-                Else {
-                    $GetNamespace = $WmiNamespace | ForEach-Object {
+                ElseIf (-not $Err) {
+                    $GetNamespace = $WmiNamespace | ForEach-Object {                
                         [PSCustomObject]@{
-                            Name = $_.Name
-                            Path = $Namespace.Trim('*')
-                            FullName =  "$($Namespace.Trim('\*'))`\$($_.Name)"
+                            Name = $Name = $_.Name
+                            Path = $Path = $_.CimSystemProperties.Namespace -replace ('/','\')
+                            FullName = "$Path`\$Name"
                         }
                     }
                 }
