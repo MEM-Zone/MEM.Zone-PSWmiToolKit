@@ -564,6 +564,8 @@ Function Get-WmiNameSpace {
 .EXAMPLE
     Get-WmiNameSpace -NameSpace 'ROOT\*'
 .EXAMPLE
+    Get-WmiNameSpace -NameSpace 'ROOT' -List
+.EXAMPLE
     Get-WmiNameSpace -NameSpace 'ROOT' -Recurse
 .NOTES
     This is a module function and can typically be called directly.
@@ -683,7 +685,7 @@ Function Get-WmiNameSpace {
                     $NamespaceParent = $(Split-Path -Path $Namespace -Parent)
                     $NamespaceLeaf = $(Split-Path -Path $Namespace -Leaf)
                     #  Get namespace
-                    $WmiNamespace = Get-CimInstance -Namespace $NamespaceParent -ClassName '__Namespace' | Where-Object { $_.Name -like $NamespaceLeaf }
+                    $WmiNamespace = Get-CimInstance -Namespace $NamespaceParent -ClassName '__Namespace' -ErrorAction 'SilentlyContinue' -ErrorVariable Err | Where-Object { $_.Name -like $NamespaceLeaf }
                 }
 
                 ## If no namespace is found, write debug message and optionally throw error is -ErrorAction 'Stop' is specified
@@ -3220,7 +3222,10 @@ Function Copy-WmiNamespace {
         [string]$NamespaceSource,
         [Parameter(Mandatory=$true,Position=1)]
         [ValidateNotNullorEmpty()]
-        [string]$NamespaceDestination
+        [string]$NamespaceDestination,
+        [Parameter(Mandatory=$false,Position=3)]
+        [ValidateNotNullorEmpty()]
+        [switch]$Force = $false
     )
 
     Begin {
@@ -3235,7 +3240,7 @@ Function Copy-WmiNamespace {
             $null = Get-WmiNameSpace -Namespace $NamespaceSource -ErrorAction 'Stop'
 
             ## Get source namespace tree
-            $NamespaceSourceTree = (Get-WmiNameSpace -Namespace $NamespaceSource -Recurse -ErrorAction 'SilentlyContinue').Path
+            $NamespaceSourceTree = Get-WmiNameSpace -Namespace $NamespaceSource -Recurse -ErrorAction 'SilentlyContinue'
 
             ## Parse namespace tree and copy namespaces and classes one by one
             $NamespaceSourceTree | ForEach-Object {
@@ -3243,15 +3248,16 @@ Function Copy-WmiNamespace {
                 #  Initialize the $ShouldCopy variable with $true
                 [boolean]$ShouldCopy = $true
 
-                #  Set namespaces to copy in a more readable format
-                $NamespaceToCopy = $_
+                #  Set current namespace source and destination paths. The destination is set by replacing the source namespace with the destination namespace.
+                [string]$NamespaceSourcePath = $_.FullName
+                [string]$NamespaceDestinationPath = $NamespaceSourcePath -ireplace [regex]::Escape($NamespaceSource), $NamespaceDestination
 
                 #  Check if the destination namespace exists
-                $NamespaceDestinationTest = Get-WmiNameSpace -Namespace "$NamespaceDestination`\$NamespaceToCopy" -ErrorAction 'SilentlyContinue'
+                $NamespaceDestinationTest = Get-WmiNameSpace -Namespace $NamespaceDestinationPath -ErrorAction 'SilentlyContinue'
 
                 #  If the namespace already exists in the destination and the -Force switch is specified remove the namespace, otherwise set the $ShouldCopy variable to $false
                 If ($NamespaceDestinationTest -and $Force) {
-                    $null = Remove-WmiNameSpace -Namespace  "$NamespaceDestination`\$NamespaceToCopy" -Force
+                    $null = Remove-WmiNameSpace -Namespace  $NamespaceDestinationPath -Force
                 }
                 ElseIf ($NamespaceDestinationTest) {
                     $ShouldCopy = $false
@@ -3261,21 +3267,21 @@ Function Copy-WmiNamespace {
                 If ($ShouldCopy) {
 
                     #  Create the destination namespace
-                    $CopyNamespace = New-WmiNameSpace -Namespace "$NamespaceDestination`\$NamespaceToCopy" -CreateSubTree -ErrorAction 'Stop'
+                    $CopyNamespace = New-WmiNameSpace -Namespace $NamespaceDestinationPath -CreateSubTree -ErrorAction 'Stop'
 
                     #  Get current source namespace classes
-                    $ClassNameSource = Get-WmiClass -Namespace $NamespaceToCopy -ErrorAction 'SilentlyContinue'
+                    $ClassNameSource = Get-WmiClass -Namespace $NamespaceSourcePath -ErrorAction 'SilentlyContinue'
 
                     #  Copy classes if present in the current source namespace
                     If ($ClassNameSource) {
                         #  Copy classes one by one
                         $ClassNameSource | ForEach-Object {
-                            Copy-WmiClass -NamespaceSource $NamespaceToCopy -NamespaceDestination $NamespaceDestination -ClassName $_.CimClassName -Force -ErrorAction 'Stop'
+                            Copy-WmiClass -NamespaceSource $NamespaceSourcePath -NamespaceDestination $NamespaceDestinationPath -ClassName $_.CimClassName -Force -ErrorAction 'Stop'
                         }
                     }
                 }
                 Else {
-                    Write-Log -Message "Destination namespace [$NamespaceDestination`\$NamespaceToCopy] already exists. Use the -Force switch to overwrite."
+                    Write-Log -Message "Destination namespace [$NamespaceDestinationPath] already exists. Use the -Force switch to overwrite."
                 }
             }
         }
