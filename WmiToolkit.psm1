@@ -1384,6 +1384,7 @@ Function New-WmiNameSpace {
         }
         Catch {
             Write-Log -Message "Failed to create namespace [$Namespace]. `n$(Resolve-Error)" -Severity 3 -Source ${CmdletName}
+            Break
         }
         Finally {
             Write-Output -InputObject $NewNamespace
@@ -3147,7 +3148,7 @@ Function Copy-WmiProperty {
                     $ClassPropertiesSource | ForEach-Object {
                         #  Create property
                         $CopyClassProperty = New-WmiProperty -Namespace $NamespaceDestination -ClassName $ClassNameDestination -PropertyName $_.Name -PropertyType $_.CimType
-                        #  Set qualifier if present
+                        #  Set qualifier if present in source property
                         If ($_.Qualifiers.Name) {
                             $null = Set-WmiPropertyQualifier -Namespace $NamespaceDestination -ClassName $ClassNameDestination -PropertyName $_.Name -Qualifier @{ Name = $_.Qualifiers.Name; Value = $_.Qualifiers.Value }
                         }
@@ -3295,7 +3296,7 @@ Function Copy-WmiNamespace {
                 }
                 Else {
 
-                    ## If a destination namespace is already present log error and continue execution only if $ErrorActionPreference variable value is 'Continue' or 'SilentlyContinue'
+                    ## If a destination namespace is already present log error and stop execution if -ErrorAction 'Stop' is specified
                     $DestinationNamespaceExistsErr = "Destination namespace [$NamespaceDestinationPath] already exists. Use the -Force switch to overwrite."
                     Write-Log -Message $DestinationNamespaceExistsErr -Severity 2 -Source ${CmdletName}
                     Write-Error -Message $NamespaceAlreadyExistsErr -Category 'ResourceExists'
@@ -3326,12 +3327,12 @@ Function Rename-WmiNamespace {
     This function is used to rename a WMI namespace by creating a new namespace, copying all existing classes to it and removing the old one.
 .PARAMETER Namespace
     Specifies the root namespace where to search for the namespace name. Default is: ROOT\cimv2.
-.PARAMETER NamespaceName
+.PARAMETER Name
     Specifies the namespace name to be renamed.
-.PARAMETER NamespaceNewName
+.PARAMETER NewName
     Specifies the new namespace name.
 .EXAMPLE
-    Rename-WmiNamespace -Namespace 'ROOT\cimv2' -NamespaceName 'OldName' -NamespaceNewName 'NewName'
+    Rename-WmiNamespace -Namespace 'ROOT\cimv2' -Name 'SCCM' -NewName 'SCCMZone'
 .NOTES
     This is a module function and can typically be called directly.
 .LINK
@@ -3346,58 +3347,42 @@ Function Rename-WmiNamespace {
         [string]$Namespace = 'ROOT\cimv2',
         [Parameter(Mandatory=$true,Position=1)]
         [ValidateNotNullorEmpty()]
-        [string]$NamespaceName,
+        [string]$Name,
         [Parameter(Mandatory=$true,Position=2)]
         [ValidateNotNullorEmpty()]
-        [string]$NamespaceNewName
+        [string]$NewName
     )
 
     Begin {
-    ## Get the name of this function and write header
-    [string]${CmdletName} = $PSCmdlet.MyInvocation.MyCommand.Name
-    Write-FunctionHeaderOrFooter -CmdletName ${CmdletName} -CmdletBoundParameters $PSBoundParameters -Header
+        ## Get the name of this function and write header
+        [string]${CmdletName} = $PSCmdlet.MyInvocation.MyCommand.Name
+        Write-FunctionHeaderOrFooter -CmdletName ${CmdletName} -CmdletBoundParameters $PSBoundParameters -Header
     }
     Process {
         Try {
 
-            ## Check if the namespace to be renamed exists
-            $NamespaceTest = Get-WmiNameSpace -Namespace $Namespace -NamespaceName $NamespaceName
+            ## Set namespace paths
+            $NamespaceSource = Join-Path -Path $Namespace -ChildPath $Name
+            $NamespaceDestination = Join-Path -Path $Namespace -ChildPath $NewName
 
-            ## Check if the new namespace exists
-            $NewNamespaceNameTest = Get-WmiNameSpace -Namespace $Namespace -NamespaceName $NamespaceNewName
+            ## Check if the source namespace exists
+            $null = Get-WmiNameSpace -Namespace $NamespaceSource -ErrorVariable 'Stop'
 
-            ## If the namespace exists and another namespace with the new name does not exist, rename namespace
-            If ($NamespaceTest) {
-                If (-not $NewNamespaceNameTest) {
+            #  Create the new namespace but throw an error if it already exists
+            New-WmiNameSpace -Namespace $NamespaceDestination -ErrorAction 'Stop'
 
-                    #  Create New Namespace
-                    New-WmiNameSpace -Namespace $Namespace -NamespaceName $NamespaceName
+            #  Copy the old namespace
+            Copy-WmiNamespace -NamespaceSource $NamespaceSource -NamespaceDestination $NamespaceDestination -Force -ErrorAction 'Stop'
 
-                    #  Set Source Namespace
-                    $NamespaceSource = Join-Path -Path $Namespace -ChildPath $NamespaceName
-
-                    #  Set Destination Namespace
-                    $NamespaceDestination = Join-Path -Path $Namespace -ChildPath $NamespaceNewName
-
-                    #  Copy clases to the new Namespace
-                    Copy-WmiClass -NamespaceSource $NamespaceSource -NamespaceDestination $NamespaceDestination
-
-                    #  Remove old Namespace
-                    Remove-WmiNameSpace -Namespace $Namespace -NamespaceName $NamespaceName
-
-                    #  Write success message to console
-                    Write-Log -Message "Succesfully renamed $Namespace`\$NamespaceName to $Namespace`\$NamespaceNewName." -Source ${CmdletName}
-                }
-                Else {
-                    Write-Log -Message "Failed to rename namespace. $Namespace`\$NamespaceNewName already exists." -Severity 3 -Source ${CmdletName}
-                }
-            }
-            Else {
-                Write-Log -Message "Failed to rename namespace. $Namespace`\$NamespaceName does not exist." -Severity 3 -Source ${CmdletName}
-            }
+            #  Remove old Namespace
+            Remove-WmiNameSpace -Namespace $NamespaceSource -Recurse -Force
+            
+            #  Write success message to console
+            Write-Log -Message "Succesfully renamed namespace [$NamespaceSource -> $NamespaceDestination]" -Source ${CmdletName}
         }
         Catch {
             Write-Log -Message "Failed to rename namespace. `n$(Resolve-Error)" -Severity 3 -Source ${CmdletName}
+            Break
         }
         Finally {}
     }
