@@ -644,11 +644,7 @@ Function Get-WmiNameSpace {
                             Try {
 
                                 ## Get all namespaces in the current root namespace
-<<<<<<< HEAD
-                                $Namespaces = Get-WmiNameSpace -Namespace "$NamespaceRoot\*" -ErrorAction 'SilentlyContinue'
-=======
                                 $Namespaces = Get-WmiNameSpace -Namespace "$NamespaceRoot" -List -ErrorAction 'SilentlyContinue'
->>>>>>> development
 
                                 ## Search in the current namespace for other namespaces
                                 ForEach ($Namespace in $Namespaces) {
@@ -2001,7 +1997,7 @@ Function Remove-WmiNameSpace {
 .DESCRIPTION
     This function is used to delete a WMI namespace by name.
 .PARAMETER Namespace
-   Specifies the namespace to remove.
+    Specifies the namespace to remove.
 .PARAMETER Force
     This switch deletes all existing classes in the specified path. Default is: $false.
 .PARAMETER Recurse
@@ -3403,15 +3399,15 @@ Function Rename-WmiClass {
 .SYNOPSIS
     This function is used to rename a WMI class.
 .DESCRIPTION
-    This function is used to rename a WMI class by creating a new class, copying all existing properties and instances to the new class, and removing the old one.
+    This function is used to rename a WMI class by creating a new class, copying all existing properties and instances to it and removing the old one.
 .PARAMETER Namespace
-    Specifies the namespace where the class is located. Default is: ROOT\cimv2.
-.PARAMETER ClassName
-    Specifies the name of the class to be renamed.
-.PARAMETER ClassNewName
+    Specifies the namespace for the class. Default is: ROOT\cimv2.
+.PARAMETER Name
+    Specifies the class name to be renamed.
+.PARAMETER NewName
     Specifies the new class name.
 .EXAMPLE
-    Rename-WmiClass -Namespace 'Root\cimv2' -ClassName 'OldName' -ClassNewName 'NewName'
+    Rename-WmiClass -Namespace 'ROOT\cimv2' -Name 'SCCM' -NewName 'SCCMZone'
 .NOTES
     This is a module function and can typically be called directly.
 .LINK
@@ -3419,17 +3415,17 @@ Function Rename-WmiClass {
 .LINK
     https://github.com/JhonnyTerminus/SCCM
 #>
-[CmdletBinding()]
+    [CmdletBinding()]
     Param (
-        [Parameter(Mandatory=$true,Position=0)]
+        [Parameter(Mandatory=$false,Position=0)]
         [ValidateNotNullorEmpty()]
-        [string]$ClassPathSource,
+        [string]$Namespace = 'ROOT\cimv2',
         [Parameter(Mandatory=$true,Position=1)]
         [ValidateNotNullorEmpty()]
-        [string]$ClassPathDestination,
-        [Parameter(Mandatory=$false,Position=2)]
+        [string]$Name,
+        [Parameter(Mandatory=$true,Position=2)]
         [ValidateNotNullorEmpty()]
-        [switch]$CreateDestination = $false
+        [string]$NewName
     )
 
     Begin {
@@ -3440,67 +3436,37 @@ Function Rename-WmiClass {
     Process {
         Try {
 
-            ## Set source and destination paths and name variables
-            #  Set NamespaceSource
-            $NamespaceSource = (Split-Path -Path $ClassPathSource -Qualifier).TrimEnd(':')
-            #  Set NamespaceDestination
-            $NamespaceDestination =  (Split-Path -Path $ClassPathDestination -Qualifier).TrimEnd(':')
-            #  Set ClassNameSource
-            $ClassNameSource = (Split-Path -Path $ClassPathSource -NoQualifier)
-            #  Set ClassNameDestination
-            $ClassNameDestination = (Split-Path -Path $ClassPathDestination -NoQualifier)
+            ## Set class paths
+            $ClassPathSource = "$Namespace`:$Name"
+            $ClassPathDestination =  "$Namespace`:$NewName"
 
-            ## Check if the class exists in the source location
-            $null = Get-WmiClass -Namespace $NamespaceSource -ClassName $ClassNameSource -ErrorAction 'Stop'
+            ## Check if the source class exists
+            Get-WmiClass -Namespace $ClassPathSource -ErrorVariable 'Stop'
 
-            ## Check if the destination namespace exists
-            $NamespaceDestinationTest = Get-WmiNameSpace -Namespace $NamespaceDestination -ErrorAction 'SilentlyContinue'
+            ## Create the new class but throw an error if it already exists
+            New-WmiClass -Namespace $Namespace -ClassName $NewName -ErrorAction 'Stop'
 
-            ## Create destination namespace if specified
-            If ((-not $NamespaceDestinationTest) -and $CreateDestination) {
+            ## Copy the old class
+            #  Copy class qualifiers
+            Copy-WmiClassQualifier -ClassPathSource $ClassPathSource -ClassPathDestination $ClassPathDestination -ErrorAction 'Stop'
 
-                #  Create destination namespace
-                New-WmiNameSpace -Namespace $NamespaceDestination -CreateSubTree -ErrorAction 'Stop'
-            }
-            ElseIf (-not $NamespaceDestinationTest) {
-                $DestinationNamespaceNotFoundErr = "Destination namespace [$NamespaceDestination] not found. Use -CreateDestination switch to create the destination automatically."
-                Write-Log -Message $DestinationNamespaceNotFoundErr -Severity 2 -Source ${CmdletName}
-                Write-Error -Message $DestinationNamespaceNotFoundErr -Category 'ObjectNotFound'
-            }
+            #  Copy class properties
+            Copy-WmiProperty -ClassPathSource $ClassPathSource -ClassPathDestination $ClassPathDestination -ErrorAction 'Stop'
 
-            ## Check if the destination class exists
-            $ClassNameDestinationTest = Get-WmiClass -Namespace $NamespaceDestination -ClassName $ClassNameDestination -ErrorAction 'SilentlyContinue'
+            #  Copy class instances
+            Copy-WmiInstance -ClassPathSource $ClassPathSource -ClassPathDestination $ClassPathDestination -ErrorAction 'Stop'
 
-            ## Copy class if it does not already exist in destination namespace, otherwise throw an error if -ErrorAction 'Stop' is specified
-            If (-not $ClassNameDestinationTest) {
-
-                $ClassPathSource
-                $ClassPathDestination
-
-                #  Copy class to destination namespace
-                Copy-WmiProperty -ClassPathSource $ClassPathSource -ClassPathDestination $ClassPathDestination -CreateDestination -ErrorAction 'Stop'
-
-                #  Check if source class has instances
-                $ClassInstanceSourceTest = Get-WmiInstance -Namespace $NamespaceSource -ClassName $ClassNameSource -ErrorAction 'SilentlyContinue'
-
-                #  Copy source class instances if any are found
-                If ($ClassInstanceSourceTest) {
-                    Copy-WmiInstance -ClassPathSource $ClassPathSource -ClassPathDestination $ClassPathDestination
-                }
-            }
-            Else {
-                $DestinationClassExistsErr = "Destination class [$ClassPathDestination] already exists."
-                Write-Log -Message $DestinationClassExistsErr -Severity 2 -Source ${CmdletName}
-                Write-Error -Message $DestinationClassExistsErr -Category 'ResourceExists'
-            }
+            ## Remove the old class
+            Remove-WmiClass -Namespace $Namespace -ClassName $Name -ErrorAction 'Stop'
+            
+            ## Write success message to console
+            Write-Log -Message "Succesfully renamed class [$ClassPathSource -> $ClassPathDestination]" -Source ${CmdletName}
         }
         Catch {
-            Write-Log -Message "Failed to copy class. `n$(Resolve-Error)" -Severity 3 -Source ${CmdletName}
+            Write-Log -Message "Failed to rename class. `n$(Resolve-Error)" -Severity 3 -Source ${CmdletName}
             Break
         }
-        Finally {
-            Write-Output -InputObject $CopyClass
-        }
+        Finally {}
     }
     End {
         Write-FunctionHeaderOrFooter -CmdletName ${CmdletName} -Footer
