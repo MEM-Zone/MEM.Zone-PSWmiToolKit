@@ -1480,7 +1480,7 @@ Function New-WmiClass {
             If (-not $ClassTest) {
 
                 #  Create class object
-                [wmiclass]$ClassObject = New-Object -TypeName 'System.Management.ManagementClass' -ArgumentList @("\\.\$Namespace`:__CLASS",[String]::Empty,$null)
+                [wmiclass]$ClassObject = New-Object -TypeName 'System.Management.ManagementClass' -ArgumentList @("\\.\$Namespace`:__CLASS", [String]::Empty, $null)
                 $ClassObject.Name = $ClassName
 
                 #  Write the class and dispose of the class object
@@ -3208,6 +3208,8 @@ Function Copy-WmiNamespace {
     This switch is used to overwrite the destination namespace.
 .EXAMPLE
     Copy-WmiNamespace -NamespaceSource 'ROOT\SCCMZone' -NamespaceDestination 'ROOT\cimv2' -Force
+.EXAMPLE
+    Copy-WmiNamespace -NamespaceSource 'ROOT\SCCMZone' -NamespaceDestination 'ROOT\cimv2' -ErrorAction 'SilentlyContinue'
 .NOTES
     This is a module function and can typically be called directly.
 .LINK
@@ -3241,6 +3243,17 @@ Function Copy-WmiNamespace {
 
             ## Get source namespace tree
             $NamespaceSourceTree = Get-WmiNameSpace -Namespace $NamespaceSource -Recurse -ErrorAction 'SilentlyContinue'
+
+            ## Check if we need to copy root namespace classes
+            $ClassNameSourceRoot = Get-WmiClass -Namespace $NamespaceSource -ErrorAction 'SilentlyContinue'
+
+            #  Copy root namespace classes if present
+            If ($ClassNameSourceRoot) {
+                #  Copy classes one by one
+                $ClassNameSourceRoot | ForEach-Object {
+                    Copy-WmiClass -NamespaceSource $NamespaceSource -NamespaceDestination $NamespaceDestination -ClassName $_.CimClassName -CreateDestination -Force -ErrorAction 'Stop'
+                }
+            }
 
             ## Parse namespace tree and copy namespaces and classes one by one
             $NamespaceSourceTree | ForEach-Object {
@@ -3281,7 +3294,11 @@ Function Copy-WmiNamespace {
                     }
                 }
                 Else {
-                    Write-Log -Message "Destination namespace [$NamespaceDestinationPath] already exists. Use the -Force switch to overwrite."
+
+                    ## If a destination namespace is already present log error and continue execution only if $ErrorActionPreference variable value is 'Continue' or 'SilentlyContinue'
+                    $DestinationNamespaceExistsErr = "Destination namespace [$NamespaceDestinationPath] already exists. Use the -Force switch to overwrite."
+                    Write-Log -Message $DestinationNamespaceExistsErr -Severity 2 -Source ${CmdletName}
+                    Write-Error -Message $NamespaceAlreadyExistsErr -Category 'ResourceExists'
                 }
             }
         }
