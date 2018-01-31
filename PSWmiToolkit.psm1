@@ -1,29 +1,39 @@
 ﻿<#
-*********************************************************************************************************
-* Requires          | PowerShell 4.0                                                                    *
-* ===================================================================================================== *
-* Created by        |    Date    | Comments                                                             *
-* _____________________________________________________________________________________________________ *
-* Ioan Popovici     | 2017-11-09 |                                                                      *
-* ===================================================================================================== *
-*                                                                                                       *
-*********************************************************************************************************
-
 .SYNOPSIS
     This PowerShell module contains functions for managing WMI.
 .DESCRIPTION
-    This PowerShell module contains functions for creating WMI Namespaces, Classes and Instances.
+    This PowerShell module contains functions for managing WMI Namespaces, Classes and Instances.
 .EXAMPLE
-    Import-Module -Name 'C:\Temp\WmiToolkit.psm1' -Verbose
+    Import-Module -Name '.\WmiToolkit.psm1' -Verbose
 .EXAMPLE
     Get-Command -Module 'WmiToolkit'
+.EXAMPLE
+    Get-Command -Module 'PSWmiToolkit' | ForEach-Object { Get-Help $_.Name -Examples }
+.EXAMPLE
+    Get-Help -Component WMI
+.EXAMPLE
+    Get-Help -Component WMI | Get-Help -Detailed
+.INPUTS
+    None.
+.OUTPUTS
+    None.
 .NOTES
-    --
+    Released     : 2017-11-09
+    Author       : Ioan Popovici
+    Requirements : PowerShell v3.0
 .LINK
     https://sccm-zone.com
 .LINK
     https://github.com/JhonnyTerminus/SCCM
+.COMPONENT
+    WMI
+.FUNCTIONALITY
+    WMI Management
 #>
+
+## Setting module requirements
+#Requires -Version '3.0'
+#Requires -RunAsAdministrator
 
 ##*=============================================
 ##* VARIABLE DECLARATION
@@ -567,21 +577,30 @@ Function Get-WmiNameSpace {
     Get-WmiNameSpace -NameSpace 'ROOT' -List
 .EXAMPLE
     Get-WmiNameSpace -NameSpace 'ROOT' -Recurse
+.INPUTS
+    None.
+.OUTPUTS
+    None.
 .NOTES
     This is a module function and can typically be called directly.
 .LINK
     https://sccm-zone.com
 .LINK
     https://github.com/JhonnyTerminus/SCCM
+.COMPONENT
+    WMI
+.FUNCTIONALITY
+    WMI Management
 #>
     [CmdletBinding()]
     Param (
         [Parameter(Mandatory=$true,Position=0)]
         [ValidateNotNullorEmpty()]
+        [SupportsWildcards()]
         [string]$Namespace,
         [Parameter(Mandatory=$false,Position=1)]
         [ValidateNotNullorEmpty()]
-        [ValidateScript({ 
+        [ValidateScript({
             If ($Namespace -match '\*') { Throw "Wildcards are not supported with this switch." }
             Return $true
         })]
@@ -591,7 +610,7 @@ Function Get-WmiNameSpace {
         [ValidateScript({
             If ($Namespace -match '\*') { Throw "Wildcards are not supported with this switch." }
             Return $true
-        })] 
+        })]
         [switch]$Recurse = $false
     )
 
@@ -622,12 +641,20 @@ Function Get-WmiNameSpace {
                         Specifies the root namespace path from which to start searching.
                     .EXAMPLE
                         Get-WmiNamespaceRecursive -NameSpace 'ROOT\SCCM'
+                    .INPUTS
+                        None.
+                    .OUTPUTS
+                        None.
                     .NOTES
                         This is a private module function and should not typically be called directly.
                     .LINK
                         https://sccm-zone.com
                     .LINK
                         https://github.com/JhonnyTerminus/SCCM
+                    .COMPONENT
+                        WMI
+                    .FUNCTIONALITY
+                        WMI Management
                     #>
                         [CmdletBinding()]
                         Param (
@@ -700,7 +727,7 @@ Function Get-WmiNameSpace {
                     Write-Error -Message $NamespaceNotFoundErr -Category 'ObjectNotFound'
                 }
                 ElseIf (-not $Err) {
-                    $GetNamespace = $WmiNamespace | ForEach-Object {                
+                    $GetNamespace = $WmiNamespace | ForEach-Object {
                         [PSCustomObject]@{
                             Name = $Name = $_.Name
                             Path = $Path = $_.CimSystemProperties.Namespace -replace ('/','\')
@@ -746,12 +773,20 @@ Function Get-WmiClass {
     Get-WmiClass -Namespace 'ROOT\SCCM' -QualifierName 'Description'
 .EXAMPLE
     Get-WmiClass -Namespace 'ROOT\SCCM'
+.INPUTS
+    None.
+.OUTPUTS
+    None.
 .NOTES
     This is a module function and can typically be called directly.
 .LINK
     https://sccm-zone.com
 .LINK
     https://github.com/JhonnyTerminus/SCCM
+.COMPONENT
+    WMI
+.FUNCTIONALITY
+    WMI Management
 #>
     [CmdletBinding()]
     Param (
@@ -3376,7 +3411,7 @@ Function Rename-WmiNamespace {
 
             #  Remove old Namespace
             Remove-WmiNameSpace -Namespace $NamespaceSource -Recurse -Force
-            
+
             #  Write success message to console
             Write-Log -Message "Succesfully renamed namespace [$NamespaceSource -> $NamespaceDestination]" -Source ${CmdletName}
         }
@@ -3458,7 +3493,7 @@ Function Rename-WmiClass {
 
             ## Remove the old class
             Remove-WmiClass -Namespace $Namespace -ClassName $Name -ErrorAction 'Stop'
-            
+
             ## Write success message to console
             Write-Log -Message "Succesfully renamed class [$ClassPathSource -> $ClassPathDestination]" -Source ${CmdletName}
         }
@@ -3508,7 +3543,9 @@ Function Set-WmiInstance {
         'Date' = $(Get-Date)
     }
     Set-WmiInstance -Namespace 'ROOT' -ClassName 'SCCMZone' -Key 'File1' -PropertySearch $PropertySearch -Property $Property
+.EXAMPLE
     Set-WmiInstance -Namespace 'ROOT' -ClassName 'SCCMZone' -Key 'File1' -Property $Property
+.EXAMPLE
     Set-WmiInstance -Namespace 'ROOT' -ClassName 'SCCMZone' -Property $Property -CreateInstance
 .NOTES
     This is a module function and can typically be called directly.
@@ -3661,12 +3698,12 @@ Export-ModuleMember -Function Copy-WmiProperty
 Export-ModuleMember -Function Copy-WmiInstance
 
 
-Export-ModulMember -Function Rename-WmiNamespace
-Export-ModulMember -Function Rename-WmiClass
+Export-ModuleMember -Function Rename-WmiNamespace
+Export-ModuleMember -Function Rename-WmiClass
 
 Export-ModuleMember -Function Set-WmiClassQualifier
 Export-ModuleMember -Function Set-WmiPropertyQualifier
-Export-ModuleMember -Function Set-WmiInstance
+#Export-ModuleMember -Function Set-WmiInstance
 
 #endregion
 ##*=============================================
