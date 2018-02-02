@@ -2,33 +2,38 @@
 Function Get-WmiNameSpace {
 <#
 .SYNOPSIS
-    This function is used to get a WMI namespace.
+    This function is used to get WMI namespace information.
 .DESCRIPTION
     This function is used to get the details of one or more WMI namespaces.
 .PARAMETER Namespace
-    Specifies the namespace path. Supports wildcards only when not using the -Recurse or -List switch.
+    Specifies the namespace path. Supports wildcards only when not using the -Recurse or -List switch. Can be piped.
 .PARAMETER List
-    This switch is used to list all namespaces in the specified path.
+    This switch is used to list all namespaces in the specified path. Cannot be used in conjunction with the -Recurse switch.
 .PARAMETER Recurse
-    This switch is used to get the whole WMI namespace tree recursively.
+    This switch is used to get the whole WMI namespace tree recursively. Cannot be used in conjunction with the -List switch.
 .EXAMPLE
-    Get-WmiNameSpace -NameSpace 'ROOT\SCCM'
+    C:\PS> Get-WmiNameSpace -NameSpace 'ROOT\SCCM'
 .EXAMPLE
-    Get-WmiNameSpace -NameSpace 'ROOT\*'
+    C:\PS> Get-WmiNameSpace -NameSpace 'ROOT\*CM'
 .EXAMPLE
-    Get-WmiNameSpace -NameSpace 'ROOT' -List
+    C:\PS> Get-WmiNameSpace -NameSpace 'ROOT' -List
 .EXAMPLE
-    Get-WmiNameSpace -NameSpace 'ROOT' -Recurse
+    C:\PS> Get-WmiNameSpace -NameSpace 'ROOT' -Recurse
+.EXAMPLE
+    C:\PS> 'Root\SCCM', 'Root\SC*' | Get-WmiNameSpace
 .INPUTS
-    None.
+    System.String[].
 .OUTPUTS
-    None.
+    System.Management.Automation.PSCustomObject.
+        'Name'
+        'Path'
+        'FullName'
 .NOTES
-    This is a module function and can typically be called directly.
+    This is a public module function and can typically be called directly.
+.LINK
+    https://github.com/JhonnyTerminus/PSWmiToolKit
 .LINK
     https://sccm-zone.com
-.LINK
-    https://github.com/JhonnyTerminus/SCCM
 .COMPONENT
     WMI
 .FUNCTIONALITY
@@ -36,10 +41,10 @@ Function Get-WmiNameSpace {
 #>
     [CmdletBinding()]
     Param (
-        [Parameter(Mandatory=$true,Position=0)]
+        [Parameter(Mandatory=$true,ValueFromPipeline,Position=0)]
         [ValidateNotNullorEmpty()]
         [SupportsWildcards()]
-        [string]$Namespace,
+        [string[]]$Namespace,
         [Parameter(Mandatory=$false,Position=1)]
         [ValidateNotNullorEmpty()]
         [ValidateScript({
@@ -102,6 +107,7 @@ Function Get-WmiNameSpace {
                     $GetNamespace = $WmiNamespace | ForEach-Object {
                         [PSCustomObject]@{
                             Name = $Name = $_.Name
+                            #  Standardize namespace path separator by changing it from '/' to '\'.
                             Path = $Path = $_.CimSystemProperties.Namespace -replace ('/','\')
                             FullName = "$Path`\$Name"
                         }
