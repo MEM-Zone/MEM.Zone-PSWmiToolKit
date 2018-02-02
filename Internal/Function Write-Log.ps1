@@ -55,7 +55,7 @@ Function Write-Log {
         [string]$Source = '',
         [Parameter(Mandatory=$false,Position=3)]
         [ValidateNotNullorEmpty()]
-        [string]$ScriptSection = 'N/A',
+        [string]$ScriptSection = 'Module',
         [Parameter(Mandatory=$false,Position=4)]
         [ValidateSet('CMTrace','Legacy')]
         [string]$LogType = 'Legacy',
