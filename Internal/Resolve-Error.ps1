@@ -39,13 +39,13 @@ Function Resolve-Error {
         [ValidateNotNullorEmpty()]
         [string[]]$Property = ('Message','InnerException','FullyQualifiedErrorId','ScriptStackTrace','PositionMessage'),
         [Parameter(Mandatory=$false,Position=2)]
-        [switch]$GetErrorRecord,
+        [switch]$GetErrorRecord = $true,
         [Parameter(Mandatory=$false,Position=3)]
-        [switch]$GetErrorInvocation,
+        [switch]$GetErrorInvocation = $true,
         [Parameter(Mandatory=$false,Position=4)]
-        [switch]$GetErrorException,
+        [switch]$GetErrorException = $true,
         [Parameter(Mandatory=$false,Position=5)]
-        [switch]$GetErrorInnerException
+        [switch]$GetErrorInnerException = $true
     )
 
     Begin {
