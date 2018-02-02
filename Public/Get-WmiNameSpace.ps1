@@ -1,26 +1,26 @@
-#region Function Get-WmiNameSpace
-Function Get-WmiNameSpace {
+#region Function Get-WmiNamespace
+Function Get-WmiNamespace {
 <#
 .SYNOPSIS
     This function is used to get WMI namespace information.
 .DESCRIPTION
     This function is used to get the details of one or more WMI namespaces.
 .PARAMETER Namespace
-    Specifies the namespace path. Supports wildcards only when not using the -Recurse or -List switch. Can be piped.
+    Specifies the namespace(s) path(s). Supports wildcards only when not using the -Recurse or -List switch. Can be piped.
 .PARAMETER List
     This switch is used to list all namespaces in the specified path. Cannot be used in conjunction with the -Recurse switch.
 .PARAMETER Recurse
     This switch is used to get the whole WMI namespace tree recursively. Cannot be used in conjunction with the -List switch.
 .EXAMPLE
-    C:\PS> Get-WmiNameSpace -NameSpace 'ROOT\SCCM'
+    C:\PS> Get-WmiNamespace -NameSpace 'ROOT\SCCM'
 .EXAMPLE
-    C:\PS> Get-WmiNameSpace -NameSpace 'ROOT\*CM'
+    C:\PS> Get-WmiNamespace -NameSpace 'ROOT\*CM'
 .EXAMPLE
-    C:\PS> Get-WmiNameSpace -NameSpace 'ROOT' -List
+    C:\PS> Get-WmiNamespace -NameSpace 'ROOT' -List
 .EXAMPLE
-    C:\PS> Get-WmiNameSpace -NameSpace 'ROOT' -Recurse
+    C:\PS> Get-WmiNamespace -NameSpace 'ROOT' -Recurse
 .EXAMPLE
-    C:\PS> 'Root\SCCM', 'Root\SC*' | Get-WmiNameSpace
+    C:\PS> 'Root\SCCM', 'Root\SC*' | Get-WmiNamespace
 .INPUTS
     System.String[].
 .OUTPUTS
@@ -48,14 +48,14 @@ Function Get-WmiNameSpace {
         [Parameter(Mandatory=$false,Position=1)]
         [ValidateNotNullorEmpty()]
         [ValidateScript({
-            If ($Namespace -match '\*') { Throw "Wildcards are not supported with this switch." }
+            If ($Namespace -match '\*') { Throw 'Wildcards are not supported with this switch.' }
             Return $true
         })]
         [switch]$List = $false,
         [Parameter(Mandatory=$false,Position=2)]
         [ValidateNotNullorEmpty()]
         [ValidateScript({
-            If ($Namespace -match '\*') { Throw "Wildcards are not supported with this switch." }
+            If ($Namespace -match '\*') { Throw 'Wildcards are not supported with this switch.' }
             Return $true
         })]
         [switch]$Recurse = $false
@@ -75,19 +75,19 @@ Function Get-WmiNameSpace {
             ## Get namespace tree recursively if specified, otherwise just get the current namespace
             If ($Recurse) {
 
-                    #  Call Get-NamespacesRecursive internal function
-                    $GetNamespace = Get-WmiNamespaceRecursive -NamespaceRoot $Namespace -ErrorAction 'SilentlyContinue' | Sort-Object -Property Path
+                #  Call Get-WmiNamespaceRecursive internal function
+                $GetNamespace = Get-WmiNamespaceRecursive -Namespace $Namespace -ErrorAction 'SilentlyContinue' | Sort-Object -Property Path
             }
             Else {
 
                 ## If namespace is 'ROOT' or -List is specified get namespace else get Parent\Leaf namespace
                 If ($List -or ($Namespace -eq 'ROOT')) {
-                    $WmiNamespace = Get-CimInstance -Namespace $Namespace -ClassName '__Namespace' -ErrorAction 'SilentlyContinue' -ErrorVariable Err
+                    $WmiNamespace = Get-CimInstance -Namespace $([string]$Namespace) -ClassName '__Namespace' -ErrorAction 'SilentlyContinue' -ErrorVariable Err
                 }
                 Else {
                     #  Set namespace path and name
-                    $NamespaceParent = $(Split-Path -Path $Namespace -Parent)
-                    $NamespaceLeaf = $(Split-Path -Path $Namespace -Leaf)
+                    [string]$NamespaceParent = $(Split-Path -Path $Namespace -Parent)
+                    [string]$NamespaceLeaf = $(Split-Path -Path $Namespace -Leaf)
                     #  Get namespace
                     $WmiNamespace = Get-CimInstance -Namespace $NamespaceParent -ClassName '__Namespace' -ErrorAction 'SilentlyContinue' -ErrorVariable Err | Where-Object { $_.Name -like $NamespaceLeaf }
                 }

@@ -1,5 +1,5 @@
-#region Function Remove-WmiNameSpace
-Function Remove-WmiNameSpace {
+#region Function Remove-WmiNamespace
+Function Remove-WmiNamespace {
 <#
 .SYNOPSIS
     This function is used to delete a WMI namespace.
@@ -12,7 +12,7 @@ Function Remove-WmiNameSpace {
 .PARAMETER Recurse
     This switch deletes all existing child namespaces in the specified path.
 .EXAMPLE
-    Remove-WmiNameSpace -Namespace 'ROOT\SCCM' -Force -Recurse
+    Remove-WmiNamespace -Namespace 'ROOT\SCCM' -Force -Recurse
 .NOTES
     This is a module function and can typically be called directly.
 .LINK
@@ -47,13 +47,13 @@ Function Remove-WmiNameSpace {
             $NamespaceName = Split-Path -Path $Namespace -Leaf
 
             ## Check if the namespace exists
-            $null = Get-WmiNameSpace -Namespace $Namespace -ErrorAction 'Stop'
+            $null = Get-WmiNamespace -Namespace $Namespace -ErrorAction 'Stop'
 
             ## Check if there are any classes
             $ClassTest = Get-WmiClass -Namespace $Namespace -ErrorAction 'SilentlyContinue'
 
             ## Check if there are any child namespaces or if the -Recurse switch was specified
-            $ChildNamespaceTest = (Get-WmiNameSpace -Namespace $($Namespace + '\*') -ErrorAction 'SilentlyContinue').Name
+            $ChildNamespaceTest = (Get-WmiNamespace -Namespace $($Namespace + '\*') -ErrorAction 'SilentlyContinue').Name
             If ((-not $ChildNamespaceTest) -or $Recurse) {
 
                 #   Remove all existing classes and instances if the -Force switch was specified

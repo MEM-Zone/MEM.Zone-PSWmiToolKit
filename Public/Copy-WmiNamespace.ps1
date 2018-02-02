@@ -44,10 +44,10 @@ Function Copy-WmiNamespace {
         Try {
 
             ## Check if the source namespace exists
-            $null = Get-WmiNameSpace -Namespace $NamespaceSource -ErrorAction 'Stop'
+            $null = Get-WmiNamespace -Namespace $NamespaceSource -ErrorAction 'Stop'
 
             ## Get source namespace tree
-            $NamespaceSourceTree = Get-WmiNameSpace -Namespace $NamespaceSource -Recurse -ErrorAction 'SilentlyContinue'
+            $NamespaceSourceTree = Get-WmiNamespace -Namespace $NamespaceSource -Recurse -ErrorAction 'SilentlyContinue'
 
             ## Check if we need to copy root namespace classes
             $ClassNameSourceRoot = Get-WmiClass -Namespace $NamespaceSource -ErrorAction 'SilentlyContinue'
@@ -71,11 +71,11 @@ Function Copy-WmiNamespace {
                 [string]$NamespaceDestinationPath = $NamespaceSourcePath -ireplace [regex]::Escape($NamespaceSource), $NamespaceDestination
 
                 #  Check if the destination namespace exists
-                $NamespaceDestinationTest = Get-WmiNameSpace -Namespace $NamespaceDestinationPath -ErrorAction 'SilentlyContinue'
+                $NamespaceDestinationTest = Get-WmiNamespace -Namespace $NamespaceDestinationPath -ErrorAction 'SilentlyContinue'
 
                 #  If the namespace already exists in the destination and the -Force switch is specified remove the namespace, otherwise set the $ShouldCopy variable to $false
                 If ($NamespaceDestinationTest -and $Force) {
-                    $null = Remove-WmiNameSpace -Namespace  $NamespaceDestinationPath -Force
+                    $null = Remove-WmiNamespace -Namespace  $NamespaceDestinationPath -Force
                 }
                 ElseIf ($NamespaceDestinationTest) {
                     $ShouldCopy = $false
@@ -85,7 +85,7 @@ Function Copy-WmiNamespace {
                 If ($ShouldCopy) {
 
                     #  Create the destination namespace
-                    $CopyNamespace = New-WmiNameSpace -Namespace $NamespaceDestinationPath -CreateSubTree -ErrorAction 'Stop'
+                    $CopyNamespace = New-WmiNamespace -Namespace $NamespaceDestinationPath -CreateSubTree -ErrorAction 'Stop'
 
                     #  Get current source namespace classes
                     $ClassNameSource = Get-WmiClass -Namespace $NamespaceSourcePath -ErrorAction 'SilentlyContinue'

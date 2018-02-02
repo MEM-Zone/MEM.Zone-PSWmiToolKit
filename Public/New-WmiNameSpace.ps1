@@ -1,5 +1,5 @@
-#region Function New-WmiNameSpace
-Function New-WmiNameSpace {
+#region Function New-WmiNamespace
+Function New-WmiNamespace {
 <#
 .SYNOPSIS
     This function is used to create a new WMI namespace.
@@ -10,9 +10,9 @@ Function New-WmiNameSpace {
 .PARAMETER CreateSubTree
     This swith is used to create the whole namespace sub tree if it does not exist.
 .EXAMPLE
-    New-WmiNameSpace -Namespace 'ROOT\SCCM'
+    New-WmiNamespace -Namespace 'ROOT\SCCM'
 .EXAMPLE
-    New-WmiNameSpace -Namespace 'ROOT\SCCM\SCCMZone\Blog' -CreateSubTree
+    New-WmiNamespace -Namespace 'ROOT\SCCM\SCCMZone\Blog' -CreateSubTree
 .NOTES
     This is a module function and can typically be called directly.
 .LINK
@@ -39,7 +39,7 @@ Function New-WmiNameSpace {
         Try {
 
             ## Check if the namespace exists
-            $WmiNamespace = Get-WmiNameSpace -Namespace $Namespace -ErrorAction 'SilentlyContinue'
+            $WmiNamespace = Get-WmiNamespace -Namespace $Namespace -ErrorAction 'SilentlyContinue'
 
             ## Create Namespace if it does not exist
             If (-not $WmiNamespace) {
@@ -79,7 +79,7 @@ Function New-WmiNameSpace {
                     $PathProps = [ordered]@{
                         'NamespacePath' = $(Split-Path -Path $Path)
                         'NamespaceName' = $(Split-Path -Path $Path -Leaf)
-                        'NamespaceTest' = [boolean]$(Get-WmiNameSpace -Namespace $Path -ErrorAction 'SilentlyContinue')
+                        'NamespaceTest' = [boolean]$(Get-WmiNamespace -Namespace $Path -ErrorAction 'SilentlyContinue')
                     }
                     $NamespacePathsObject += [PSCustomObject]$PathProps
                 }

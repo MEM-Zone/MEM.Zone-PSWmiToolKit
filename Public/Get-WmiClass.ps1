@@ -59,7 +59,7 @@ Function Get-WmiClass {
         Try {
 
             ## Check if the namespace exists
-            $NamespaceTest = Get-WmiNameSpace -Namespace $Namespace -ErrorAction 'SilentlyContinue'
+            $NamespaceTest = Get-WmiNamespace -Namespace $Namespace -ErrorAction 'SilentlyContinue'
             If (-not $NamespaceTest) {
                 $NamespaceNotFoundErr = "Namespace [$Namespace] not found."
                 Write-Log -Message $NamespaceNotFoundErr -Severity 2 -Source ${CmdletName} -DebugMessage

@@ -57,13 +57,13 @@ Function Copy-WmiClass {
             $WmiClass = (Get-WmiClass -Namespace $NamespaceSource -ErrorAction 'Stop').CimClassName
 
             ## Check if the destination namespace exists
-            $NamespaceDestinationTest = Get-WmiNameSpace -Namespace $NamespaceDestination -ErrorAction 'SilentlyContinue'
+            $NamespaceDestinationTest = Get-WmiNamespace -Namespace $NamespaceDestination -ErrorAction 'SilentlyContinue'
 
             ## Create destination namespace if specified
             If ((-not $NamespaceDestinationTest) -and $CreateDestination) {
 
                 #  Create destination namespace
-                New-WmiNameSpace -Namespace $NamespaceDestination -CreateSubTree -ErrorAction 'Stop'
+                New-WmiNamespace -Namespace $NamespaceDestination -CreateSubTree -ErrorAction 'Stop'
             }
             ElseIf (-not $NamespaceDestinationTest) {
                 $DestinationNamespaceNotFoundErr = "Destination namespace [$NamespaceDestination] not found. Use -CreateDestination switch to create the destination automatically."

@@ -66,11 +66,11 @@ Function New-WmiClass {
             $ClassTest = Get-WmiClass -Namespace $Namespace -ClassName $ClassName -ErrorAction 'SilentlyContinue'
 
             ## Check if the namespace exists
-            $NamespaceTest = Get-WmiNameSpace -Namespace $Namespace -ErrorAction 'SilentlyContinue'
+            $NamespaceTest = Get-WmiNamespace -Namespace $Namespace -ErrorAction 'SilentlyContinue'
 
             ## Create destination namespace if specified, otherwise throw error if -ErrorAction 'Stop' is specified
             If ((-not $NamespaceTest) -and $CreateDestination) {
-                $null = New-WmiNameSpace $Namespace -CreateSubTree -ErrorAction 'Stop'
+                $null = New-WmiNamespace $Namespace -CreateSubTree -ErrorAction 'Stop'
             }
             ElseIf (-not $NamespaceTest) {
                 $NamespaceNotFoundErr = "Namespace [$Namespace] does not exist. Use the -CreateDestination switch to create namespace."

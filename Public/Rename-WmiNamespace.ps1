@@ -46,16 +46,16 @@ Function Rename-WmiNamespace {
             $NamespaceDestination = Join-Path -Path $Namespace -ChildPath $NewName
 
             ## Check if the source namespace exists
-            $null = Get-WmiNameSpace -Namespace $NamespaceSource -ErrorVariable 'Stop'
+            $null = Get-WmiNamespace -Namespace $NamespaceSource -ErrorVariable 'Stop'
 
             #  Create the new namespace but throw an error if it already exists
-            New-WmiNameSpace -Namespace $NamespaceDestination -ErrorAction 'Stop'
+            New-WmiNamespace -Namespace $NamespaceDestination -ErrorAction 'Stop'
 
             #  Copy the old namespace
             Copy-WmiNamespace -NamespaceSource $NamespaceSource -NamespaceDestination $NamespaceDestination -Force -ErrorAction 'Stop'
 
             #  Remove old Namespace
-            Remove-WmiNameSpace -Namespace $NamespaceSource -Recurse -Force
+            Remove-WmiNamespace -Namespace $NamespaceSource -Recurse -Force
 
             #  Write success message to console
             Write-Log -Message "Succesfully renamed namespace [$NamespaceSource -> $NamespaceDestination]" -Source ${CmdletName}

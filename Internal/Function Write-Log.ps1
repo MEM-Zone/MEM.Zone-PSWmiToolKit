@@ -61,10 +61,10 @@ Function Write-Log {
         [string]$LogType = 'Legacy',
         [Parameter(Mandatory=$false,Position=5)]
         [ValidateNotNullorEmpty()]
-        [string]$LogFileDirectory = $(Join-Path -Path $Env:windir -ChildPath "\Logs\WmiToolkit"),
+        [string]$LogFileDirectory = $(Join-Path -Path $Env:windir -ChildPath '\Logs\PSWmiToolKit'),
         [Parameter(Mandatory=$false,Position=6)]
         [ValidateNotNullorEmpty()]
-        [string]$LogFileName = 'WmiTool.log',
+        [string]$LogFileName = 'PSWmiToolKit.log',
         [Parameter(Mandatory=$false,Position=7)]
         [ValidateNotNullorEmpty()]
         [decimal]$MaxLogFileSizeMB = '5',
@@ -79,7 +79,7 @@ Function Write-Log {
         [Parameter(Mandatory=$false,Position=11)]
         [switch]$DebugMessage = $false,
         [Parameter(Mandatory=$false,Position=12)]
-        [boolean]$LogDebugMessage = $true
+        [boolean]$LogDebugMessage = $false
     )
 
     Begin {
