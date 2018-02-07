@@ -33,7 +33,7 @@ Copyright = '(c) 2018 Ioan Popovici. All rights reserved.'
 Description = 'This PowerShell module contains functions for managing WMI Namespaces, Classes and Instances.'
 
 # Minimum version of the Windows PowerShell engine required by this module
-# PowerShellVersion = '3.0'
+PowerShellVersion = '3.0'
 
 # Name of the Windows PowerShell host required by this module
 # PowerShellHostName = ''
