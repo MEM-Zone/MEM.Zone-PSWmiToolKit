@@ -1,6 +1,6 @@
 task . Clean, Build, Tests, ExportHelp, Stats
-task Tests ImportCompipledModule, Pester
-task CreateManifest CopyPSD, UpdatPublicFunctionsToExport
+task Tests ImportCompiledModule, Pester
+task CreateManifest CopyPSD, CopyFormats, UpdatPublicFunctionsToExport
 task Build Compile, CreateManifest
 task Stats RemoveStats, WriteStats
 
@@ -10,6 +10,7 @@ $script:OutPutFolder = "$PSScriptRoot\Output"
 $script:ImportFolders = @('Public', 'Internal', 'Classes')
 $script:PsmPath = Join-Path -Path $PSScriptRoot -ChildPath "Output\$($script:ModuleName)\$($script:ModuleName).psm1"
 $script:PsdPath = Join-Path -Path $PSScriptRoot -ChildPath "Output\$($script:ModuleName)\$($script:ModuleName).psd1"
+$script:FormatsPath = Join-Path -Path $PSScriptRoot -ChildPath "Output\$($script:ModuleName)\$($script:ModuleName).Formats.ps1xml"
 $script:HelpPath = Join-Path -Path $PSScriptRoot -ChildPath "Output\$($script:ModuleName)\en-US"
 
 $script:PublicFolder = 'Public'
@@ -73,6 +74,17 @@ task CopyPSD {
     Copy-Item @copy
 }
 
+task CopyFormats {
+    New-Item -Path (Split-Path $script:FormatsPath) -ItemType Directory -ErrorAction 0
+    $copy = @{
+        Path        = "$($script:ModuleName).Formats.ps1xml"
+        Destination = $script:FormatsPath
+        Force       = $true
+        Verbose  = $true
+    }
+    Copy-Item @copy
+}
+
 task UpdatPublicFunctionsToExport -if (Test-Path -Path $script:PublicFolder) {
     $publicFunctions = (Get-ChildItem -Path $script:PublicFolder |
             Select-Object -ExpandProperty BaseName) -join "', '"
@@ -85,7 +97,7 @@ task UpdatPublicFunctionsToExport -if (Test-Path -Path $script:PublicFolder) {
 
 
 
-task ImportCompipledModule -if (Test-Path -Path $script:PsmPath) {
+task ImportCompiledModule -if (Test-Path -Path $script:PsmPath) {
     Get-Module -Name $script:ModuleName |
         Remove-Module -Force
     Import-Module -Name $script:PsdPath -Force

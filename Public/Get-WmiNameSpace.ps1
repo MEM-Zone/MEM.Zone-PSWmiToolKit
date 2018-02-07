@@ -120,6 +120,16 @@ Function Get-WmiNamespace {
             Break
         }
         Finally {
+
+            ## If we have anyting to return, add typename for formatting purposes, otherwise set the result to $null
+            If ($GetNamespace) {
+                $GetNamespace.PSObject.TypeNames.Insert(0,'Get.WmiNamespace.Typename')
+            }
+            Else {
+                $GetNamespace = $null
+            }
+
+            ## Return result
             Write-Output -InputObject $GetNamespace
         }
     }

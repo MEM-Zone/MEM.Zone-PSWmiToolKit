@@ -63,10 +63,10 @@ Function New-WmiClass {
         Try {
 
             ## Check if the class exists
-            $ClassTest = Get-WmiClass -Namespace $Namespace -ClassName $ClassName -ErrorAction 'SilentlyContinue'
+            [boolean]$ClassTest = Get-WmiClass -Namespace $Namespace -ClassName $ClassName -ErrorAction 'SilentlyContinue'
 
             ## Check if the namespace exists
-            $NamespaceTest = Get-WmiNamespace -Namespace $Namespace -ErrorAction 'SilentlyContinue'
+            [boolean]$NamespaceTest = Get-WmiNamespace -Namespace $Namespace -ErrorAction 'SilentlyContinue'
 
             ## Create destination namespace if specified, otherwise throw error if -ErrorAction 'Stop' is specified
             If ((-not $NamespaceTest) -and $CreateDestination) {

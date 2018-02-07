@@ -94,6 +94,16 @@ Function Get-WmiClass {
             Break
         }
         Finally {
+
+            ## If we have anyting to return, add typename for formatting purposes, otherwise set the result to $null
+            If ($GetClass) {
+                $GetClass.PSObject.TypeNames.Insert(0,'Get.WmiClass.Typename')
+            }
+            Else {
+                $GetClass = $null
+            }
+
+            ## Return result
             Write-Output -InputObject $GetClass
         }
     }
