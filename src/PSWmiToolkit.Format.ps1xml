@@ -38,10 +38,10 @@
             <TableControl>
                 <TableHeaders>
                     <TableColumnHeader>
-                        <Width>10</Width>
+                        <Width>15</Width>
                     </TableColumnHeader>
                     <TableColumnHeader>
-                        <Width>15</Width>
+                        <Width>25</Width>
                         <Alignment>right</Alignment>
                     </TableColumnHeader>
                 </TableHeaders>
