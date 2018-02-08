@@ -1,4 +1,4 @@
-[![Build status](https://ci.appveyor.com/api/projects/status/77kw76x5c3s6a298/branch/master?svg=true)](https://ci.appveyor.com/project/JhonnyTerminus/pswmitoolkit/branch/master)
+[![Build status](https://ci.appveyor.com/api/projects/status/yjy4jgdwotlx9n9s/branch/master?svg=true)](https://ci.appveyor.com/project/JhonnyTerminus/pswmitoolkit/branch/master)
 
 # PSWmiToolkit
 
