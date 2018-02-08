@@ -98,23 +98,23 @@ PrivateData = @{
         # Tags = @()
 
         # A URL to the license for this module.
-        LicenseUri = 'https://github.com/JhonnyTerminus/PSWmiToolKit/blob/master/LICENSE'
+        LicenseUri = 'https://github.com/JhonnyTerminus/PSWmiToolkit/blob/master/LICENSE'
 
         # A URL to the main website for this project.
-        ProjectUri = 'https://github.com/JhonnyTerminus/PSWmiToolKit/wiki'
+        ProjectUri = 'https://github.com/JhonnyTerminus/PSWmiToolkit/wiki'
 
         # A URL to an icon representing this module.
         # IconUri = ''
 
         # ReleaseNotes of this module
-        ReleaseNotes = 'https://github.com/JhonnyTerminus/PSWmiToolKit/releases'
+        ReleaseNotes = 'https://github.com/JhonnyTerminus/PSWmiToolkit/releases'
 
     } # End of PSData hashtable
 
 } # End of PrivateData hashtable
 
 # HelpInfo URI of this module
-HelpInfoURI = 'https://github.com/JhonnyTerminus/PSWmiToolKit/docs/Help.MD'
+HelpInfoURI = 'https://github.com/JhonnyTerminus/PSWmiToolKit/blob/master/docs/README.md'
 
 # Default prefix for commands exported from this module. Override the default prefix using Import-Module -Prefix.
 # DefaultCommandPrefix = ''
