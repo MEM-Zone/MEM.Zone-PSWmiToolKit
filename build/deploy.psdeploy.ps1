@@ -50,6 +50,7 @@ if(
     $env:BHBuildSystem -eq 'AppVeyor'
    )
 {
+    Write-Host "Deploy to AppVeyor...`n"
     Deploy DeveloperBuild {
         By AppVeyorModule {
             FromSource $ENV:BHModulePath
