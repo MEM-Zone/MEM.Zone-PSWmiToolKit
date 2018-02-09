@@ -21,7 +21,7 @@ image: WMF 5
 configuration: Debug, Release
 platform: Any CPU
 shallow_clone: true
-build: false
+build:
   verbosity: minimal
 artifacts:
 - path: C:\projects\pswmitoolkit\BuildOutput
