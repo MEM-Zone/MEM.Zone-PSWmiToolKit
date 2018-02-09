@@ -15,6 +15,52 @@ skip_commits:
 
 build: false
 
+version: 3.0.{build}
+pull_requests:
+  do_not_increment_build_number: true
+max_jobs: 2
+image: WMF 5
+configuration: Debug, Release
+platform: Any CPU
+shallow_clone: true
+build:
+  verbosity: minimal
+deploy:
+- provider: GitHub
+  tag: $(APPVEYOR_BUILD_VERSION)-alpha
+  release: $(APPVEYOR_BUILD_VERSION)-alpha release of PSWmiToolkit
+  description: '## $(APPVEYOR_BUILD_VERSION)-alpha - $(APPVEYOR_REPO_COMMIT_TIMESTAMP)'
+  auth_token:
+    secure: YfB1t8pxFZz+8Lc1GkcBPAmI+Hfg1MuM9+iMXSFU5BDSR7IKfisI79N+bjvTII7t
+  repository: JhonnyTerminus/PSWmiToolkit
+  prerelease: true
+  force_update: true
+  on:
+    branch: master
+notifications:
+- provider: GitHubPullRequest
+  auth_token:
+    secure: YfB1t8pxFZz+8Lc1GkcBPAmI+Hfg1MuM9+iMXSFU5BDSR7IKfisI79N+bjvTII7t
+  on_build_success: true
+  on_build_failure: true
+  on_build_status_changed: false
+- provider: Email
+  to:
+  - me@ioan-popovici.ro
+  subject: AppVeyoy - Notification
+  message: Build Successful!
+  on_build_success: true
+  on_build_failure: false
+  on_build_status_changed: false
+- provider: Email
+  to:
+  - me@ioan-popovici.ro
+  subject: AppVeyoy - Notification
+  message: Build Failed!
+  on_build_success: false
+  on_build_failure: true
+  on_build_status_changed: false
+
 #Kick off the CI/CD pipeline
 test_script:
   - ps: . .\build\Start-Build.ps1
