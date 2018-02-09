@@ -7,9 +7,9 @@
 
 This PowerShell module contains functions for managing WMI Namespaces, Classes and Instances.
 
-## JhonnyTerminus/PSWmiToolkit Github repository
+## JhonnyTerminus/PSWmiToolKit Github repository
 
-You've found the GitHub repository that houses the source for the PSWmiToolkit PowerShell module.
+You've found the GitHub repository that houses the source for the PSWmiToolKit PowerShell module.
 
 [appveyor-badge]: https://ci.appveyor.com/api/projects/status/yjy4jgdwotlx9n9s?svg=true
 [appveyor-build]: https://ci.appveyor.com/project/JhonnyTerminus/pswmitoolkit
