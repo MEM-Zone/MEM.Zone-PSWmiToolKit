@@ -27,11 +27,11 @@ deploy:
 - provider: GitHub
   tag: $(APPVEYOR_BUILD_VERSION)-alpha
   release: $(APPVEYOR_BUILD_VERSION)-alpha release of PSWmiToolkit
-  description: '## $(APPVEYOR_BUILD_VERSION)-alpha - $(APPVEYOR_REPO_COMMIT_TIMESTAMP)'
+  description: '## $(APPVEYOR_BUILD_VERSION)-alpha - $(Get-Date)'
   auth_token:
     secure: YfB1t8pxFZz+8Lc1GkcBPAmI+Hfg1MuM9+iMXSFU5BDSR7IKfisI79N+bjvTII7t
   repository: JhonnyTerminus/PSWmiToolkit
-  artifact: src
+  artifact: Build
   draft: true
   prerelease: true
   force_update: true
