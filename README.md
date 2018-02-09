@@ -1,5 +1,7 @@
 [![Build status](https://ci.appveyor.com/api/projects/status/yjy4jgdwotlx9n9s/branch/master?svg=true)](https://ci.appveyor.com/project/JhonnyTerminus/pswmitoolkit/branch/master)
 [![Gitter chat](https://badges.gitter.im/PSWmiToolKit.svg)](https://gitter.im/PSWmiToolKit/Lobby)
+[![PowerShell Gallery][psgallery-badge]][psgallery]
+[![Nuget downloads][nuget-downloads]][nuget]
 
 # PSWmiToolkit
 
