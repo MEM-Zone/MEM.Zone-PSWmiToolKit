@@ -13,6 +13,10 @@ os: WMF 5
 skip_commits:
   message: /updated readme.*|update readme.*s/
 
+#Kick off the CI/CD pipeline
+test_script:
+- ps: . .\build\Start-Build.ps1
+
 version: 3.0.{build}
 pull_requests:
   do_not_increment_build_number: true
@@ -27,6 +31,7 @@ deploy:
   auth_token:
     secure: YfB1t8pxFZz+8Lc1GkcBPAmI+Hfg1MuM9+iMXSFU5BDSR7IKfisI79N+bjvTII7t
   repository: JhonnyTerminus/PSWmiToolkit
+  artifact: src
   draft: true
   prerelease: true
   force_update: true
