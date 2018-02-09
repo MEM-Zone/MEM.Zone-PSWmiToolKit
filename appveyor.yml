@@ -12,6 +12,7 @@ os: WMF 5
 # We can force this by adding [skip ci] or [ci skip] anywhere in commit message 
 skip_commits:
   message: /updated readme.*|update readme.*s/
+
 version: 3.0.{build}
 pull_requests:
   do_not_increment_build_number: true
@@ -20,7 +21,7 @@ image: WMF 5
 configuration: Debug, Release
 platform: Any CPU
 shallow_clone: true
-build:
+build: false
   verbosity: minimal
 artifacts:
 - path: C:\projects\pswmitoolkit\BuildOutput
@@ -32,6 +33,7 @@ deploy:
   auth_token:
     secure: YfB1t8pxFZz+8Lc1GkcBPAmI+Hfg1MuM9+iMXSFU5BDSR7IKfisI79N+bjvTII7t
   repository: JhonnyTerminus/PSWmiToolkit
+  draft: true
   prerelease: true
   force_update: true
   on:
