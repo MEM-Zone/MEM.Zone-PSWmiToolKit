@@ -22,6 +22,8 @@ platform: Any CPU
 shallow_clone: true
 build:
   verbosity: minimal
+artifacts:
+- path: C:\projects\pswmitoolkit\BuildOutput
 deploy:
 - provider: GitHub
   tag: $(APPVEYOR_BUILD_VERSION)-alpha
