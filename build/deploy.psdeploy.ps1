@@ -56,7 +56,6 @@ if(
             To AppVeyor
             WithOptions @{
                 Version = $ENV:APPVEYOR_BUILD_VERSION
-                ModuleName = $ENV:BHProjectName 
             }
         }
     }
