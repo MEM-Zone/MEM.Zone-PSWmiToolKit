@@ -15,7 +15,7 @@ skip_commits:
 
 #Kick off the CI/CD pipeline
 test_script:
-- ps: . .\build\Start-Build.ps1
+- ps: . .\build\Start-Build.ps1 -Task Deploy
 
 version: 3.0.{build}
 pull_requests:
