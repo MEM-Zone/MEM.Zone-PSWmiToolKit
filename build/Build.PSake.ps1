@@ -77,7 +77,7 @@ Task Build -Depends Test, CreateHelp {
     }
 }
 
-Task Deploy -Depends Test {
+Task Deploy -Depends Test, Build {
     $lines
 
     $Params = @{
