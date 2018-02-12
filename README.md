@@ -1,10 +1,8 @@
-[![Release version][release-badge]][release]
-[![Release date][release-date-badge]][release-date]
-[![Comits since release][commits-since-badge]][commits-since]
-
 [![Build status][appveyor-badge]][appveyor-build]
+[![Release date][release-date-badge]][release-date]
+[![Release version][release-badge]][release]
+[![Comits since release][commits-since-badge]][commits-since]
 [![PowerShell Gallery][psgallery-badge]][psgallery]
-[![Nuget downloads][nuget-badge]][nuget]
 [![Gitter chat][gitter-badge]][gitter]
 
 # PSWmiToolkit
@@ -19,8 +17,6 @@ You've found the GitHub repository that houses the source for the PSWmiToolKit P
 [appveyor-build]: https://ci.appveyor.com/project/JhonnyTerminus/pswmitoolkit
 [psgallery-badge]: https://img.shields.io/powershellgallery/dt/PSWmiToolKit.svg
 [psgallery]: https://www.powershellgallery.com/packages/PSWmiToolKit
-[nuget-badge]: https://img.shields.io/nuget/dt/PSWmiToolKit.svg
-[nuget]: https://www.nuget.org/packages/PSWmiToolKit/
 [gitter-badge]: https://badges.gitter.im/PSWmiToolKit.svg
 [gitter]: https://gitter.im/PSWmiToolKit/Lobby
 [release-badge]: https://img.shields.io/github/release/JhonnyTerminus/PSWmiToolKit/all.svg
