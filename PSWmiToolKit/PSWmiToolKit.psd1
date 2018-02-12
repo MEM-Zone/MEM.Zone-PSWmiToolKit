@@ -15,7 +15,7 @@
     ModuleVersion = '3.0.30'
 
     # Supported PSEditions
-    CompatiblePSEditions = @('3')
+    # CompatiblePSEditions = @()
 
     # ID used to uniquely identify this module
     GUID = 'a885bff3-c6d1-403f-92a9-a0ae74bcbbf6'
