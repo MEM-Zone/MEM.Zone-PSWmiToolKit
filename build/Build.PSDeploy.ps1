@@ -18,7 +18,7 @@
 # * Set-BuildEnvironment from BuildHelpers module has populated ENV:BHModulePath and related variables
 
 # Publish to gallery with a few restrictions
-if(
+If (
     $env:BHModulePath -and
     $env:BHBuildSystem -ne 'Unknown' -and
     $env:BHBranchName -eq "master" -and
@@ -35,7 +35,7 @@ if(
         }
     }
 }
-else
+Else
 {
     "Skipping deployment: To deploy, ensure that...`n" +
     "`t* You are in a known build system (Current: $ENV:BHBuildSystem)`n" +
@@ -45,7 +45,7 @@ else
 }
 
 # Publish to AppVeyor if we're in AppVeyor
-if(
+If (
     $env:BHModulePath -and
     $env:BHBuildSystem -eq 'AppVeyor'
    )
