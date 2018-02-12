@@ -117,7 +117,7 @@
     HelpInfoURI = 'https://github.com/JhonnyTerminus/PSWmiToolKit/blob/master/PSWmiToolKit/en-US'
 
     # Default prefix for commands exported from this module. Override the default prefix using Import-Module -Prefix.
-    DefaultCommandPrefix = 'Wmi'
+    # DefaultCommandPrefix = ''
 
 }
 
