@@ -49,14 +49,14 @@ Task Test -Depends Init  {
 
     # Failed tests?
     # Need to tell psake or it will proceed to the deployment. Danger!
-    If ($TestResults.FailedCount -gt 0)
+    if($TestResults.FailedCount -gt 0)
     {
         Write-Error "Failed '$($TestResults.FailedCount)' tests, build failed"
     }
     "`n"
 }
 
-Task Build -Depends Test, CreateHelp {
+Task Build -Depends Test {
     $lines
 
     # Load the module, read the exported functions, update the psd1 FunctionsToExport
@@ -77,7 +77,7 @@ Task Build -Depends Test, CreateHelp {
     }
 }
 
-Task Deploy -Depends Test {
+Task Deploy -Depends Build {
     $lines
 
     $Params = @{
@@ -86,26 +86,4 @@ Task Deploy -Depends Test {
         Recurse = $false # We keep psdeploy artifacts, avoid deploying those : )
     }
     Invoke-PSDeploy @Verbose @Params
-}
-
-Task CreateHelp -Depends Test {
-    $lines
-
-    # Dot-source New-Cabinet function
-    . .\build\Build.New-CabinetFile.ps1
-
-    # Get help files
-    $HelpFiles = Get-ChildItem -Path (Join-Path -Path $ProjectRoot -ChildPath '\docs\help\updatable\') | Select-Object -ExpandProperty Fullname
-
-    # Get module GUID
-    $ModuleGUID = Get-MetaData -Path $env:BHPSModuleManifest -PropertyName GUID -ErrorAction Stop
-
-    # Set parameters
-    $Params = @{
-        Name = $env:BHProjectName + '_' + $ModuleGUID + '_en-US_HelpContent.cab'
-        DestinationPath = "$ProjectRoot\PSWmiToolkit\en-US"
-        File = $HelpFiles
-    }
-    New-CabinetFile @Params | Out-Null
-    "`n"
 }
