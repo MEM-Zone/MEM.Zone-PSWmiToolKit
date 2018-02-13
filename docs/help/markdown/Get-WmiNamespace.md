@@ -1,5 +1,5 @@
 ---
-external help file: PSWmiToolkit-help.xml
+external help file: PSWmiToolKit-help.xml
 Module Name: PSWmiToolKit
 online version: https://github.com/JhonnyTerminus/PSWmiToolKit
 schema: 2.0.0

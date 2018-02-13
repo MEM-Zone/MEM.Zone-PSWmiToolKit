@@ -89,3 +89,15 @@ Invoke-PSake $PSScriptRoot\Build.PSake.ps1 -TaskList $Task -NoLogo
 
 ## Exit build build
 Exit ( [int]( -not $PSake.Build_Success ) )
+
+## Build Help
+<#
+    New-MarkdownHelp -Module PSWmiToolKit -OutputFolder 'D:\GitHub\PSWmiToolKit\docs\help\markdown' -WithModulePage
+
+    $CabFilesFolder = 'D:\GitHub\PSWmiToolKit\docs\help\offline'
+    $LandingPagePath = 'D:\GitHub\PSWmiToolKit\docs\help\markdown\PSWmiToolKit.md'
+    $OutputFolder = 'D:\GitHub\PSWmiToolKit\docs\help\updatable'
+
+    New-ExternalHelpCab -CabFilesFolder $CabFilesFolder -LandingPagePath $LandingPagePath -OutputFolder $OutputFolder -IncrementHelpVersion
+
+#>

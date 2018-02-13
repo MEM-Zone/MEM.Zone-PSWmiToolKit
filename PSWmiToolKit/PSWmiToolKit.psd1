@@ -12,7 +12,7 @@
     RootModule = 'PSWmiToolKit.psm1'
 
     # Version number of this module.
-    ModuleVersion = '3.0.42'
+    ModuleVersion = '3.0.43'
 
     # Supported PSEditions
     # CompatiblePSEditions = @()
@@ -114,7 +114,7 @@
     } # End of PrivateData hashtable
 
     # HelpInfo URI of this module
-    HelpInfoURI = 'http://github.com/JhonnyTerminus/PSWmiToolKit/blob/master/PSWmiToolKit/en-US/'
+    HelpInfoURI = 'http://pswmitoolkit.updatable-help.com'
 
     # Default prefix for commands exported from this module. Override the default prefix using Import-Module -Prefix.
     # DefaultCommandPrefix = ''
