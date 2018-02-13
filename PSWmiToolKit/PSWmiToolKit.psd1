@@ -12,7 +12,7 @@
     RootModule = 'PSWmiToolKit.psm1'
 
     # Version number of this module.
-    ModuleVersion = '3.0.43'
+    ModuleVersion = '3.0.45'
 
     # Supported PSEditions
     # CompatiblePSEditions = @()
@@ -101,7 +101,7 @@
             LicenseUri = 'https://github.com/JhonnyTerminus/PSWmiToolkit/blob/master/LICENSE'
 
             # A URL to the main website for this project.
-            ProjectUri = 'https://github.com/JhonnyTerminus/PSWmiToolkit/wiki'
+            ProjectUri = 'https://github.com/JhonnyTerminus/PSWmiToolkit'
 
             # A URL to an icon representing this module.
             # IconUri = ''
@@ -114,7 +114,7 @@
     } # End of PrivateData hashtable
 
     # HelpInfo URI of this module
-    HelpInfoURI = 'http://pswmitoolkit.updatable-help.com'
+    HelpInfoURI = 'http://pswmitoolkit.updatable-help.com/'
 
     # Default prefix for commands exported from this module. Override the default prefix using Import-Module -Prefix.
     # DefaultCommandPrefix = ''

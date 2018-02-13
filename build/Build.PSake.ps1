@@ -56,7 +56,7 @@ Task Test -Depends Init  {
     "`n"
 }
 
-Task Build -Depends Test, CreateHelp {
+Task Build -Depends Test {
     $lines
 
     # Load the module, read the exported functions, update the psd1 FunctionsToExport
