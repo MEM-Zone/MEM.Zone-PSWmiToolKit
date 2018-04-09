@@ -1,7 +1,7 @@
 #region Function Remove-WmiClass
 Function Remove-WmiClass {
 <#
-.SYNOPSISl
+.SYNOPSIS
     This function is used to remove a WMI class.
 .DESCRIPTION
     This function is used to remove a WMI class by name.
