@@ -41,7 +41,7 @@ Function Get-WmiNamespace {
 #>
     [CmdletBinding()]
     Param (
-        [Parameter(Mandatory=$true,ValueFromPipeline,Position=0)]
+        [Parameter(Mandatory=$true,ValueFromPipeline=$true,Position=0)]
         [ValidateNotNullorEmpty()]
         [SupportsWildcards()]
         [string[]]$Namespace,
