@@ -24,7 +24,7 @@ Function Remove-WmiProperty {
 .LINK
     https://sccm-zone.com
 .LINK
-    https://github.com/JhonnyTerminus/SCCM
+    https://github.com/Ioan-Popovici/SCCM
 #>
     [CmdletBinding()]
     Param (

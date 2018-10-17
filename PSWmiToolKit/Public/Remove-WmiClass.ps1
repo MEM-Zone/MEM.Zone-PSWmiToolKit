@@ -1,7 +1,7 @@
 #region Function Remove-WmiClass
 Function Remove-WmiClass {
 <#
-.SYNOPSISl
+.SYNOPSIS
     This function is used to remove a WMI class.
 .DESCRIPTION
     This function is used to remove a WMI class by name.
@@ -22,7 +22,7 @@ Function Remove-WmiClass {
 .LINK
     https://sccm-zone.com
 .LINK
-    https://github.com/JhonnyTerminus/SCCM
+    https://github.com/Ioan-Popovici/SCCM
 #>
     [CmdletBinding()]
     Param (

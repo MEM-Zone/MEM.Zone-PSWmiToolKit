@@ -28,7 +28,7 @@ Function Get-WmiClass {
 .LINK
     https://sccm-zone.com
 .LINK
-    https://github.com/JhonnyTerminus/SCCM
+    https://github.com/Ioan-Popovici/SCCM
 .COMPONENT
     WMI
 .FUNCTIONALITY
