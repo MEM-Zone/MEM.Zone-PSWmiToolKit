@@ -31,7 +31,7 @@ Function Get-WmiNamespace {
 .NOTES
     This is a public module function and can typically be called directly.
 .LINK
-    https://github.com/JhonnyTerminus/PSWmiToolKit
+    https://github.com/Ioan-Popovici/PSWmiToolKit
 .LINK
     https://sccm-zone.com
 .COMPONENT

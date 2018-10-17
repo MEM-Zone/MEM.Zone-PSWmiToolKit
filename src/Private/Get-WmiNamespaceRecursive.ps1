@@ -24,7 +24,7 @@ Function Get-WmiNamespaceRecursive {
 
     This is an internal module function and should not typically be called directly.
 .LINK
-    https://github.com/JhonnyTerminus/PSWmiToolKit
+    https://github.com/Ioan-Popovici/PSWmiToolKit
 .LINK
     https://sccm-zone.com
 .COMPONENT
