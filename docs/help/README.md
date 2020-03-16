@@ -1,11 +1,4 @@
-[![Release version][release-version-badge]][release-version]
-[![Release date][release-date-badge]][release-date]
-[![Issues count][issues-badge]][issues]
-[![Comits since release][commits-since-badge]][commits-since]
-[![Chat on discord][discord-badge]][discord]
-[![Follow on twitter][twitter-badge]][twitter]
-
-# Install-SRSReport
+# Readme for Install-SRSReport
 
 ## Welcome to our awesome SRS Report Installer :)
 
@@ -79,17 +72,3 @@ Get-Help .\Install-SRSReport.ps1
 >**Notes**
 > If you don't use `Windows Authentication` (you should!) in your SQL server you can use the `-UseSQLAuthentication` switch.
 > PowerShell script needs to be run as administrator.
-
-
-[release-version-badge]: https://img.shields.io/github/v/release/SCCM-ZONE/Install-SRSReport
-[release-version]: https://github.com/SCCM-Zone/Install-SRSReport/releases
-[release-date-badge]: https://img.shields.io/github/release-date-pre/SCCM-ZONE/Install-SRSReport
-[release-date]: https://github.com/SCCM-Zone/Install-SRSReport/releases
-[issues-badge]: https://img.shields.io/github/issues/SCCM-Zone/Install-SRSReport
-[issues]: https://github.com/SCCM-Zone/Install-SRSReport/issues?q=is%3Aopen+is%3Aissue
-[commits-since-badge]: https://img.shields.io/github/commits-since/SCCM-Zone/Install-SRSReport/v1.0.0
-[commits-since]: https://github.com/SCCM-Zone/Install-SRSReport/commits/master
-[discord-badge]: https://img.shields.io/discord/666618982844989460?logo=discord
-[discord]: https://discord.gg/dz2xcDz
-[twitter-badge]: https://img.shields.io/twitter/follow/ioanpopovici?style=social&logo=twitter
-[twitter]: https://twitter.com/intent/follow?screen_name=ioanpopovici
