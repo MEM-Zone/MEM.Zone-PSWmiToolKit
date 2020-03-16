@@ -1,1 +1,1 @@
-# Known Issues for Install-SRSReport
+# Known Issues for PSWmiToolkit
