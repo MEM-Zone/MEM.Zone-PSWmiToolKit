@@ -24,7 +24,7 @@
     Author = 'Ioan Popovici'
 
     # Company or vendor of this module
-    CompanyName = 'SCCMZone'
+    CompanyName = 'MEMZone'
 
     # Copyright statement for this module
     Copyright = '(c) 2018 Ioan Popovici. All rights reserved.'
@@ -95,29 +95,28 @@
         PSData = @{
 
             # Tags applied to this module. These help with module discovery in online galleries.
-            Tags = @('powershell', 'powershell-module', 'powershell-cmdlets', 'wmi', 'manage-wmi', 'microsoft', 'microsoft-windows', 'sccm', 'sccm-hwi')
+            Tags = @('powershell', 'powershell-module', 'powershell-cmdlets', 'wmi', 'manage-wmi', 'microsoft', 'microsoft-windows', 'sccm', 'configmgr')
 
             # A URL to the license for this module.
-            LicenseUri = 'https://github.com/JhonnyTerminus/PSWmiToolkit/blob/master/LICENSE'
+            LicenseUri = 'https://MEM.Zone/PSWmiToolKit/LICENSE'
 
             # A URL to the main website for this project.
-            ProjectUri = 'https://github.com/JhonnyTerminus/PSWmiToolkit'
+            ProjectUri   = 'https://MEM.Zone/PSWmiToolKit'
 
             # A URL to an icon representing this module.
             # IconUri = ''
 
             # ReleaseNotes of this module
-            ReleaseNotes = 'https://github.com/JhonnyTerminus/PSWmiToolkit/releases'
+            ReleaseNotes = 'https://MEM.Zone/PSWmiToolKit/RELEASES'
 
         } # End of PSData hashtable
 
     } # End of PrivateData hashtable
 
     # HelpInfo URI of this module
-    HelpInfoURI = 'http://pswmitoolkit.updatable-help.com/'
+    HelpInfoURI = 'https://MEM.Zone/PSWmiToolKit/UpdatableHelp'
 
     # Default prefix for commands exported from this module. Override the default prefix using Import-Module -Prefix.
     # DefaultCommandPrefix = ''
 
 }
-

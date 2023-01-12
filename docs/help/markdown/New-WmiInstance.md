@@ -1,47 +1,51 @@
 ---
 external help file: PSWmiToolKit-help.xml
 Module Name: PSWmiToolKit
-online version: https://sccm-zone.com
+online version: https://MEM.Zone/PSWmiToolKit
 schema: 2.0.0
 ---
 
 # New-WmiInstance
 
 ## SYNOPSIS
+
 This function is used to create a WMI Instance.
 
 ## SYNTAX
 
-```
+```powershell
 New-WmiInstance [[-Namespace] <String>] [-ClassName] <String> [[-Key] <String[]>] [-Property] <PSObject>
  [<CommonParameters>]
 ```
 
 ## DESCRIPTION
+
 This function is used to create a WMI Instance using CIM.
 
 ## EXAMPLES
 
 ### EXAMPLE 1
-```
-[hashtable]$Property = @{
-```
 
-'ServerPort' = '89'
+```powershell
+[hashtable]$Property = @{
+    'ServerPort' = '89'
     'ServerIP' = '11.11.11.11'
     'Source' = 'File1'
     'Date' = $(Get-Date)
 }
-New-WmiInstance -Namespace 'ROOT' -ClassName 'SCCMZone' -Key 'File1' -Property $Property
+New-WmiInstance -Namespace 'ROOT' -ClassName 'MEMZone' -Key 'File1' -Property $Property
+```
 
 ### EXAMPLE 2
-```
-"Server Port = 89 `n ServerIp = 11.11.11.11 `n Source = File `n Date = $(GetDate)" | New-WmiInstance -Namespace 'ROOT' -ClassName 'SCCMZone' -Property $Property
+
+```powershell
+"Server Port = 89 `n ServerIp = 11.11.11.11 `n Source = File `n Date = $(GetDate)" | New-WmiInstance -Namespace 'ROOT' -ClassName 'MEMZone' -Property $Property
 ```
 
 ## PARAMETERS
 
 ### -Namespace
+
 Specifies the namespace where to search for the WMI class.
 Default is: 'ROOT\cimv2'.
 
@@ -58,6 +62,7 @@ Accept wildcard characters: False
 ```
 
 ### -ClassName
+
 Specifies the class where to create the new WMI instance.
 
 ```yaml
@@ -73,6 +78,7 @@ Accept wildcard characters: False
 ```
 
 ### -Key
+
 Specifies properties that are used as keys (Optional).
 
 ```yaml
@@ -88,6 +94,7 @@ Accept wildcard characters: False
 ```
 
 ### -Property
+
 Specifies the class instance Properties or Values.
 You can also specify a string but you must separate the name and value with a new line character (\`n).
 This parameter can also be piped.
@@ -105,19 +112,19 @@ Accept wildcard characters: False
 ```
 
 ### CommonParameters
+
 This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable.
-For more information, see about_CommonParameters (http://go.microsoft.com/fwlink/?LinkID=113216).
+For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 
 ## OUTPUTS
 
 ## NOTES
+
 This is a module function and can typically be called directly.
 
 ## RELATED LINKS
 
-[https://sccm-zone.com](https://sccm-zone.com)
-
-[https://github.com/JhonnyTerminus/SCCM](https://github.com/JhonnyTerminus/SCCM)
-
+[MEM.Zone](https://MEM.Zone)
+[MEM.Zone/GIT](https://MEM.Zone/GIT)
