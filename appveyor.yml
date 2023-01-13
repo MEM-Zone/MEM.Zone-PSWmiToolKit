@@ -17,7 +17,7 @@ skip_commits:
 test_script:
 - ps: . .\build\Start-Build.ps1 -Task Deploy
 
-version: 3.0.{build}
+version: 3.1.{build}
 pull_requests:
   do_not_increment_build_number: true
 image: WMF 5
