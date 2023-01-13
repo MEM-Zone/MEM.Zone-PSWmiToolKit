@@ -25,9 +25,9 @@ shallow_clone: true
 build: off
 deploy:
 - provider: GitHub
-  tag: $(APPVEYOR_BUILD_VERSION)-alpha
-  release: $(APPVEYOR_BUILD_VERSION)-alpha release of PSWmiToolkit
-  description: '## $(APPVEYOR_BUILD_VERSION)-alpha - '
+  tag: $(APPVEYOR_BUILD_VERSION)-
+  release: $(APPVEYOR_BUILD_VERSION) release of PSWmiToolkit
+  description: '## $(APPVEYOR_BUILD_VERSION) - '
   auth_token:
     secure: E8T2wHruTFYq8Z5zf/ymcDKSDPSnJEeV3Ei7ijcV66qBBtNkVRYQuWs0Nyy7APhQ
   repository: MEM-Zone/PSWmiToolkit

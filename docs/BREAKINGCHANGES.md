@@ -1,1 +1,1 @@
-# Breaking Changes for PSWmiToolkit
+# PSWmiToolkit breaking changes
