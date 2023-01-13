@@ -14,28 +14,32 @@ Function Copy-WmiProperty {
 .PARAMETER CreateDestination
     This switch is used to create the destination if it does not exist. Default is: $false.
 .EXAMPLE
-    Copy-WmiProperty -ClassPathSource 'ROOT\SCCM:SCCMZone' -ClassPathDestination 'ROOT\SCCM:SCCMZoneBlog' -CreateDestination
+    Copy-WmiProperty -ClassPathSource 'ROOT\ConfigMgr:MEMZone' -ClassPathDestination 'ROOT\ConfigMgr:MEMZoneBlog' -CreateDestination
 .EXAMPLE
-    Copy-WmiProperty -ClassPathSource 'ROOT\SCCM:SCCMZone' -ClassPathDestination 'ROOT\SCCM:SCCMZoneBlog' -PropertyName 'SCCMZoneWebSite' -CreateDestination
+    Copy-WmiProperty -ClassPathSource 'ROOT\ConfigMgr:MEMZone' -ClassPathDestination 'ROOT\ConfigMgr:MEMZoneBlog' -PropertyName 'MEMZoneWebSite' -CreateDestination
 .NOTES
     This is a module function and can typically be called directly.
 .LINK
-    https://sccm-zone.com
+    https://MEM.Zone/
 .LINK
-    https://github.com/Ioan-Popovici/SCCM
+    https://MEM.Zone/PSWmiToolKit-RELEASES
+.LINK
+    https://MEM.Zone/PSWmiToolKit/GIT
+.LINK
+    https://MEM.Zone/PSWmiToolKit/ISSUES
 #>
     [CmdletBinding()]
     Param (
-        [Parameter(Mandatory=$true,Position=0)]
+        [Parameter(Mandatory = $true, Position = 0)]
         [ValidateNotNullorEmpty()]
         [string]$ClassPathSource,
-        [Parameter(Mandatory=$true,Position=1)]
+        [Parameter(Mandatory = $true, Position = 1)]
         [ValidateNotNullorEmpty()]
         [string]$ClassPathDestination,
-        [Parameter(Mandatory=$false,Position=2)]
+        [Parameter(Mandatory = $false, Position = 2)]
         [ValidateNotNullorEmpty()]
         [string[]]$PropertyName,
-        [Parameter(Mandatory=$false,Position=3)]
+        [Parameter(Mandatory = $false, Position = 3)]
         [ValidateNotNullorEmpty()]
         [switch]$CreateDestination = $false
     )
@@ -86,10 +90,10 @@ Function Copy-WmiProperty {
                     #  Create destination property and property qualifiers one by one
                     $ClassPropertiesSource | ForEach-Object {
                         #  Create property
-                        $CopyClassProperty = New-WmiProperty -Namespace $NamespaceDestination -ClassName $ClassNameDestination -PropertyName $_.Name -PropertyType $_.CimType
+                        $CopyClassProperty = New-WmiProperty -Namespace $NamespaceDestination -ClassName $ClassNameDestination -PropertyName $PSItem.Name -PropertyType $PSItem.CimType
                         #  Set qualifier if present in source property
-                        If ($_.Qualifiers.Name) {
-                            $null = Set-WmiPropertyQualifier -Namespace $NamespaceDestination -ClassName $ClassNameDestination -PropertyName $_.Name -Qualifier @{ Name = $_.Qualifiers.Name; Value = $_.Qualifiers.Value }
+                        If ($PSItem.Qualifiers.Name) {
+                            $null = Set-WmiPropertyQualifier -Namespace $NamespaceDestination -ClassName $ClassNameDestination -PropertyName $PSItem.Name -Qualifier @{ Name = $PSItem.Qualifiers.Name; Value = $PSItem.Qualifiers.Value }
                         }
                     }
                 }
@@ -97,16 +101,16 @@ Function Copy-WmiProperty {
 
                     ## Copy specified property and property qualifier if it exists in source class, otherwise log the error and continue
                     $ClassPropertiesSource | ForEach-Object {
-                        If ($_.Name -in $PropertyName) {
+                        If ($PSItem.Name -in $PropertyName) {
                             #  Create property
-                            $CopyClassProperty =  New-WmiProperty -Namespace $NamespaceDestination -ClassName $ClassNameDestination -PropertyName $_.Name -PropertyType $_.CimType
+                            $CopyClassProperty =  New-WmiProperty -Namespace $NamespaceDestination -ClassName $ClassNameDestination -PropertyName $PSItem.Name -PropertyType $PSItem.CimType
                             #  Set qualifier if present
-                            If ($_.Qualifiers.Name) {
-                                $null = Set-WmiPropertyQualifier -Namespace $NamespaceDestination -ClassName $ClassNameDestination -PropertyName $_.Name -Qualifier @{ Name = $_.Qualifiers.Name; Value = $_.Qualifiers.Value }
+                            If ($PSItem.Qualifiers.Name) {
+                                $null = Set-WmiPropertyQualifier -Namespace $NamespaceDestination -ClassName $ClassNameDestination -PropertyName $PSItem.Name -Qualifier @{ Name = $PSItem.Qualifiers.Name; Value = $PSItem.Qualifiers.Value }
                             }
                         }
                         Else {
-                            $ClassPropertyNotFoundErr = "Failed to copy class property [$($_.Name)]. Property not found in source class [$NamespaceSource`:$ClassName]."
+                            $ClassPropertyNotFoundErr = "Failed to copy class property [$($PSItem.Name)]. Property not found in source class [$NamespaceSource`:$ClassName]."
                             Write-Log -Message $ClassPropertyNotFoundErr -Severity 3 -Source ${CmdletName}
                         }
                     }

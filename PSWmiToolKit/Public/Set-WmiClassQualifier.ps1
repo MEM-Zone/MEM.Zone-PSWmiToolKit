@@ -23,27 +23,31 @@ Function Set-WmiClassQualifier {
             IsOverridable = $true
         }
 .EXAMPLE
-    Set-WmiClassQualifier -Namespace 'ROOT' -ClassName 'SCCMZone' -Qualifier @{ Name = 'Description'; Value = 'SCCMZone Blog' }
+    Set-WmiClassQualifier -Namespace 'ROOT' -ClassName 'MEMZone' -Qualifier @{ Name = 'Description'; Value = 'MEMZone Blog' }
 .EXAMPLE
-    Set-WmiClassQualifier -Namespace 'ROOT' -ClassName 'SCCMZone' -Qualifier "Name = Description `n Value = SCCMZone Blog"
+    Set-WmiClassQualifier -Namespace 'ROOT' -ClassName 'MEMZone' -Qualifier "Name = Description `n Value = MEMZone Blog"
 .EXAMPLE
-    "Name = Description `n Value = SCCMZone Blog" | Set-WmiClassQualifier -Namespace 'ROOT' -ClassName 'SCCMZone'
+    "Name = Description `n Value = MEMZone Blog" | Set-WmiClassQualifier -Namespace 'ROOT' -ClassName 'MEMZone'
 .NOTES
     This is a module function and can typically be called directly.
 .LINK
-    https://sccm-zone.com
+    https://MEM.Zone/
 .LINK
-    https://github.com/Ioan-Popovici/SCCM
+    https://MEM.Zone/PSWmiToolKit-RELEASES
+.LINK
+    https://MEM.Zone/PSWmiToolKit/GIT
+.LINK
+    https://MEM.Zone/PSWmiToolKit/ISSUES
 #>
 [CmdletBinding()]
 Param (
-    [Parameter(Mandatory=$false,Position=0)]
+    [Parameter(Mandatory = $false, Position = 0)]
     [ValidateNotNullorEmpty()]
     [string]$Namespace = 'ROOT\cimv2',
-    [Parameter(Mandatory=$true,Position=1)]
+    [Parameter(Mandatory = $true, Position = 1)]
     [ValidateNotNullorEmpty()]
     [string]$ClassName,
-    [Parameter(Mandatory=$false,ValueFromPipeline,Position=2)]
+    [Parameter(Mandatory = $false,ValueFromPipeline, Position = 2)]
     [ValidateNotNullorEmpty()]
     [PSCustomObject]$Qualifier = @()
     )

@@ -12,25 +12,29 @@ Function Copy-WmiNamespace {
 .PARAMETER Force
     This switch is used to overwrite the destination namespace.
 .EXAMPLE
-    Copy-WmiNamespace -NamespaceSource 'ROOT\SCCMZone' -NamespaceDestination 'ROOT\cimv2' -Force
+    Copy-WmiNamespace -NamespaceSource 'ROOT\MEMZone' -NamespaceDestination 'ROOT\cimv2' -Force
 .EXAMPLE
-    Copy-WmiNamespace -NamespaceSource 'ROOT\SCCMZone' -NamespaceDestination 'ROOT\cimv2' -ErrorAction 'SilentlyContinue'
+    Copy-WmiNamespace -NamespaceSource 'ROOT\MEMZone' -NamespaceDestination 'ROOT\cimv2' -ErrorAction 'SilentlyContinue'
 .NOTES
     This is a module function and can typically be called directly.
 .LINK
-    https://sccm-zone.com
+    https://MEM.Zone/
 .LINK
-    https://github.com/Ioan-Popovici/SCCM
+    https://MEM.Zone/PSWmiToolKit-RELEASES
+.LINK
+    https://MEM.Zone/PSWmiToolKit/GIT
+.LINK
+    https://MEM.Zone/PSWmiToolKit/ISSUES
 #>
     [CmdletBinding()]
     Param (
-        [Parameter(Mandatory=$true,Position=0)]
+        [Parameter(Mandatory = $true, Position = 0)]
         [ValidateNotNullorEmpty()]
         [string]$NamespaceSource,
-        [Parameter(Mandatory=$true,Position=1)]
+        [Parameter(Mandatory = $true, Position = 1)]
         [ValidateNotNullorEmpty()]
         [string]$NamespaceDestination,
-        [Parameter(Mandatory=$false,Position=3)]
+        [Parameter(Mandatory = $false, Position = 3)]
         [ValidateNotNullorEmpty()]
         [switch]$Force = $false
     )
@@ -56,7 +60,7 @@ Function Copy-WmiNamespace {
             If ($ClassNameSourceRoot) {
                 #  Copy classes one by one
                 $ClassNameSourceRoot | ForEach-Object {
-                    Copy-WmiClass -NamespaceSource $NamespaceSource -NamespaceDestination $NamespaceDestination -ClassName $_.CimClassName -CreateDestination -Force -ErrorAction 'Stop'
+                    Copy-WmiClass -NamespaceSource $NamespaceSource -NamespaceDestination $NamespaceDestination -ClassName $PSItem.CimClassName -CreateDestination -Force -ErrorAction 'Stop'
                 }
             }
 
@@ -67,7 +71,7 @@ Function Copy-WmiNamespace {
                 [boolean]$ShouldCopy = $true
 
                 #  Set current namespace source and destination paths. The destination is set by replacing the source namespace with the destination namespace.
-                [string]$NamespaceSourcePath = $_.FullName
+                [string]$NamespaceSourcePath = $PSItem.FullName
                 [string]$NamespaceDestinationPath = $NamespaceSourcePath -ireplace [regex]::Escape($NamespaceSource), $NamespaceDestination
 
                 #  Check if the destination namespace exists
@@ -94,7 +98,7 @@ Function Copy-WmiNamespace {
                     If ($ClassNameSource) {
                         #  Copy classes one by one
                         $ClassNameSource | ForEach-Object {
-                            Copy-WmiClass -NamespaceSource $NamespaceSourcePath -NamespaceDestination $NamespaceDestinationPath -ClassName $_.CimClassName -Force -ErrorAction 'Stop'
+                            Copy-WmiClass -NamespaceSource $NamespaceSourcePath -NamespaceDestination $NamespaceDestinationPath -ClassName $PSItem.CimClassName -Force -ErrorAction 'Stop'
                         }
                     }
                 }

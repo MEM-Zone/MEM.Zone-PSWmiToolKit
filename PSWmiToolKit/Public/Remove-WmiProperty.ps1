@@ -16,31 +16,35 @@ Function Remove-WmiProperty {
 .PARAMETER Force
     This switch is used to remove all instances. The class must be empty in order to be able to delete properties. Default is: $false.
 .EXAMPLE
-    Remove-WmiProperty -Namespace 'ROOT' -ClassName 'SCCMZone' -Property 'SCCMZone','Blog'
+    Remove-WmiProperty -Namespace 'ROOT' -ClassName 'MEMZone' -Property 'MEMZone','Blog'
 .EXAMPLE
-    Remove-WmiProperty -Namespace 'ROOT' -ClassName 'SCCMZone' -RemoveAll -Force
+    Remove-WmiProperty -Namespace 'ROOT' -ClassName 'MEMZone' -RemoveAll -Force
 .NOTES
     This is a module function and can typically be called directly.
 .LINK
-    https://sccm-zone.com
+    https://MEM.Zone/
 .LINK
-    https://github.com/Ioan-Popovici/SCCM
+    https://MEM.Zone/PSWmiToolKit-RELEASES
+.LINK
+    https://MEM.Zone/PSWmiToolKit/GIT
+.LINK
+    https://MEM.Zone/PSWmiToolKit/ISSUES
 #>
     [CmdletBinding()]
     Param (
-        [Parameter(Mandatory=$false,Position=0)]
+        [Parameter(Mandatory = $false, Position = 0)]
         [ValidateNotNullorEmpty()]
         [string]$Namespace = 'ROOT\cimv2',
-        [Parameter(Mandatory=$true,Position=1)]
+        [Parameter(Mandatory = $true, Position = 1)]
         [ValidateNotNullorEmpty()]
         [string]$ClassName,
-        [Parameter(Mandatory=$false,Position=2)]
+        [Parameter(Mandatory = $false, Position = 2)]
         [ValidateNotNullorEmpty()]
         [string[]]$PropertyName,
-        [Parameter(Mandatory=$false,Position=3)]
+        [Parameter(Mandatory = $false, Position = 3)]
         [ValidateNotNullorEmpty()]
         [switch]$RemoveAll = $false,
-        [Parameter(Mandatory=$false,Position=4)]
+        [Parameter(Mandatory = $false, Position = 4)]
         [ValidateNotNullorEmpty()]
         [switch]$Force = $false
     )
@@ -64,7 +68,7 @@ Function Remove-WmiProperty {
                 $RemoveWmiProperty = $WmiPropertyNames
             }
             ElseIf ($PropertyName) {
-                $RemoveWmiProperty = $WmiPropertyNames | Where-Object { $_ -in $PropertyName }
+                $RemoveWmiProperty = $WmiPropertyNames | Where-Object { $PSItem -in $PropertyName }
             }
             Else {
                 $PropertyNameIsNullErr = "PropertyName cannot be `$null if -RemoveAll is not specified."
@@ -89,7 +93,7 @@ Function Remove-WmiProperty {
                 [wmiclass]$ClassObject = New-Object -TypeName 'System.Management.ManagementClass' -ArgumentList @("\\.\$Namespace`:$ClassName")
 
                 #  Remove the specified class properties
-                $RemoveWmiProperty | ForEach-Object { $ClassObject.Properties.Remove($_) }
+                $RemoveWmiProperty | ForEach-Object { $ClassObject.Properties.Remove($PSItem) }
 
                 #  Write the class and dispose of the object
                 $null = $ClassObject.Put()

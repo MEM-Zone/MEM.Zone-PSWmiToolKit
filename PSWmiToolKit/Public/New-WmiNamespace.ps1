@@ -10,22 +10,26 @@ Function New-WmiNamespace {
 .PARAMETER CreateSubTree
     This swith is used to create the whole namespace sub tree if it does not exist.
 .EXAMPLE
-    New-WmiNamespace -Namespace 'ROOT\SCCM'
+    New-WmiNamespace -Namespace 'ROOT\ConfigMgr'
 .EXAMPLE
-    New-WmiNamespace -Namespace 'ROOT\SCCM\SCCMZone\Blog' -CreateSubTree
+    New-WmiNamespace -Namespace 'ROOT\ConfigMgr\MEMZone\Blog' -CreateSubTree
 .NOTES
     This is a module function and can typically be called directly.
 .LINK
-    https://sccm-zone.com
+    https://MEM.Zone/
 .LINK
-    https://github.com/Ioan-Popovici/SCCM
+    https://MEM.Zone/PSWmiToolKit-RELEASES
+.LINK
+    https://MEM.Zone/PSWmiToolKit/GIT
+.LINK
+    https://MEM.Zone/PSWmiToolKit/ISSUES
 #>
     [CmdletBinding()]
     Param (
-        [Parameter(Mandatory=$true,Position=0)]
+        [Parameter(Mandatory = $true, Position = 0)]
         [ValidateNotNullorEmpty()]
         [string]$Namespace,
-        [Parameter(Mandatory=$false,Position=1)]
+        [Parameter(Mandatory = $false, Position = 1)]
         [ValidateNotNullorEmpty()]
         [switch]$CreateSubTree = $false
     )
@@ -91,23 +95,23 @@ Function New-WmiNamespace {
                     $NamespacePathsObject | ForEach-Object {
 
                         #  Check if we need to create the namespace
-                        If (-not $_.NamespaceTest) {
+                        If (-not $PSItem.NamespaceTest) {
                             #  Create namespace object and assign namespace name
-                            $NameSpaceObject = (New-Object -TypeName 'System.Management.ManagementClass' -ArgumentList "\\.\$($_.NameSpacePath)`:__NAMESPACE").CreateInstance()
-                            $NameSpaceObject.Name = $_.NamespaceName
+                            $NameSpaceObject = (New-Object -TypeName 'System.Management.ManagementClass' -ArgumentList "\\.\$($PSItem.NameSpacePath)`:__NAMESPACE").CreateInstance()
+                            $NameSpaceObject.Name = $PSItem.NamespaceName
 
                             #  Write the namespace object
                             $NewNamespace = $NameSpaceObject.Put()
                             $NameSpaceObject.Dispose()
                         }
                         Else {
-                            Write-Log -Message "Namespace [$($_.NamespacePath)`\$($_.NamespaceName)] already exists." -Severity 2 -Source ${CmdletName} -DebugMessage
+                            Write-Log -Message "Namespace [$($PSItem.NamespacePath)`\$($PSItem.NamespaceName)] already exists." -Severity 2 -Source ${CmdletName} -DebugMessage
                         }
                     }
 
                     #  On namespace creation failure, write debug message and optionally throw error if -ErrorAction 'Stop' is specified
                     If (-not $NewNamespace) {
-                        $CreateNamespaceErr = "Failed to create namespace [$($_.NameSpacePath)`\$($_.NamespaceName)]."
+                        $CreateNamespaceErr = "Failed to create namespace [$($PSItem.NameSpacePath)`\$($PSItem.NamespaceName)]."
                         Write-Log -Message $CreateNamespaceErr -Severity 3 -Source ${CmdletName} -DebugMessage
                         Write-Error -Message $CreateNamespaceErr -Category 'InvalidResult'
                     }

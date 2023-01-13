@@ -17,32 +17,36 @@ Function Get-WmiInstance {
     [hashtable]$Property = @{
         'ServerPort' = '80'
         'ServerIP' = '10.10.10.11'
-        'Source' = 'SCCMZone Blog'
+        'Source' = 'MEMZone Blog'
     }
-    Get-WmiInstance -Namespace 'ROOT' -ClassName 'SCCMZone' -Property $Property
+    Get-WmiInstance -Namespace 'ROOT' -ClassName 'MEMZone' -Property $Property
 .EXAMPLE
-    Get-WmiInstance -Namespace 'ROOT' -ClassName 'SCCMZone' -Property @{ 'Source' = 'SCCMZone Blog' } -KeyOnly
+    Get-WmiInstance -Namespace 'ROOT' -ClassName 'MEMZone' -Property @{ 'Source' = 'MEMZone Blog' } -KeyOnly
 .EXAMPLE
-    Get-WmiInstance -Namespace 'ROOT' -ClassName 'SCCMZone'
+    Get-WmiInstance -Namespace 'ROOT' -ClassName 'MEMZone'
 .NOTES
     This is a module function and can typically be called directly.
 .LINK
-    https://sccm-zone.com
+    https://MEM.Zone/
 .LINK
-    https://github.com/Ioan-Popovici/SCCM
+    https://MEM.Zone/PSWmiToolKit-RELEASES
+.LINK
+    https://MEM.Zone/PSWmiToolKit/GIT
+.LINK
+    https://MEM.Zone/PSWmiToolKit/ISSUES
 #>
     [CmdletBinding()]
     Param (
-        [Parameter(Mandatory=$false,Position=0)]
+        [Parameter(Mandatory = $false, Position = 0)]
         [string]$Namespace = 'ROOT\cimv2',
         [ValidateNotNullorEmpty()]
-        [Parameter(Mandatory=$true,Position=1)]
+        [Parameter(Mandatory = $true, Position = 1)]
         [ValidateNotNullorEmpty()]
         [string]$ClassName,
-        [Parameter(Mandatory=$false,Position=2)]
+        [Parameter(Mandatory = $false, Position = 2)]
         [ValidateNotNullorEmpty()]
         [hashtable]$Property,
-        [Parameter(Mandatory=$false,Position=3)]
+        [Parameter(Mandatory = $false, Position = 3)]
         [switch]$KeyOnly
     )
 
@@ -82,10 +86,10 @@ Function Get-WmiInstance {
                     #  Check if and instance with the same values exists. Since $InputProperty is a dinamically generated object Compare-Object has no hope of working correctly.
                     #  Luckily Compare-Object as a -Property parameter which allows us to look at specific parameters.
                     $GetInstance = $WmiInstance | ForEach-Object {
-                        $MatchInstance = Compare-Object -ReferenceObject $_ -DifferenceObject $InputProperty -Property $InputPropertyNames -IncludeEqual -ExcludeDifferent
+                        $MatchInstance = Compare-Object -ReferenceObject $PSItem -DifferenceObject $InputProperty -Property $InputPropertyNames -IncludeEqual -ExcludeDifferent
                         If ($MatchInstance) {
                             #  Add matched instance to output
-                            $_
+                            $PSItem
                         }
                     }
 

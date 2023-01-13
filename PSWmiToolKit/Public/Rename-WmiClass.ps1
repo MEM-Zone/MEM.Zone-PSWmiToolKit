@@ -12,23 +12,27 @@ Function Rename-WmiClass {
 .PARAMETER NewName
     Specifies the new class name.
 .EXAMPLE
-    Rename-WmiClass -Namespace 'ROOT\cimv2' -Name 'SCCM' -NewName 'SCCMZone'
+    Rename-WmiClass -Namespace 'ROOT\cimv2' -Name 'ConfigMgr' -NewName 'MEMZone'
 .NOTES
     This is a module function and can typically be called directly.
 .LINK
-    https://sccm-zone.com
+    https://MEM.Zone/
 .LINK
-    https://github.com/Ioan-Popovici/SCCM
+    https://MEM.Zone/PSWmiToolKit-RELEASES
+.LINK
+    https://MEM.Zone/PSWmiToolKit/GIT
+.LINK
+    https://MEM.Zone/PSWmiToolKit/ISSUES
 #>
     [CmdletBinding()]
     Param (
-        [Parameter(Mandatory=$false,Position=0)]
+        [Parameter(Mandatory = $false, Position = 0)]
         [ValidateNotNullorEmpty()]
         [string]$Namespace = 'ROOT\cimv2',
-        [Parameter(Mandatory=$true,Position=1)]
+        [Parameter(Mandatory = $true, Position = 1)]
         [ValidateNotNullorEmpty()]
         [string]$Name,
-        [Parameter(Mandatory=$true,Position=2)]
+        [Parameter(Mandatory = $true, Position = 2)]
         [ValidateNotNullorEmpty()]
         [string]$NewName
     )

@@ -12,7 +12,7 @@ Function Get-WmiNamespace {
 .PARAMETER Recurse
     This switch is used to get the whole WMI namespace tree recursively. Cannot be used in conjunction with the -List switch.
 .EXAMPLE
-    C:\PS> Get-WmiNamespace -NameSpace 'ROOT\SCCM'
+    C:\PS> Get-WmiNamespace -NameSpace 'ROOT\ConfigMgr'
 .EXAMPLE
     C:\PS> Get-WmiNamespace -NameSpace 'ROOT\*CM'
 .EXAMPLE
@@ -20,7 +20,7 @@ Function Get-WmiNamespace {
 .EXAMPLE
     C:\PS> Get-WmiNamespace -NameSpace 'ROOT' -Recurse
 .EXAMPLE
-    C:\PS> 'Root\SCCM', 'Root\SC*' | Get-WmiNamespace
+    C:\PS> 'Root\ConfigMgr', 'Root\SC*' | Get-WmiNamespace
 .INPUTS
     System.String[].
 .OUTPUTS
@@ -33,7 +33,7 @@ Function Get-WmiNamespace {
 .LINK
     https://github.com/Ioan-Popovici/PSWmiToolKit
 .LINK
-    https://sccm-zone.com
+    https://ConfigMgr-zone.com
 .COMPONENT
     WMI
 .FUNCTIONALITY
@@ -41,18 +41,18 @@ Function Get-WmiNamespace {
 #>
     [CmdletBinding()]
     Param (
-        [Parameter(Mandatory=$true,ValueFromPipeline=$true,Position=0)]
+        [Parameter(Mandatory = $true,ValueFromPipeline=$true, Position = 0)]
         [ValidateNotNullorEmpty()]
         [SupportsWildcards()]
         [string[]]$Namespace,
-        [Parameter(Mandatory=$false,Position=1)]
+        [Parameter(Mandatory = $false, Position = 1)]
         [ValidateNotNullorEmpty()]
         [ValidateScript({
             If ($Namespace -match '\*') { Throw 'Wildcards are not supported with this switch.' }
             Return $true
         })]
         [switch]$List = $false,
-        [Parameter(Mandatory=$false,Position=2)]
+        [Parameter(Mandatory = $false, Position = 2)]
         [ValidateNotNullorEmpty()]
         [ValidateScript({
             If ($Namespace -match '\*') { Throw 'Wildcards are not supported with this switch.' }
@@ -89,7 +89,7 @@ Function Get-WmiNamespace {
                     [string]$NamespaceParent = $(Split-Path -Path $Namespace -Parent)
                     [string]$NamespaceLeaf = $(Split-Path -Path $Namespace -Leaf)
                     #  Get namespace
-                    $WmiNamespace = Get-CimInstance -Namespace $NamespaceParent -ClassName '__Namespace' -ErrorAction 'SilentlyContinue' -ErrorVariable Err | Where-Object { $_.Name -like $NamespaceLeaf }
+                    $WmiNamespace = Get-CimInstance -Namespace $NamespaceParent -ClassName '__Namespace' -ErrorAction 'SilentlyContinue' -ErrorVariable Err | Where-Object { $PSItem.Name -like $NamespaceLeaf }
                 }
 
                 ## If no namespace is found, write debug message and optionally throw error is -ErrorAction 'Stop' is specified
@@ -106,9 +106,9 @@ Function Get-WmiNamespace {
                 ElseIf (-not $Err) {
                     $GetNamespace = $WmiNamespace | ForEach-Object {
                         [PSCustomObject]@{
-                            Name = $Name = $_.Name
+                            Name = $Name = $PSItem.Name
                             #  Standardize namespace path separator by changing it from '/' to '\'.
-                            Path = $Path = $_.CimSystemProperties.Namespace -replace ('/','\')
+                            Path = $Path = $PSItem.CimSystemProperties.Namespace -replace ('/','\')
                             FullName = "$Path`\$Name"
                         }
                     }

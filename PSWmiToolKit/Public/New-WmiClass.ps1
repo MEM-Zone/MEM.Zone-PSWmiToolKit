@@ -24,32 +24,36 @@ Function New-WmiClass {
     [hashtable]$Qualifiers = @{
         Key = $true
         Static = $true
-        Description = 'SCCMZone Blog'
+        Description = 'MEMZone Blog'
     }
-    New-WmiClass -Namespace 'ROOT' -ClassName 'SCCMZone' -Qualifiers $Qualifiers
+    New-WmiClass -Namespace 'ROOT' -ClassName 'MEMZone' -Qualifiers $Qualifiers
 .EXAMPLE
-    "Key = $true `n Static = $true `n Description = SCCMZone Blog" | New-WmiClass -Namespace 'ROOT' -ClassName 'SCCMZone'
+    "Key = $true `n Static = $true `n Description = MEMZone Blog" | New-WmiClass -Namespace 'ROOT' -ClassName 'MEMZone'
 .EXAMPLE
-    New-WmiClass -Namespace 'ROOT\SCCM' -ClassName 'SCCMZone' -CreateDestination
+    New-WmiClass -Namespace 'ROOT\ConfigMgr' -ClassName 'MEMZone' -CreateDestination
 .NOTES
     This is a module function and can typically be called directly.
 .LINK
-    https://sccm-zone.com
+    https://MEM.Zone/
 .LINK
-    https://github.com/Ioan-Popovici/SCCM
+    https://MEM.Zone/PSWmiToolKit-RELEASES
+.LINK
+    https://MEM.Zone/PSWmiToolKit/GIT
+.LINK
+    https://MEM.Zone/PSWmiToolKit/ISSUES
 #>
     [CmdletBinding()]
     Param (
-        [Parameter(Mandatory=$false,Position=0)]
+        [Parameter(Mandatory = $false, Position = 0)]
         [ValidateNotNullorEmpty()]
         [string]$Namespace = 'ROOT\cimv2',
-        [Parameter(Mandatory=$true,Position=1)]
+        [Parameter(Mandatory = $true, Position = 1)]
         [ValidateNotNullorEmpty()]
         [string]$ClassName,
-        [Parameter(Mandatory=$false,ValueFromPipeline,Position=2)]
+        [Parameter(Mandatory = $false,ValueFromPipeline, Position = 2)]
         [ValidateNotNullorEmpty()]
         [PSCustomObject]$Qualifiers = @("Static = $true"),
-        [Parameter(Mandatory=$false,Position=3)]
+        [Parameter(Mandatory = $false, Position = 3)]
         [ValidateNotNullorEmpty()]
         [switch]$CreateDestination = $false
     )
@@ -107,7 +111,7 @@ Function New-WmiClass {
                 If ($Qualifiers) {
                     #  Convert to a hashtable format accepted by Set-WmiClassQualifier. Name = QualifierName and Value = QualifierValue are expected.
                     $Qualifiers.Keys | ForEach-Object {
-                        [hashtable]$PropertyQualifier = @{ Name = $_; Value = $Qualifiers.Item($_) }
+                        [hashtable]$PropertyQualifier = @{ Name = $PSItem; Value = $Qualifiers.Item($PSItem) }
                         #  Set qualifier
                         $null = Set-WmiClassQualifier -Namespace $Namespace -ClassName $ClassName -Qualifier $PropertyQualifier -ErrorAction 'Stop'
                     }

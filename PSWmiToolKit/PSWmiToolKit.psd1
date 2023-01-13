@@ -12,7 +12,7 @@
     RootModule = 'PSWmiToolKit.psm1'
 
     # Version number of this module.
-    ModuleVersion = '3.0.46'
+    ModuleVersion = '3.1.0'
 
     # Supported PSEditions
     # CompatiblePSEditions = @()
@@ -24,7 +24,7 @@
     Author = 'Ioan Popovici'
 
     # Company or vendor of this module
-    CompanyName = 'MEMZone'
+    CompanyName = 'MEM.Zone'
 
     # Copyright statement for this module
     Copyright = '(c) 2018 Ioan Popovici. All rights reserved.'

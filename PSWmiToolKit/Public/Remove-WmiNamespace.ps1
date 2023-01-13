@@ -12,23 +12,27 @@ Function Remove-WmiNamespace {
 .PARAMETER Recurse
     This switch deletes all existing child namespaces in the specified path.
 .EXAMPLE
-    Remove-WmiNamespace -Namespace 'ROOT\SCCM' -Force -Recurse
+    Remove-WmiNamespace -Namespace 'ROOT\ConfigMgr' -Force -Recurse
 .NOTES
     This is a module function and can typically be called directly.
 .LINK
-    https://sccm-zone.com
+    https://MEM.Zone/
 .LINK
-    https://github.com/Ioan-Popovici/SCCM
+    https://MEM.Zone/PSWmiToolKit-RELEASES
+.LINK
+    https://MEM.Zone/PSWmiToolKit/GIT
+.LINK
+    https://MEM.Zone/PSWmiToolKit/ISSUES
 #>
     [CmdletBinding()]
     Param (
-        [Parameter(Mandatory=$true,Position=0)]
+        [Parameter(Mandatory = $true, Position = 0)]
         [ValidateNotNullorEmpty()]
         [string]$Namespace,
-        [Parameter(Mandatory=$false,Position=2)]
+        [Parameter(Mandatory = $false, Position = 2)]
         [ValidateNotNullorEmpty()]
         [switch]$Force = $false,
-        [Parameter(Mandatory=$false,Position=2)]
+        [Parameter(Mandatory = $false, Position = 2)]
         [ValidateNotNullorEmpty()]
         [switch]$Recurse = $false
     )

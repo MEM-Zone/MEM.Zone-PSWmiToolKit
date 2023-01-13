@@ -14,28 +14,32 @@ Function Remove-WmiClassQualifier {
 .PARAMETER RemoveAll
     This switch will remove all class qualifiers.
 .EXAMPLE
-    Remove-WmiClassQualifier -Namespace 'ROOT' -ClassName 'SCCMZone' -QualifierName 'Description', 'Static'
+    Remove-WmiClassQualifier -Namespace 'ROOT' -ClassName 'MEMZone' -QualifierName 'Description', 'Static'
 .EXAMPLE
-    Remove-WmiClassQualifier -Namespace 'ROOT' -ClassName 'SCCMZone' -RemoveAll
+    Remove-WmiClassQualifier -Namespace 'ROOT' -ClassName 'MEMZone' -RemoveAll
 .NOTES
     This is a module function and can typically be called directly.
 .LINK
-    https://sccm-zone.com
+    https://MEM.Zone/
 .LINK
-    https://github.com/Ioan-Popovici/SCCM
+    https://MEM.Zone/PSWmiToolKit-RELEASES
+.LINK
+    https://MEM.Zone/PSWmiToolKit/GIT
+.LINK
+    https://MEM.Zone/PSWmiToolKit/ISSUES
 #>
 [CmdletBinding()]
 Param (
-    [Parameter(Mandatory=$false,Position=0)]
+    [Parameter(Mandatory = $false, Position = 0)]
     [ValidateNotNullorEmpty()]
     [string]$Namespace = 'ROOT\cimv2',
-    [Parameter(Mandatory=$true,Position=1)]
+    [Parameter(Mandatory = $true, Position = 1)]
     [ValidateNotNullorEmpty()]
     [string]$ClassName,
-    [Parameter(Mandatory=$false,ValueFromPipeline,Position=2)]
+    [Parameter(Mandatory = $false,ValueFromPipeline, Position = 2)]
     [ValidateNotNullorEmpty()]
     [string[]]$QualifierName,
-    [Parameter(Mandatory=$false,Position=3)]
+    [Parameter(Mandatory = $false, Position = 3)]
     [ValidateNotNullorEmpty()]
     [switch]$RemoveAll = $false
     )
@@ -56,7 +60,7 @@ Param (
                 $RemoveClassQualifier = $WmiClassQualifier
             }
             ElseIf ($QualifierName) {
-                $RemoveClassQualifier = $WmiClassQualifier | Where-Object { $_ -in $QualifierName }
+                $RemoveClassQualifier = $WmiClassQualifier | Where-Object { $PSItem -in $QualifierName }
             }
             Else {
                 $QualifierNameIsNullErr = "QualifierName cannot be `$null if -RemoveAll is not specified."
@@ -71,7 +75,7 @@ Param (
                 [wmiclass]$ClassObject = New-Object -TypeName 'System.Management.ManagementClass' -ArgumentList @("\\.\$Namespace`:$ClassName")
 
                 #  Remove class qualifiers one by one
-                $QualifierName | ForEach-Object { $ClassObject.Qualifiers.Remove($_) }
+                $QualifierName | ForEach-Object { $ClassObject.Qualifiers.Remove($PSItem) }
 
             }
             Else {

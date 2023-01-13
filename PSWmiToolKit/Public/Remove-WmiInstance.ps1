@@ -18,26 +18,30 @@ Function Remove-WmiInstance {
         'ServerPort' = '80'
         'ServerIP' = '10.10.10.11'
     }
-    Remove-WmiInstance -Namespace 'ROOT' -ClassName 'SCCMZone' -Property $Property -RemoveAll
+    Remove-WmiInstance -Namespace 'ROOT' -ClassName 'MEMZone' -Property $Property -RemoveAll
 .NOTES
     This is a module function and can typically be called directly.
 .LINK
-    https://sccm-zone.com
+    https://MEM.Zone/
 .LINK
-    https://github.com/Ioan-Popovici/SCCM
+    https://MEM.Zone/PSWmiToolKit-RELEASES
+.LINK
+    https://MEM.Zone/PSWmiToolKit/GIT
+.LINK
+    https://MEM.Zone/PSWmiToolKit/ISSUES
 #>
     [CmdletBinding()]
     Param (
-        [Parameter(Mandatory=$false,Position=0)]
+        [Parameter(Mandatory = $false, Position = 0)]
         [ValidateNotNullorEmpty()]
         [string]$Namespace = 'ROOT\cimv2',
-        [Parameter(Mandatory=$true,Position=1)]
+        [Parameter(Mandatory = $true, Position = 1)]
         [ValidateNotNullorEmpty()]
         [string]$ClassName,
-        [Parameter(Mandatory=$false,ValueFromPipeline,Position=2)]
+        [Parameter(Mandatory = $false,ValueFromPipeline, Position = 2)]
         [ValidateNotNullorEmpty()]
         [hashtable]$Property,
-        [Parameter(Mandatory=$false,Position=3)]
+        [Parameter(Mandatory = $false, Position = 3)]
         [switch]$RemoveAll
     )
 
@@ -63,7 +67,7 @@ Function Remove-WmiInstance {
             ## Remove according to specified options. If multiple instances are found check for the -RemoveAll switch
             If (($RemoveInstances.Count -eq 1) -or (($RemoveInstances.Count -gt 1) -and $RemoveAll)) {
                 #  Remove instances one by one
-                $RemoveInstances | ForEach-Object { Remove-CimInstance -InputObject $_ -ErrorAction 'Stop' }
+                $RemoveInstances | ForEach-Object { Remove-CimInstance -InputObject $PSItem -ErrorAction 'Stop' }
             }
 
             ## Otherwise if more than one instance is detected, write debug message and optionally throw error if -ErrorAction 'Stop' is specified

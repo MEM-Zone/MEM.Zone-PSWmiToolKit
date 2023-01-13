@@ -16,33 +16,37 @@ Function Get-WmiPropertyQualifier {
 .PARAMETER QualifierValue
     Specifies the property qualifier value or values to search for.(Optional)
 .EXAMPLE
-    Get-WmiPropertyQualifier -Namespace 'ROOT' -ClassName 'SCCMZone' -PropertyName 'SCCMZone Blog'
+    Get-WmiPropertyQualifier -Namespace 'ROOT' -ClassName 'MEMZone' -PropertyName 'MEMZone Blog'
 .EXAMPLE
-    'SCCMZone Blog', 'ServerAddress' | Get-WmiPropertyQualifier -Namespace 'ROOT' -ClassName 'SCCMZone'
+    'MEMZone Blog', 'ServerAddress' | Get-WmiPropertyQualifier -Namespace 'ROOT' -ClassName 'MEMZone'
 .EXAMPLE
-    Get-WmiPropertyQualifier -Namespace 'ROOT' -ClassName 'SCCMZone' -QualifierName 'key','Description'
+    Get-WmiPropertyQualifier -Namespace 'ROOT' -ClassName 'MEMZone' -QualifierName 'key','Description'
 .NOTES
     This is a module function and can typically be called directly.
 .LINK
-    https://sccm-zone.com
+    https://MEM.Zone/
 .LINK
-    https://github.com/Ioan-Popovici/SCCM
+    https://MEM.Zone/PSWmiToolKit-RELEASES
+.LINK
+    https://MEM.Zone/PSWmiToolKit/GIT
+.LINK
+    https://MEM.Zone/PSWmiToolKit/ISSUES
 #>
     [CmdletBinding()]
     Param (
-        [Parameter(Mandatory=$false,Position=0)]
+        [Parameter(Mandatory = $false, Position = 0)]
         [ValidateNotNullorEmpty()]
         [string]$Namespace = 'ROOT\cimv2',
-        [Parameter(Mandatory=$true,Position=1)]
+        [Parameter(Mandatory = $true, Position = 1)]
         [ValidateNotNullorEmpty()]
         [string]$ClassName,
-        [Parameter(Mandatory=$false,ValueFromPipeline,Position=2)]
+        [Parameter(Mandatory = $false,ValueFromPipeline, Position = 2)]
         [ValidateNotNullorEmpty()]
         [string]$PropertyName = '*',
-        [Parameter(Mandatory=$false,Position=3)]
+        [Parameter(Mandatory = $false, Position = 3)]
         [ValidateNotNullorEmpty()]
         [string[]]$QualifierName,
-        [Parameter(Mandatory=$false,Position=4)]
+        [Parameter(Mandatory = $false, Position = 4)]
         [ValidateNotNullorEmpty()]
         [string[]]$QualifierValue
     )
@@ -60,13 +64,13 @@ Function Get-WmiPropertyQualifier {
 
             ## Get property qualifiers based on specified parameters
             If ($QualifierName -and $QualifierValue) {
-                $GetPropertyQualifier = $WmiPropertyQualifier | Where-Object { ($_.Name -in $QualifierName) -and ($_.Value -in $QualifierValue) }
+                $GetPropertyQualifier = $WmiPropertyQualifier | Where-Object { ($PSItem.Name -in $QualifierName) -and ($PSItem.Value -in $QualifierValue) }
             }
             ElseIf ($QualifierName) {
-                $GetPropertyQualifier = $WmiPropertyQualifier | Where-Object { ($_.Name -in $QualifierName) }
+                $GetPropertyQualifier = $WmiPropertyQualifier | Where-Object { ($PSItem.Name -in $QualifierName) }
             }
             ElseIf ($QualifierValue) {
-                $GetPropertyQualifier = $WmiPropertyQualifier | Where-Object { $_.Value -in $QualifierValue }
+                $GetPropertyQualifier = $WmiPropertyQualifier | Where-Object { $PSItem.Value -in $QualifierValue }
             }
             Else {
                 $GetPropertyQualifier = $WmiPropertyQualifier

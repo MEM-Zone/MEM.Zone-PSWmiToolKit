@@ -14,11 +14,11 @@ Function Get-WmiClass {
 .PARAMETER IncludeSpecialClasses
     Specifies to include System, MSFT and CIM classes. Use this or Get operations only.
 .EXAMPLE
-    Get-WmiClass -Namespace 'ROOT\SCCM' -ClassName 'SCCMZone'
+    Get-WmiClass -Namespace 'ROOT\ConfigMgr' -ClassName 'MEMZone'
 .EXAMPLE
-    Get-WmiClass -Namespace 'ROOT\SCCM' -QualifierName 'Description'
+    Get-WmiClass -Namespace 'ROOT\ConfigMgr' -QualifierName 'Description'
 .EXAMPLE
-    Get-WmiClass -Namespace 'ROOT\SCCM'
+    Get-WmiClass -Namespace 'ROOT\ConfigMgr'
 .INPUTS
     None.
 .OUTPUTS
@@ -26,9 +26,13 @@ Function Get-WmiClass {
 .NOTES
     This is a module function and can typically be called directly.
 .LINK
-    https://sccm-zone.com
+    https://MEM.Zone/
 .LINK
-    https://github.com/Ioan-Popovici/SCCM
+    https://MEM.Zone/PSWmiToolKit-RELEASES
+.LINK
+    https://MEM.Zone/PSWmiToolKit/GIT
+.LINK
+    https://MEM.Zone/PSWmiToolKit/ISSUES
 .COMPONENT
     WMI
 .FUNCTIONALITY
@@ -36,16 +40,16 @@ Function Get-WmiClass {
 #>
     [CmdletBinding()]
     Param (
-        [Parameter(Mandatory=$false,Position=0)]
+        [Parameter(Mandatory = $false, Position = 0)]
         [ValidateNotNullorEmpty()]
         [string]$Namespace = 'ROOT\cimv2',
-        [Parameter(Mandatory=$false,Position=1)]
+        [Parameter(Mandatory = $false, Position = 1)]
         [ValidateNotNullorEmpty()]
         [string]$ClassName = '*',
-        [Parameter(Mandatory=$false,Position=2)]
+        [Parameter(Mandatory = $false, Position = 2)]
         [ValidateNotNullorEmpty()]
         [string]$QualifierName,
-        [Parameter(Mandatory=$false,Position=3)]
+        [Parameter(Mandatory = $false, Position = 3)]
         [ValidateNotNullorEmpty()]
         [switch]$IncludeSpecialClasses
     )
@@ -79,7 +83,7 @@ Function Get-WmiClass {
                 $GetClass = $WmiClass
             }
             Else {
-                $GetClass = $WmiClass | Where-Object { ($_.CimClassName -notmatch '__') -and ($_.CimClassName -notmatch 'CIM_') -and ($_.CimClassName -notmatch 'MSFT_') }
+                $GetClass = $WmiClass | Where-Object { ($PSItem.CimClassName -notmatch '__') -and ($PSItem.CimClassName -notmatch 'CIM_') -and ($PSItem.CimClassName -notmatch 'MSFT_') }
             }
 
             ## If no class is found, write debug message and optionally throw error if -ErrorAction 'Stop' is specified

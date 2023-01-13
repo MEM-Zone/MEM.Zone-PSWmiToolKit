@@ -17,38 +17,42 @@ Function Copy-WmiInstance {
 .PARAMETER CreateDestination
     This switch is used to create the destination if it does not exist. Default is: $false.
 .EXAMPLE
-    Copy-WmiInstance -ClassPathSource 'ROOT\SCCM:SCCMZone' -ClassPathDestination 'ROOT\SCCM:SCCMZoneBlog' -CreateDestination
+    Copy-WmiInstance -ClassPathSource 'ROOT\ConfigMgr:MEMZone' -ClassPathDestination 'ROOT\ConfigMgr:MEMZoneBlog' -CreateDestination
 .EXAMPLE
-    [hashtable]$Property = @{ Description = 'SCCMZone WebSite' }
-    Copy-WmiInstance -ClassPathSource 'ROOT\SCCM:SCCMZone' -ClassPathDestination 'ROOT\SCCM:SCCMZoneBlog' -Property $Property -CreateDestination
+    [hashtable]$Property = @{ Description = 'MEMZone WebSite' }
+    Copy-WmiInstance -ClassPathSource 'ROOT\ConfigMgr:MEMZone' -ClassPathDestination 'ROOT\ConfigMgr:MEMZoneBlog' -Property $Property -CreateDestination
 .EXAMPLE
     [hashtable]$Property = @{
-        SCCMZoneWebSite = 'https:\SCCM-Zone.com'
-        Description = 'SCCMZone WebSite'
+        MEMZoneWebSite = 'https:\ConfigMgr-Zone.com'
+        Description = 'MEMZone WebSite'
     }
-    Copy-WmiInstance -ClassPathSource 'ROOT\SCCM:SCCMZone' -ClassPathDestination 'ROOT\SCCM:SCCMZoneBlog'  -Property $Property -MatchAll -CreateDestination
+    Copy-WmiInstance -ClassPathSource 'ROOT\ConfigMgr:MEMZone' -ClassPathDestination 'ROOT\ConfigMgr:MEMZoneBlog'  -Property $Property -MatchAll -CreateDestination
 .NOTES
     This is a module function and can typically be called directly.
 .LINK
-    https://sccm-zone.com
+    https://MEM.Zone/
 .LINK
-    https://github.com/Ioan-Popovici/SCCM
+    https://MEM.Zone/PSWmiToolKit-RELEASES
+.LINK
+    https://MEM.Zone/PSWmiToolKit/GIT
+.LINK
+    https://MEM.Zone/PSWmiToolKit/ISSUES
 #>
     [CmdletBinding()]
     Param (
-        [Parameter(Mandatory=$true,Position=0)]
+        [Parameter(Mandatory = $true, Position = 0)]
         [ValidateNotNullorEmpty()]
         [string]$ClassPathSource,
-        [Parameter(Mandatory=$true,Position=1)]
+        [Parameter(Mandatory = $true, Position = 1)]
         [ValidateNotNullorEmpty()]
         [string]$ClassPathDestination,
-        [Parameter(Mandatory=$false,Position=2)]
+        [Parameter(Mandatory = $false, Position = 2)]
         [ValidateNotNullorEmpty()]
         [hashtable]$Property,
-        [Parameter(Mandatory=$false,Position=3)]
+        [Parameter(Mandatory = $false, Position = 3)]
         [ValidateNotNullorEmpty()]
         [switch]$MatchAll = $false,
-        [Parameter(Mandatory=$false,Position=4)]
+        [Parameter(Mandatory = $false, Position = 4)]
         [ValidateNotNullorEmpty()]
         [switch]$CreateDestination = $false
     )
@@ -95,12 +99,12 @@ Function Copy-WmiInstance {
 
             ## Copy class properties from the source class if not present in the destination class
             $ClassPropertiesSource | ForEach-Object {
-                If ($_.Name -notin $ClassPropertiesDestination.Name) {
+                If ($PSItem.Name -notin $ClassPropertiesDestination.Name) {
                     #  Create property
-                    $null = New-WmiProperty -Namespace $NamespaceDestination -ClassName $ClassNameDestination -PropertyName $_.Name -PropertyType $_.CimType
+                    $null = New-WmiProperty -Namespace $NamespaceDestination -ClassName $ClassNameDestination -PropertyName $PSItem.Name -PropertyType $PSItem.CimType
                     #  Set qualifier if present
-                    If ($_.Qualifiers.Name) {
-                        $null = Set-WmiPropertyQualifier -Namespace $NamespaceDestination -ClassName $ClassNameDestination -PropertyName $_.Name -Qualifier @{ Name = $_.Qualifiers.Name; Value = $_.Qualifiers.Value }
+                    If ($PSItem.Qualifiers.Name) {
+                        $null = Set-WmiPropertyQualifier -Namespace $NamespaceDestination -ClassName $ClassNameDestination -PropertyName $PSItem.Name -Qualifier @{ Name = $PSItem.Qualifiers.Name; Value = $PSItem.Qualifiers.Value }
                     }
                 }
             }
@@ -123,7 +127,7 @@ Function Copy-WmiInstance {
                     #  Assemble instance property hashtable
                     For ($i = 0; $i -le $($ClassPropertiesSource.Name.Length -1); $i++) {
                         $InstanceProperty += [ordered]@{
-                            $($ClassPropertiesSource.Name[$i]) = $_.($ClassPropertiesSource.Name[$i])
+                            $($ClassPropertiesSource.Name[$i]) = $PSItem.($ClassPropertiesSource.Name[$i])
                         }
                     }
 

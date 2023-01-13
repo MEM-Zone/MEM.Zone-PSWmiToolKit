@@ -14,28 +14,32 @@ Function Copy-WmiClassQualifier {
 .PARAMETER CreateDestination
     This switch is used to create the destination if it does not exist. Default is: $false.
 .EXAMPLE
-    Copy-WmiClassQualifier -ClassPathSource 'ROOT\SCCM:SCCMZone' -ClassPathDestination 'ROOT\SCCM:SCCMZoneBlog' -CreateDestination
+    Copy-WmiClassQualifier -ClassPathSource 'ROOT\ConfigMgr:MEMZone' -ClassPathDestination 'ROOT\ConfigMgr:MEMZoneBlog' -CreateDestination
 .EXAMPLE
-    Copy-WmiClassQualifier -ClassPathSource 'ROOT\SCCM:SCCMZone' -ClassPathDestination 'ROOT\SCCM:SCCMZoneBlog' -QualifierName 'Description' -CreateDestination
+    Copy-WmiClassQualifier -ClassPathSource 'ROOT\ConfigMgr:MEMZone' -ClassPathDestination 'ROOT\ConfigMgr:MEMZoneBlog' -QualifierName 'Description' -CreateDestination
 .NOTES
     This is a module function and can typically be called directly.
 .LINK
-    https://sccm-zone.com
+    https://MEM.Zone/
 .LINK
-    https://github.com/Ioan-Popovici/SCCM
+    https://MEM.Zone/PSWmiToolKit-RELEASES
+.LINK
+    https://MEM.Zone/PSWmiToolKit/GIT
+.LINK
+    https://MEM.Zone/PSWmiToolKit/ISSUES
 #>
     [CmdletBinding()]
     Param (
-        [Parameter(Mandatory=$true,Position=0)]
+        [Parameter(Mandatory = $true, Position = 0)]
         [ValidateNotNullorEmpty()]
         [string]$ClassPathSource,
-        [Parameter(Mandatory=$true,Position=1)]
+        [Parameter(Mandatory = $true, Position = 1)]
         [ValidateNotNullorEmpty()]
         [string]$ClassPathDestination,
-        [Parameter(Mandatory=$false,Position=2)]
+        [Parameter(Mandatory = $false, Position = 2)]
         [ValidateNotNullorEmpty()]
         [string[]]$QualifierName,
-        [Parameter(Mandatory=$false,Position=3)]
+        [Parameter(Mandatory = $false, Position = 3)]
         [ValidateNotNullorEmpty()]
         [switch]$CreateDestination = $false
     )
@@ -86,18 +90,18 @@ Function Copy-WmiClassQualifier {
                     #  Set destination class qualifiers
                     $ClassQualifiersSource | ForEach-Object {
                         #  Set class qualifiers one by one
-                        $CopyClassQualifier = Set-WmiClassQualifier -Namespace $NamespaceDestination -ClassName $ClassNameDestination -Qualifier @{ Name = $_.Name; Value = $_.Value } -ErrorAction 'Stop'
+                        $CopyClassQualifier = Set-WmiClassQualifier -Namespace $NamespaceDestination -ClassName $ClassNameDestination -Qualifier @{ Name = $PSItem.Name; Value = $PSItem.Value } -ErrorAction 'Stop'
                     }
                 }
                 Else {
 
                     ## Copy class qualifier if it exists in source class, otherwise log the error and continue
                     $ClassQualifiersSource | ForEach-Object {
-                        If ($_.Name -in $QualifierName) {
-                            $CopyClassQualifier = Set-WmiClassQualifier -Namespace $NamespaceDestination -ClassName $ClassNameDestination -Qualifier @{ Name = $_.Name; Value = $_.Value } -ErrorAction 'Stop'
+                        If ($PSItem.Name -in $QualifierName) {
+                            $CopyClassQualifier = Set-WmiClassQualifier -Namespace $NamespaceDestination -ClassName $ClassNameDestination -Qualifier @{ Name = $PSItem.Name; Value = $PSItem.Value } -ErrorAction 'Stop'
                         }
                         Else {
-                            $ClassQualifierNotFoundErr = "Failed to copy class qualifier [$($_.Name)]. Qualifier not found in source class [$NamespaceSource`:$ClassName]."
+                            $ClassQualifierNotFoundErr = "Failed to copy class qualifier [$($PSItem.Name)]. Qualifier not found in source class [$NamespaceSource`:$ClassName]."
                             Write-Log -Message $ClassQualifierNotFoundErr -Severity 3 -Source ${CmdletName}
                         }
                     }

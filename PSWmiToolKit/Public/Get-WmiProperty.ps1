@@ -24,44 +24,48 @@ Function Get-WmiProperty {
             'CimType' = 'String'
         }
 .EXAMPLE
-    Get-WmiProperty -Namespace 'ROOT' -ClassName 'SCCMZone'
+    Get-WmiProperty -Namespace 'ROOT' -ClassName 'MEMZone'
 .EXAMPLE
-    Get-WmiProperty -Namespace 'ROOT' -ClassName 'SCCMZone' -PropertyName 'WebsiteSite' -QualifierName 'key'
+    Get-WmiProperty -Namespace 'ROOT' -ClassName 'MEMZone' -PropertyName 'WebsiteSite' -QualifierName 'key'
 .EXAMPLE
-    Get-WmiProperty -Namespace 'ROOT' -ClassName 'SCCMZone' -PropertyName '*Site'
+    Get-WmiProperty -Namespace 'ROOT' -ClassName 'MEMZone' -PropertyName '*Site'
 .EXAMPLE
     $Property = [PSCustomobject]@{
         'Name' = 'Website'
         'Value' = $null
         'CimType' = 'String'
     }
-    Get-WmiProperty -Namespace 'ROOT' -ClassName 'SCCMZone' -Property $Property
-    $Property | Get-WmiProperty -Namespace 'ROOT' -ClassName 'SCCMZone'
+    Get-WmiProperty -Namespace 'ROOT' -ClassName 'MEMZone' -Property $Property
+    $Property | Get-WmiProperty -Namespace 'ROOT' -ClassName 'MEMZone'
 .NOTES
     This is a module function and can typically be called directly.
 .LINK
-    https://sccm-zone.com
+    https://MEM.Zone/
 .LINK
-    https://github.com/Ioan-Popovici/SCCM
+    https://MEM.Zone/PSWmiToolKit-RELEASES
+.LINK
+    https://MEM.Zone/PSWmiToolKit/GIT
+.LINK
+    https://MEM.Zone/PSWmiToolKit/ISSUES
 #>
     [CmdletBinding()]
     Param (
-        [Parameter(Mandatory=$false,Position=0)]
+        [Parameter(Mandatory = $false, Position = 0)]
         [ValidateNotNullorEmpty()]
         [string]$Namespace = 'ROOT\cimv2',
-        [Parameter(Mandatory=$true,Position=1)]
+        [Parameter(Mandatory = $true, Position = 1)]
         [ValidateNotNullorEmpty()]
         [string]$ClassName,
-        [Parameter(Mandatory=$false,Position=2)]
+        [Parameter(Mandatory = $false, Position = 2)]
         [ValidateNotNullorEmpty()]
         [string]$PropertyName = '*',
-        [Parameter(Mandatory=$false,Position=3)]
+        [Parameter(Mandatory = $false, Position = 3)]
         [ValidateNotNullorEmpty()]
         [string]$PropertyValue,
-        [Parameter(Mandatory=$false,Position=4)]
+        [Parameter(Mandatory = $false, Position = 4)]
         [ValidateNotNullorEmpty()]
         [string]$QualifierName,
-        [Parameter(Mandatory=$false,ValueFromPipeline,Position=5)]
+        [Parameter(Mandatory = $false,ValueFromPipeline, Position = 5)]
         [ValidateNotNullorEmpty()]
         [PSCustomObject]$Property = @()
     )
@@ -95,13 +99,13 @@ Function Get-WmiProperty {
 
             }
             ElseIf ($PropertyValue -and $QualifierName) {
-                $GetProperty = $WmiProperty | Where-Object { ($_.Value -like $PropertyValue) -and ($_.Qualifiers.Name -like $QualifierName) }
+                $GetProperty = $WmiProperty | Where-Object { ($PSItem.Value -like $PropertyValue) -and ($PSItem.Qualifiers.Name -like $QualifierName) }
             }
             ElseIf ($PropertyValue) {
                 $GetProperty = $WmiProperty | Where-Object -Property Value -like $PropertyValue
             }
             ElseIf ($QualifierName) {
-                $GetProperty = $WmiProperty | Where-Object { $_.Qualifiers.Name -like $QualifierName }
+                $GetProperty = $WmiProperty | Where-Object { $PSItem.Qualifiers.Name -like $QualifierName }
             }
             Else {
                 $GetProperty = $WmiProperty

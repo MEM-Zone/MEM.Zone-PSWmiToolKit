@@ -12,27 +12,31 @@ Function Remove-WmiClass {
 .PARAMETER RemoveAll
     This switch is used to remove all namespace classes.
 .EXAMPLE
-    Remove-WmiClass -Namespace 'ROOT' -ClassName 'SCCMZone','SCCMZoneBlog'
+    Remove-WmiClass -Namespace 'ROOT' -ClassName 'MEMZone','MEMZoneBlog'
 .EXAMPLE
-    'SCCMZone','SCCMZoneBlog' | Remove-WmiClass -Namespace 'ROOT'
+    'MEMZone','MEMZoneBlog' | Remove-WmiClass -Namespace 'ROOT'
 .EXAMPLE
     Remove-WmiClass -Namespace 'ROOT' -RemoveAll
 .NOTES
     This is a module function and can typically be called directly.
 .LINK
-    https://sccm-zone.com
+    https://MEM.Zone/
 .LINK
-    https://github.com/Ioan-Popovici/SCCM
+    https://MEM.Zone/PSWmiToolKit-RELEASES
+.LINK
+    https://MEM.Zone/PSWmiToolKit/GIT
+.LINK
+    https://MEM.Zone/PSWmiToolKit/ISSUES
 #>
     [CmdletBinding()]
     Param (
-        [Parameter(Mandatory=$false,Position=0)]
+        [Parameter(Mandatory = $false, Position = 0)]
         [ValidateNotNullorEmpty()]
         [string]$Namespace = 'ROOT\cimv2',
-        [Parameter(Mandatory=$false,ValueFromPipeline,Position=1)]
+        [Parameter(Mandatory = $false,ValueFromPipeline, Position = 1)]
         [ValidateNotNullorEmpty()]
         [string[]]$ClassName,
-        [Parameter(Mandatory=$false,Position=2)]
+        [Parameter(Mandatory = $false, Position = 2)]
         [ValidateNotNullorEmpty()]
         [switch]$RemoveAll = $false
     )
@@ -53,7 +57,7 @@ Function Remove-WmiClass {
                 $ClassNamesToDelete = $WmiClassNames
             }
             ElseIf ($ClassName) {
-                $ClassNamesToDelete = $WmiClassNames | Where-Object { $_ -in $ClassName }
+                $ClassNamesToDelete = $WmiClassNames | Where-Object { $PSItem -in $ClassName }
             }
             Else {
                 $ClassNameIsNullErr = "ClassName cannot be `$null if -RemoveAll is not specified."
@@ -66,7 +70,7 @@ Function Remove-WmiClass {
                 $ClassNamesToDelete | Foreach-Object {
 
                     #  Create the class object
-                    [wmiclass]$ClassObject = New-Object -TypeName 'System.Management.ManagementClass' -ArgumentList @("\\.\$Namespace`:$_")
+                    [wmiclass]$ClassObject = New-Object -TypeName 'System.Management.ManagementClass' -ArgumentList @("\\.\$Namespace`:$PSItem")
 
                     #  Remove class
                     $null = $ClassObject.Delete()

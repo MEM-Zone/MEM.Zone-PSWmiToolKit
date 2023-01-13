@@ -30,31 +30,35 @@ Function Set-WmiInstance {
         'Source' = 'File1'
         'Date' = $(Get-Date)
     }
-    Set-WmiInstance -Namespace 'ROOT' -ClassName 'SCCMZone' -Key 'File1' -PropertySearch $PropertySearch -Property $Property
+    Set-WmiInstance -Namespace 'ROOT' -ClassName 'MEMZone' -Key 'File1' -PropertySearch $PropertySearch -Property $Property
 .EXAMPLE
-    Set-WmiInstance -Namespace 'ROOT' -ClassName 'SCCMZone' -Key 'File1' -Property $Property
+    Set-WmiInstance -Namespace 'ROOT' -ClassName 'MEMZone' -Key 'File1' -Property $Property
 .EXAMPLE
-    Set-WmiInstance -Namespace 'ROOT' -ClassName 'SCCMZone' -Property $Property -CreateInstance
+    Set-WmiInstance -Namespace 'ROOT' -ClassName 'MEMZone' -Property $Property -CreateInstance
 .NOTES
     This is a module function and can typically be called directly.
 .LINK
-    https://sccm-zone.com
+    https://MEM.Zone/
 .LINK
-    https://github.com/Ioan-Popovici/SCCM
+    https://MEM.Zone/PSWmiToolKit-RELEASES
+.LINK
+    https://MEM.Zone/PSWmiToolKit/GIT
+.LINK
+    https://MEM.Zone/PSWmiToolKit/ISSUES
 #>
     [CmdletBinding()]
     Param (
-        [Parameter(Mandatory=$false,Position=0)]
+        [Parameter(Mandatory = $false, Position = 0)]
         [string]$Namespace = 'ROOT\cimv2',
-        [Parameter(Mandatory=$false,Position=1)]
-        [string]$ClassName = 'SCCMZone',
-        [Parameter(Mandatory=$false,Position=2)]
+        [Parameter(Mandatory = $false, Position = 1)]
+        [string]$ClassName = 'MEMZone',
+        [Parameter(Mandatory = $false, Position = 2)]
         [string[]]$Key = '',
-        [Parameter(Mandatory=$false,Position=3)]
+        [Parameter(Mandatory = $false, Position = 3)]
         [hashtable]$PropertySearch = '',
-        [Parameter(Mandatory=$true,Position=4)]
+        [Parameter(Mandatory = $true, Position = 4)]
         [hashtable]$Property,
-        [Parameter(Mandatory=$false,Position=5)]
+        [Parameter(Mandatory = $false, Position = 5)]
         [switch]$CreateInstance = $false,
         [PSCustomObject]$Result = @()
     )
@@ -118,10 +122,10 @@ Function Set-WmiInstance {
                 '1' { $Result = $InstanceTest | Set-CimInstance -Property $Property -ErrorAction 'Stop' }
 
                 #  If $InstanceTest is not $null and contains more than one instance, abort and return error message
-                { $_ -gt '1' } { $Result = 'Set Instance - Failed! More than one instance with the specified values found!' }
+                { $PSItem -gt '1' } { $Result = 'Set Instance - Failed! More than one instance with the specified values found!' }
 
                 #  If $InstanceTest is $null, the -CreateInstance switch was specified and not matching instance exists, create a new instance with the specified values
-                { $_ -eq '0' -and (-not $InstanceTest) -and $CreateInstance } {
+                { $PSItem -eq '0' -and (-not $InstanceTest) -and $CreateInstance } {
 
                     #  Create a new instance with or without the key parameter
                     If ($Key) {
@@ -139,7 +143,7 @@ Function Set-WmiInstance {
         }
     }
     Catch {
-        $Result = "Set Instance - Failed! `n $_"
+        $Result = "Set Instance - Failed! `n $PSItem"
     }
     Finally {
         Write-Output -InputObject $Result

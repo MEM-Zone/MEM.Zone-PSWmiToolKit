@@ -26,30 +26,34 @@ Function Set-WmiPropertyQualifier {
         }
     Specifies if the property is key. Default is: $false.
 .EXAMPLE
-    Set-WmiPropertyQualifier -Namespace 'ROOT\SCCM' -ClassName 'SCCMZone' -Property 'WebSite' -Qualifier @{ Name = 'Description' ; Value = 'SCCMZone Blog' }
+    Set-WmiPropertyQualifier -Namespace 'ROOT\ConfigMgr' -ClassName 'MEMZone' -Property 'WebSite' -Qualifier @{ Name = 'Description' ; Value = 'MEMZone Blog' }
 .EXAMPLE
-    Set-WmiPropertyQualifier -Namespace 'ROOT\SCCM' -ClassName 'SCCMZone' -Property 'WebSite' -Qualifier "Name = Description `n Value = SCCMZone Blog"
+    Set-WmiPropertyQualifier -Namespace 'ROOT\ConfigMgr' -ClassName 'MEMZone' -Property 'WebSite' -Qualifier "Name = Description `n Value = MEMZone Blog"
 .EXAMPLE
-    "Name = Description `n Value = SCCMZone Blog" | Set-WmiPropertyQualifier -Namespace 'ROOT\SCCM' -ClassName 'SCCMZone' -Property 'WebSite'
+    "Name = Description `n Value = MEMZone Blog" | Set-WmiPropertyQualifier -Namespace 'ROOT\ConfigMgr' -ClassName 'MEMZone' -Property 'WebSite'
 .NOTES
     This is a module function and can typically be called directly.
 .LINK
-    https://sccm-zone.com
+    https://MEM.Zone/
 .LINK
-    https://github.com/Ioan-Popovici/SCCM
+    https://MEM.Zone/PSWmiToolKit-RELEASES
+.LINK
+    https://MEM.Zone/PSWmiToolKit/GIT
+.LINK
+    https://MEM.Zone/PSWmiToolKit/ISSUES
 #>
     [CmdletBinding()]
     Param (
-        [Parameter(Mandatory=$false,Position=0)]
+        [Parameter(Mandatory = $false, Position = 0)]
         [ValidateNotNullorEmpty()]
         [string]$Namespace = 'ROOT\cimv2',
-        [Parameter(Mandatory=$true,Position=1)]
+        [Parameter(Mandatory = $true, Position = 1)]
         [ValidateNotNullorEmpty()]
         [string]$ClassName,
-        [Parameter(Mandatory=$true,Position=2)]
+        [Parameter(Mandatory = $true, Position = 2)]
         [ValidateNotNullorEmpty()]
         [string]$PropertyName,
-        [Parameter(Mandatory=$false,ValueFromPipeline,Position=3)]
+        [Parameter(Mandatory = $false,ValueFromPipeline, Position = 3)]
         [ValidateNotNullorEmpty()]
         [PSCustomObject]$Qualifier = @()
     )
