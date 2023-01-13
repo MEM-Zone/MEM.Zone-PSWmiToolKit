@@ -1,6 +1,6 @@
 # PSWmiToolkit release history
 
-## 3.1.1 - 2022-02-09
+## 3.1.0 - 2022-02-09
 
 * Moved to `MEM-Zone`
 * Updated Links
