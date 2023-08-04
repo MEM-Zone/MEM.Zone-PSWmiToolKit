@@ -12,7 +12,7 @@
     RootModule            = 'PSWmiToolKit.psm1'
 
     # Version number of this module.
-    ModuleVersion         = '3.1.0'
+    ModuleVersion         = '3.1.3'
 
     # Supported PSEditions
     # CompatiblePSEditions = @()
