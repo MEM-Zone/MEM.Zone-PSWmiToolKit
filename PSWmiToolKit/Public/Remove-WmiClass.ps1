@@ -24,9 +24,9 @@ Function Remove-WmiClass {
 .LINK
     https://MEM.Zone/PSWmiToolKit-RELEASES
 .LINK
-    https://MEM.Zone/PSWmiToolKit/GIT
+    https://MEM.Zone/PSWmiToolKit-GIT
 .LINK
-    https://MEM.Zone/PSWmiToolKit/ISSUES
+    https://MEM.Zone/PSWmiToolKit-ISSUES
 #>
     [CmdletBinding()]
     Param (

@@ -147,14 +147,14 @@
     <command:examples>
       <command:example>
         <maml:title>-------------------------- EXAMPLE 1 --------------------------</maml:title>
-        <dev:code>Copy-WmiClass -ClassName 'SCCMZone' -NamespaceSource 'ROOT\SCCM' -NamespaceDestination 'ROOT\Blog' -CreateDestination</dev:code>
+        <dev:code>Copy-WmiClass -ClassName 'MEMZone' -NamespaceSource 'ROOT\ConfigMgr' -NamespaceDestination 'ROOT\Blog' -CreateDestination</dev:code>
         <dev:remarks>
           <maml:para></maml:para>
         </dev:remarks>
       </command:example>
       <command:example>
         <maml:title>-------------------------- EXAMPLE 2 --------------------------</maml:title>
-        <dev:code>Copy-WmiClass -NamespaceSource 'ROOT\SCCM' -NamespaceDestination 'ROOT\Blog' -CreateDestination</dev:code>
+        <dev:code>Copy-WmiClass -NamespaceSource 'ROOT\ConfigMgr' -NamespaceDestination 'ROOT\Blog' -CreateDestination</dev:code>
         <dev:remarks>
           <maml:para></maml:para>
         </dev:remarks>
@@ -162,12 +162,12 @@
     </command:examples>
     <command:relatedLinks>
       <maml:navigationLink>
-        <maml:linkText>https://sccm-zone.com</maml:linkText>
-        <maml:uri>https://sccm-zone.com</maml:uri>
+        <maml:linkText>https://MEM.Zone/PSWmiToolKit</maml:linkText>
+        <maml:uri>https://MEM.Zone/PSWmiToolKit</maml:uri>
       </maml:navigationLink>
       <maml:navigationLink>
-        <maml:linkText>https://github.com/JhonnyTerminus/SCCM</maml:linkText>
-        <maml:uri>https://github.com/JhonnyTerminus/SCCM</maml:uri>
+        <maml:linkText>https://MEM.Zone/PSWmiToolKit-ISSUES</maml:linkText>
+        <maml:uri>https://MEM.Zone/PSWmiToolKit-ISSUES</maml:uri>
       </maml:navigationLink>
     </command:relatedLinks>
   </command:command>
@@ -295,14 +295,14 @@
     <command:examples>
       <command:example>
         <maml:title>-------------------------- EXAMPLE 1 --------------------------</maml:title>
-        <dev:code>Copy-WmiClassQualifier -ClassPathSource 'ROOT\SCCM:SCCMZone' -ClassPathDestination 'ROOT\SCCM:SCCMZoneBlog' -CreateDestination</dev:code>
+        <dev:code>Copy-WmiClassQualifier -ClassPathSource 'ROOT\ConfigMgr:MEMZone' -ClassPathDestination 'ROOT\ConfigMgr:MEMZoneBlog' -CreateDestination</dev:code>
         <dev:remarks>
           <maml:para></maml:para>
         </dev:remarks>
       </command:example>
       <command:example>
         <maml:title>-------------------------- EXAMPLE 2 --------------------------</maml:title>
-        <dev:code>Copy-WmiClassQualifier -ClassPathSource 'ROOT\SCCM:SCCMZone' -ClassPathDestination 'ROOT\SCCM:SCCMZoneBlog' -QualifierName 'Description' -CreateDestination</dev:code>
+        <dev:code>Copy-WmiClassQualifier -ClassPathSource 'ROOT\ConfigMgr:MEMZone' -ClassPathDestination 'ROOT\ConfigMgr:MEMZoneBlog' -QualifierName 'Description' -CreateDestination</dev:code>
         <dev:remarks>
           <maml:para></maml:para>
         </dev:remarks>
@@ -310,12 +310,12 @@
     </command:examples>
     <command:relatedLinks>
       <maml:navigationLink>
-        <maml:linkText>https://sccm-zone.com</maml:linkText>
-        <maml:uri>https://sccm-zone.com</maml:uri>
+        <maml:linkText>https://MEM.Zone/PSWmiToolKit</maml:linkText>
+        <maml:uri>https://MEM.Zone/PSWmiToolKit</maml:uri>
       </maml:navigationLink>
       <maml:navigationLink>
-        <maml:linkText>https://github.com/JhonnyTerminus/SCCM</maml:linkText>
-        <maml:uri>https://github.com/JhonnyTerminus/SCCM</maml:uri>
+        <maml:linkText>https://MEM.Zone/PSWmiToolKit-ISSUES</maml:linkText>
+        <maml:uri>https://MEM.Zone/PSWmiToolKit-ISSUES</maml:uri>
       </maml:navigationLink>
     </command:relatedLinks>
   </command:command>
@@ -466,34 +466,34 @@
     <command:examples>
       <command:example>
         <maml:title>-------------------------- EXAMPLE 1 --------------------------</maml:title>
-        <dev:code>Copy-WmiInstance -ClassPathSource 'ROOT\SCCM:SCCMZone' -ClassPathDestination 'ROOT\SCCM:SCCMZoneBlog' -CreateDestination</dev:code>
+        <dev:code>Copy-WmiInstance -ClassPathSource 'ROOT\ConfigMgr:MEMZone' -ClassPathDestination 'ROOT\ConfigMgr:MEMZoneBlog' -CreateDestination</dev:code>
         <dev:remarks>
           <maml:para></maml:para>
         </dev:remarks>
       </command:example>
       <command:example>
         <maml:title>-------------------------- EXAMPLE 2 --------------------------</maml:title>
-        <dev:code>[hashtable]$Property = @{ Description = 'SCCMZone WebSite' }</dev:code>
+        <dev:code>[hashtable]$Property = @{ Description = 'MEMZone WebSite' }</dev:code>
         <dev:remarks>
-          <maml:para>Copy-WmiInstance -ClassPathSource 'ROOT\SCCM:SCCMZone' -ClassPathDestination 'ROOT\SCCM:SCCMZoneBlog' -Property $Property -CreateDestination</maml:para>
+          <maml:para>Copy-WmiInstance -ClassPathSource 'ROOT\ConfigMgr:MEMZone' -ClassPathDestination 'ROOT\ConfigMgr:MEMZoneBlog' -Property $Property -CreateDestination</maml:para>
         </dev:remarks>
       </command:example>
       <command:example>
         <maml:title>-------------------------- EXAMPLE 3 --------------------------</maml:title>
         <dev:code>[hashtable]$Property = @{</dev:code>
         <dev:remarks>
-          <maml:para>SCCMZoneWebSite = 'https:\SCCM-Zone.com'     Description = 'SCCMZone WebSite' } Copy-WmiInstance -ClassPathSource 'ROOT\SCCM:SCCMZone' -ClassPathDestination 'ROOT\SCCM:SCCMZoneBlog'  -Property $Property -MatchAll -CreateDestination</maml:para>
+          <maml:para>MEMZoneWebsite = 'https:\ConfigMgr-Zone.com'     Description = 'MEMZone WebSite' } Copy-WmiInstance -ClassPathSource 'ROOT\ConfigMgr:MEMZone' -ClassPathDestination 'ROOT\ConfigMgr:MEMZoneBlog'  -Property $Property -MatchAll -CreateDestination</maml:para>
         </dev:remarks>
       </command:example>
     </command:examples>
     <command:relatedLinks>
       <maml:navigationLink>
-        <maml:linkText>https://sccm-zone.com</maml:linkText>
-        <maml:uri>https://sccm-zone.com</maml:uri>
+        <maml:linkText>https://MEM.Zone/PSWmiToolKit</maml:linkText>
+        <maml:uri>https://MEM.Zone/PSWmiToolKit</maml:uri>
       </maml:navigationLink>
       <maml:navigationLink>
-        <maml:linkText>https://github.com/JhonnyTerminus/SCCM</maml:linkText>
-        <maml:uri>https://github.com/JhonnyTerminus/SCCM</maml:uri>
+        <maml:linkText>https://MEM.Zone/PSWmiToolKit-ISSUES</maml:linkText>
+        <maml:uri>https://MEM.Zone/PSWmiToolKit-ISSUES</maml:uri>
       </maml:navigationLink>
     </command:relatedLinks>
   </command:command>
@@ -597,14 +597,14 @@
     <command:examples>
       <command:example>
         <maml:title>-------------------------- EXAMPLE 1 --------------------------</maml:title>
-        <dev:code>Copy-WmiNamespace -NamespaceSource 'ROOT\SCCMZone' -NamespaceDestination 'ROOT\cimv2' -Force</dev:code>
+        <dev:code>Copy-WmiNamespace -NamespaceSource 'ROOT\MEMZone' -NamespaceDestination 'ROOT\cimv2' -Force</dev:code>
         <dev:remarks>
           <maml:para></maml:para>
         </dev:remarks>
       </command:example>
       <command:example>
         <maml:title>-------------------------- EXAMPLE 2 --------------------------</maml:title>
-        <dev:code>Copy-WmiNamespace -NamespaceSource 'ROOT\SCCMZone' -NamespaceDestination 'ROOT\cimv2' -ErrorAction 'SilentlyContinue'</dev:code>
+        <dev:code>Copy-WmiNamespace -NamespaceSource 'ROOT\MEMZone' -NamespaceDestination 'ROOT\cimv2' -ErrorAction 'SilentlyContinue'</dev:code>
         <dev:remarks>
           <maml:para></maml:para>
         </dev:remarks>
@@ -612,12 +612,12 @@
     </command:examples>
     <command:relatedLinks>
       <maml:navigationLink>
-        <maml:linkText>https://sccm-zone.com</maml:linkText>
-        <maml:uri>https://sccm-zone.com</maml:uri>
+        <maml:linkText>https://MEM.Zone/PSWmiToolKit</maml:linkText>
+        <maml:uri>https://MEM.Zone/PSWmiToolKit</maml:uri>
       </maml:navigationLink>
       <maml:navigationLink>
-        <maml:linkText>https://github.com/JhonnyTerminus/SCCM</maml:linkText>
-        <maml:uri>https://github.com/JhonnyTerminus/SCCM</maml:uri>
+        <maml:linkText>https://MEM.Zone/PSWmiToolKit-ISSUES</maml:linkText>
+        <maml:uri>https://MEM.Zone/PSWmiToolKit-ISSUES</maml:uri>
       </maml:navigationLink>
     </command:relatedLinks>
   </command:command>
@@ -745,14 +745,14 @@
     <command:examples>
       <command:example>
         <maml:title>-------------------------- EXAMPLE 1 --------------------------</maml:title>
-        <dev:code>Copy-WmiProperty -ClassPathSource 'ROOT\SCCM:SCCMZone' -ClassPathDestination 'ROOT\SCCM:SCCMZoneBlog' -CreateDestination</dev:code>
+        <dev:code>Copy-WmiProperty -ClassPathSource 'ROOT\ConfigMgr:MEMZone' -ClassPathDestination 'ROOT\ConfigMgr:MEMZoneBlog' -CreateDestination</dev:code>
         <dev:remarks>
           <maml:para></maml:para>
         </dev:remarks>
       </command:example>
       <command:example>
         <maml:title>-------------------------- EXAMPLE 2 --------------------------</maml:title>
-        <dev:code>Copy-WmiProperty -ClassPathSource 'ROOT\SCCM:SCCMZone' -ClassPathDestination 'ROOT\SCCM:SCCMZoneBlog' -PropertyName 'SCCMZoneWebSite' -CreateDestination</dev:code>
+        <dev:code>Copy-WmiProperty -ClassPathSource 'ROOT\ConfigMgr:MEMZone' -ClassPathDestination 'ROOT\ConfigMgr:MEMZoneBlog' -PropertyName 'MEMZoneWebsite' -CreateDestination</dev:code>
         <dev:remarks>
           <maml:para></maml:para>
         </dev:remarks>
@@ -760,12 +760,12 @@
     </command:examples>
     <command:relatedLinks>
       <maml:navigationLink>
-        <maml:linkText>https://sccm-zone.com</maml:linkText>
-        <maml:uri>https://sccm-zone.com</maml:uri>
+        <maml:linkText>https://MEM.Zone/PSWmiToolKit</maml:linkText>
+        <maml:uri>https://MEM.Zone/PSWmiToolKit</maml:uri>
       </maml:navigationLink>
       <maml:navigationLink>
-        <maml:linkText>https://github.com/JhonnyTerminus/SCCM</maml:linkText>
-        <maml:uri>https://github.com/JhonnyTerminus/SCCM</maml:uri>
+        <maml:linkText>https://MEM.Zone/PSWmiToolKit-ISSUES</maml:linkText>
+        <maml:uri>https://MEM.Zone/PSWmiToolKit-ISSUES</maml:uri>
       </maml:navigationLink>
     </command:relatedLinks>
   </command:command>
@@ -911,21 +911,21 @@
     <command:examples>
       <command:example>
         <maml:title>-------------------------- EXAMPLE 1 --------------------------</maml:title>
-        <dev:code>Get-WmiClass -Namespace 'ROOT\SCCM' -ClassName 'SCCMZone'</dev:code>
+        <dev:code>Get-WmiClass -Namespace 'ROOT\ConfigMgr' -ClassName 'MEMZone'</dev:code>
         <dev:remarks>
           <maml:para></maml:para>
         </dev:remarks>
       </command:example>
       <command:example>
         <maml:title>-------------------------- EXAMPLE 2 --------------------------</maml:title>
-        <dev:code>Get-WmiClass -Namespace 'ROOT\SCCM' -QualifierName 'Description'</dev:code>
+        <dev:code>Get-WmiClass -Namespace 'ROOT\ConfigMgr' -QualifierName 'Description'</dev:code>
         <dev:remarks>
           <maml:para></maml:para>
         </dev:remarks>
       </command:example>
       <command:example>
         <maml:title>-------------------------- EXAMPLE 3 --------------------------</maml:title>
-        <dev:code>Get-WmiClass -Namespace 'ROOT\SCCM'</dev:code>
+        <dev:code>Get-WmiClass -Namespace 'ROOT\ConfigMgr'</dev:code>
         <dev:remarks>
           <maml:para></maml:para>
         </dev:remarks>
@@ -933,12 +933,12 @@
     </command:examples>
     <command:relatedLinks>
       <maml:navigationLink>
-        <maml:linkText>https://sccm-zone.com</maml:linkText>
-        <maml:uri>https://sccm-zone.com</maml:uri>
+        <maml:linkText>https://MEM.Zone/PSWmiToolKit</maml:linkText>
+        <maml:uri>https://MEM.Zone/PSWmiToolKit</maml:uri>
       </maml:navigationLink>
       <maml:navigationLink>
-        <maml:linkText>https://github.com/JhonnyTerminus/SCCM</maml:linkText>
-        <maml:uri>https://github.com/JhonnyTerminus/SCCM</maml:uri>
+        <maml:linkText>https://MEM.Zone/PSWmiToolKit-ISSUES</maml:linkText>
+        <maml:uri>https://MEM.Zone/PSWmiToolKit-ISSUES</maml:uri>
       </maml:navigationLink>
     </command:relatedLinks>
   </command:command>
@@ -1067,21 +1067,21 @@
     <command:examples>
       <command:example>
         <maml:title>-------------------------- EXAMPLE 1 --------------------------</maml:title>
-        <dev:code>Get-WmiClassQualifier -Namespace 'ROOT\SCCM' -ClassName 'SCCMZone' -QualifierName 'Description' -QualifierValue 'SCCMZone Blog'</dev:code>
+        <dev:code>Get-WmiClassQualifier -Namespace 'ROOT\ConfigMgr' -ClassName 'MEMZone' -QualifierName 'Description' -QualifierValue 'MEMZone Blog'</dev:code>
         <dev:remarks>
           <maml:para></maml:para>
         </dev:remarks>
       </command:example>
       <command:example>
         <maml:title>-------------------------- EXAMPLE 2 --------------------------</maml:title>
-        <dev:code>Get-WmiClassQualifier -Namespace 'ROOT\SCCM' -ClassName 'SCCMZone' -QualifierName 'Description' -QualifierValue 'SCCMZone*'</dev:code>
+        <dev:code>Get-WmiClassQualifier -Namespace 'ROOT\ConfigMgr' -ClassName 'MEMZone' -QualifierName 'Description' -QualifierValue 'MEMZone*'</dev:code>
         <dev:remarks>
           <maml:para></maml:para>
         </dev:remarks>
       </command:example>
       <command:example>
         <maml:title>-------------------------- EXAMPLE 3 --------------------------</maml:title>
-        <dev:code>Get-WmiClassQualifier -Namespace 'ROOT\SCCM' -ClassName 'SCCMZone'</dev:code>
+        <dev:code>Get-WmiClassQualifier -Namespace 'ROOT\ConfigMgr' -ClassName 'MEMZone'</dev:code>
         <dev:remarks>
           <maml:para></maml:para>
         </dev:remarks>
@@ -1089,12 +1089,12 @@
     </command:examples>
     <command:relatedLinks>
       <maml:navigationLink>
-        <maml:linkText>https://sccm-zone.com</maml:linkText>
-        <maml:uri>https://sccm-zone.com</maml:uri>
+        <maml:linkText>https://MEM.Zone/PSWmiToolKit</maml:linkText>
+        <maml:uri>https://MEM.Zone/PSWmiToolKit</maml:uri>
       </maml:navigationLink>
       <maml:navigationLink>
-        <maml:linkText>https://github.com/JhonnyTerminus/SCCM</maml:linkText>
-        <maml:uri>https://github.com/JhonnyTerminus/SCCM</maml:uri>
+        <maml:linkText>https://MEM.Zone/PSWmiToolKit-ISSUES</maml:linkText>
+        <maml:uri>https://MEM.Zone/PSWmiToolKit-ISSUES</maml:uri>
       </maml:navigationLink>
     </command:relatedLinks>
   </command:command>
@@ -1224,19 +1224,19 @@
         <maml:title>-------------------------- EXAMPLE 1 --------------------------</maml:title>
         <dev:code>[hashtable]$Property = @{</dev:code>
         <dev:remarks>
-          <maml:para>'ServerPort' = '80'     'ServerIP' = '10.10.10.11'     'Source' = 'SCCMZone Blog' } Get-WmiInstance -Namespace 'ROOT' -ClassName 'SCCMZone' -Property $Property</maml:para>
+          <maml:para>'ServerPort' = '80'     'ServerIP' = '10.10.10.11'     'Source' = 'MEMZone Blog' } Get-WmiInstance -Namespace 'ROOT' -ClassName 'MEMZone' -Property $Property</maml:para>
         </dev:remarks>
       </command:example>
       <command:example>
         <maml:title>-------------------------- EXAMPLE 2 --------------------------</maml:title>
-        <dev:code>Get-WmiInstance -Namespace 'ROOT' -ClassName 'SCCMZone' -Property @{ 'Source' = 'SCCMZone Blog' } -KeyOnly</dev:code>
+        <dev:code>Get-WmiInstance -Namespace 'ROOT' -ClassName 'MEMZone' -Property @{ 'Source' = 'MEMZone Blog' } -KeyOnly</dev:code>
         <dev:remarks>
           <maml:para></maml:para>
         </dev:remarks>
       </command:example>
       <command:example>
         <maml:title>-------------------------- EXAMPLE 3 --------------------------</maml:title>
-        <dev:code>Get-WmiInstance -Namespace 'ROOT' -ClassName 'SCCMZone'</dev:code>
+        <dev:code>Get-WmiInstance -Namespace 'ROOT' -ClassName 'MEMZone'</dev:code>
         <dev:remarks>
           <maml:para></maml:para>
         </dev:remarks>
@@ -1244,12 +1244,12 @@
     </command:examples>
     <command:relatedLinks>
       <maml:navigationLink>
-        <maml:linkText>https://sccm-zone.com</maml:linkText>
-        <maml:uri>https://sccm-zone.com</maml:uri>
+        <maml:linkText>https://MEM.Zone/PSWmiToolKit</maml:linkText>
+        <maml:uri>https://MEM.Zone/PSWmiToolKit</maml:uri>
       </maml:navigationLink>
       <maml:navigationLink>
-        <maml:linkText>https://github.com/JhonnyTerminus/SCCM</maml:linkText>
-        <maml:uri>https://github.com/JhonnyTerminus/SCCM</maml:uri>
+        <maml:linkText>https://MEM.Zone/PSWmiToolKit-ISSUES</maml:linkText>
+        <maml:uri>https://MEM.Zone/PSWmiToolKit-ISSUES</maml:uri>
       </maml:navigationLink>
     </command:relatedLinks>
   </command:command>
@@ -1370,7 +1370,7 @@
     <command:examples>
       <command:example>
         <maml:title>-------------------------- EXAMPLE 1 --------------------------</maml:title>
-        <dev:code>Get-WmiNamespace -NameSpace 'ROOT\SCCM'</dev:code>
+        <dev:code>Get-WmiNamespace -NameSpace 'ROOT\ConfigMgr'</dev:code>
         <dev:remarks>
           <maml:para></maml:para>
         </dev:remarks>
@@ -1398,7 +1398,7 @@
       </command:example>
       <command:example>
         <maml:title>-------------------------- EXAMPLE 5 --------------------------</maml:title>
-        <dev:code>'Root\SCCM', 'Root\SC*' | Get-WmiNamespace</dev:code>
+        <dev:code>'Root\ConfigMgr', 'Root\SC*' | Get-WmiNamespace</dev:code>
         <dev:remarks>
           <maml:para></maml:para>
         </dev:remarks>
@@ -1406,12 +1406,12 @@
     </command:examples>
     <command:relatedLinks>
       <maml:navigationLink>
-        <maml:linkText>https://github.com/JhonnyTerminus/PSWmiToolKit</maml:linkText>
-        <maml:uri>https://github.com/JhonnyTerminus/PSWmiToolKit</maml:uri>
+        <maml:linkText>https://MEM.Zone/PSWmiToolKit</maml:linkText>
+        <maml:uri>https://MEM.Zone/PSWmiToolKit</maml:uri>
       </maml:navigationLink>
       <maml:navigationLink>
-        <maml:linkText>https://sccm-zone.com</maml:linkText>
-        <maml:uri>https://sccm-zone.com</maml:uri>
+        <maml:linkText>https://MEM.Zone/PSWmiToolKit-ISSUES</maml:linkText>
+        <maml:uri>https://MEM.Zone/PSWmiToolKit-ISSUES</maml:uri>
       </maml:navigationLink>
     </command:relatedLinks>
   </command:command>
@@ -1588,21 +1588,21 @@
     <command:examples>
       <command:example>
         <maml:title>-------------------------- EXAMPLE 1 --------------------------</maml:title>
-        <dev:code>Get-WmiProperty -Namespace 'ROOT' -ClassName 'SCCMZone'</dev:code>
+        <dev:code>Get-WmiProperty -Namespace 'ROOT' -ClassName 'MEMZone'</dev:code>
         <dev:remarks>
           <maml:para></maml:para>
         </dev:remarks>
       </command:example>
       <command:example>
         <maml:title>-------------------------- EXAMPLE 2 --------------------------</maml:title>
-        <dev:code>Get-WmiProperty -Namespace 'ROOT' -ClassName 'SCCMZone' -PropertyName 'WebsiteSite' -QualifierName 'key'</dev:code>
+        <dev:code>Get-WmiProperty -Namespace 'ROOT' -ClassName 'MEMZone' -PropertyName 'WebsiteSite' -QualifierName 'key'</dev:code>
         <dev:remarks>
           <maml:para></maml:para>
         </dev:remarks>
       </command:example>
       <command:example>
         <maml:title>-------------------------- EXAMPLE 3 --------------------------</maml:title>
-        <dev:code>Get-WmiProperty -Namespace 'ROOT' -ClassName 'SCCMZone' -PropertyName '*Site'</dev:code>
+        <dev:code>Get-WmiProperty -Namespace 'ROOT' -ClassName 'MEMZone' -PropertyName '*Site'</dev:code>
         <dev:remarks>
           <maml:para></maml:para>
         </dev:remarks>
@@ -1611,18 +1611,18 @@
         <maml:title>-------------------------- EXAMPLE 4 --------------------------</maml:title>
         <dev:code>$Property = [PSCustomobject]@{</dev:code>
         <dev:remarks>
-          <maml:para>'Name' = 'Website'     'Value' = $null     'CimType' = 'String' } Get-WmiProperty -Namespace 'ROOT' -ClassName 'SCCMZone' -Property $Property $Property | Get-WmiProperty -Namespace 'ROOT' -ClassName 'SCCMZone'</maml:para>
+          <maml:para>'Name' = 'Website'     'Value' = $null     'CimType' = 'String' } Get-WmiProperty -Namespace 'ROOT' -ClassName 'MEMZone' -Property $Property $Property | Get-WmiProperty -Namespace 'ROOT' -ClassName 'MEMZone'</maml:para>
         </dev:remarks>
       </command:example>
     </command:examples>
     <command:relatedLinks>
       <maml:navigationLink>
-        <maml:linkText>https://sccm-zone.com</maml:linkText>
-        <maml:uri>https://sccm-zone.com</maml:uri>
+        <maml:linkText>https://MEM.Zone/PSWmiToolKit</maml:linkText>
+        <maml:uri>https://MEM.Zone/PSWmiToolKit</maml:uri>
       </maml:navigationLink>
       <maml:navigationLink>
-        <maml:linkText>https://github.com/JhonnyTerminus/SCCM</maml:linkText>
-        <maml:uri>https://github.com/JhonnyTerminus/SCCM</maml:uri>
+        <maml:linkText>https://MEM.Zone/PSWmiToolKit-ISSUES</maml:linkText>
+        <maml:uri>https://MEM.Zone/PSWmiToolKit-ISSUES</maml:uri>
       </maml:navigationLink>
     </command:relatedLinks>
   </command:command>
@@ -1775,21 +1775,21 @@
     <command:examples>
       <command:example>
         <maml:title>-------------------------- EXAMPLE 1 --------------------------</maml:title>
-        <dev:code>Get-WmiPropertyQualifier -Namespace 'ROOT' -ClassName 'SCCMZone' -PropertyName 'SCCMZone Blog'</dev:code>
+        <dev:code>Get-WmiPropertyQualifier -Namespace 'ROOT' -ClassName 'MEMZone' -PropertyName 'MEMZone Blog'</dev:code>
         <dev:remarks>
           <maml:para></maml:para>
         </dev:remarks>
       </command:example>
       <command:example>
         <maml:title>-------------------------- EXAMPLE 2 --------------------------</maml:title>
-        <dev:code>'SCCMZone Blog', 'ServerAddress' | Get-WmiPropertyQualifier -Namespace 'ROOT' -ClassName 'SCCMZone'</dev:code>
+        <dev:code>'MEMZone Blog', 'ServerAddress' | Get-WmiPropertyQualifier -Namespace 'ROOT' -ClassName 'MEMZone'</dev:code>
         <dev:remarks>
           <maml:para></maml:para>
         </dev:remarks>
       </command:example>
       <command:example>
         <maml:title>-------------------------- EXAMPLE 3 --------------------------</maml:title>
-        <dev:code>Get-WmiPropertyQualifier -Namespace 'ROOT' -ClassName 'SCCMZone' -QualifierName 'key','Description'</dev:code>
+        <dev:code>Get-WmiPropertyQualifier -Namespace 'ROOT' -ClassName 'MEMZone' -QualifierName 'key','Description'</dev:code>
         <dev:remarks>
           <maml:para></maml:para>
         </dev:remarks>
@@ -1797,12 +1797,12 @@
     </command:examples>
     <command:relatedLinks>
       <maml:navigationLink>
-        <maml:linkText>https://sccm-zone.com</maml:linkText>
-        <maml:uri>https://sccm-zone.com</maml:uri>
+        <maml:linkText>https://MEM.Zone/PSWmiToolKit</maml:linkText>
+        <maml:uri>https://MEM.Zone/PSWmiToolKit</maml:uri>
       </maml:navigationLink>
       <maml:navigationLink>
-        <maml:linkText>https://github.com/JhonnyTerminus/SCCM</maml:linkText>
-        <maml:uri>https://github.com/JhonnyTerminus/SCCM</maml:uri>
+        <maml:linkText>https://MEM.Zone/PSWmiToolKit-ISSUES</maml:linkText>
+        <maml:uri>https://MEM.Zone/PSWmiToolKit-ISSUES</maml:uri>
       </maml:navigationLink>
     </command:relatedLinks>
   </command:command>
@@ -1932,19 +1932,19 @@
         <maml:title>-------------------------- EXAMPLE 1 --------------------------</maml:title>
         <dev:code>[hashtable]$Qualifiers = @{</dev:code>
         <dev:remarks>
-          <maml:para>Key = $true     Static = $true     Description = 'SCCMZone Blog' } New-WmiClass -Namespace 'ROOT' -ClassName 'SCCMZone' -Qualifiers $Qualifiers</maml:para>
+          <maml:para>Key = $true     Static = $true     Description = 'MEMZone Blog' } New-WmiClass -Namespace 'ROOT' -ClassName 'MEMZone' -Qualifiers $Qualifiers</maml:para>
         </dev:remarks>
       </command:example>
       <command:example>
         <maml:title>-------------------------- EXAMPLE 2 --------------------------</maml:title>
-        <dev:code>"Key = $true `n Static = $true `n Description = SCCMZone Blog" | New-WmiClass -Namespace 'ROOT' -ClassName 'SCCMZone'</dev:code>
+        <dev:code>"Key = $true `n Static = $true `n Description = MEMZone Blog" | New-WmiClass -Namespace 'ROOT' -ClassName 'MEMZone'</dev:code>
         <dev:remarks>
           <maml:para></maml:para>
         </dev:remarks>
       </command:example>
       <command:example>
         <maml:title>-------------------------- EXAMPLE 3 --------------------------</maml:title>
-        <dev:code>New-WmiClass -Namespace 'ROOT\SCCM' -ClassName 'SCCMZone' -CreateDestination</dev:code>
+        <dev:code>New-WmiClass -Namespace 'ROOT\ConfigMgr' -ClassName 'MEMZone' -CreateDestination</dev:code>
         <dev:remarks>
           <maml:para></maml:para>
         </dev:remarks>
@@ -1952,12 +1952,12 @@
     </command:examples>
     <command:relatedLinks>
       <maml:navigationLink>
-        <maml:linkText>https://sccm-zone.com</maml:linkText>
-        <maml:uri>https://sccm-zone.com</maml:uri>
+        <maml:linkText>https://MEM.Zone/PSWmiToolKit</maml:linkText>
+        <maml:uri>https://MEM.Zone/PSWmiToolKit</maml:uri>
       </maml:navigationLink>
       <maml:navigationLink>
-        <maml:linkText>https://github.com/JhonnyTerminus/SCCM</maml:linkText>
-        <maml:uri>https://github.com/JhonnyTerminus/SCCM</maml:uri>
+        <maml:linkText>https://MEM.Zone/PSWmiToolKit-ISSUES</maml:linkText>
+        <maml:uri>https://MEM.Zone/PSWmiToolKit-ISSUES</maml:uri>
       </maml:navigationLink>
     </command:relatedLinks>
   </command:command>
@@ -2088,12 +2088,12 @@
         <maml:title>-------------------------- EXAMPLE 1 --------------------------</maml:title>
         <dev:code>[hashtable]$Property = @{</dev:code>
         <dev:remarks>
-          <maml:para>'ServerPort' = '89'     'ServerIP' = '11.11.11.11'     'Source' = 'File1'     'Date' = $(Get-Date) } New-WmiInstance -Namespace 'ROOT' -ClassName 'SCCMZone' -Key 'File1' -Property $Property</maml:para>
+          <maml:para>'ServerPort' = '89'     'ServerIP' = '11.11.11.11'     'Source' = 'File1'     'Date' = $(Get-Date) } New-WmiInstance -Namespace 'ROOT' -ClassName 'MEMZone' -Key 'File1' -Property $Property</maml:para>
         </dev:remarks>
       </command:example>
       <command:example>
         <maml:title>-------------------------- EXAMPLE 2 --------------------------</maml:title>
-        <dev:code>"Server Port = 89 `n ServerIp = 11.11.11.11 `n Source = File `n Date = $(GetDate)" | New-WmiInstance -Namespace 'ROOT' -ClassName 'SCCMZone' -Property $Property</dev:code>
+        <dev:code>"Server Port = 89 `n ServerIp = 11.11.11.11 `n Source = File `n Date = $(GetDate)" | New-WmiInstance -Namespace 'ROOT' -ClassName 'MEMZone' -Property $Property</dev:code>
         <dev:remarks>
           <maml:para></maml:para>
         </dev:remarks>
@@ -2101,12 +2101,12 @@
     </command:examples>
     <command:relatedLinks>
       <maml:navigationLink>
-        <maml:linkText>https://sccm-zone.com</maml:linkText>
-        <maml:uri>https://sccm-zone.com</maml:uri>
+        <maml:linkText>https://MEM.Zone/PSWmiToolKit</maml:linkText>
+        <maml:uri>https://MEM.Zone/PSWmiToolKit</maml:uri>
       </maml:navigationLink>
       <maml:navigationLink>
-        <maml:linkText>https://github.com/JhonnyTerminus/SCCM</maml:linkText>
-        <maml:uri>https://github.com/JhonnyTerminus/SCCM</maml:uri>
+        <maml:linkText>https://MEM.Zone/PSWmiToolKit-ISSUES</maml:linkText>
+        <maml:uri>https://MEM.Zone/PSWmiToolKit-ISSUES</maml:uri>
       </maml:navigationLink>
     </command:relatedLinks>
   </command:command>
@@ -2186,14 +2186,14 @@
     <command:examples>
       <command:example>
         <maml:title>-------------------------- EXAMPLE 1 --------------------------</maml:title>
-        <dev:code>New-WmiNamespace -Namespace 'ROOT\SCCM'</dev:code>
+        <dev:code>New-WmiNamespace -Namespace 'ROOT\ConfigMgr'</dev:code>
         <dev:remarks>
           <maml:para></maml:para>
         </dev:remarks>
       </command:example>
       <command:example>
         <maml:title>-------------------------- EXAMPLE 2 --------------------------</maml:title>
-        <dev:code>New-WmiNamespace -Namespace 'ROOT\SCCM\SCCMZone\Blog' -CreateSubTree</dev:code>
+        <dev:code>New-WmiNamespace -Namespace 'ROOT\ConfigMgr\MEMZone\Blog' -CreateSubTree</dev:code>
         <dev:remarks>
           <maml:para></maml:para>
         </dev:remarks>
@@ -2201,12 +2201,12 @@
     </command:examples>
     <command:relatedLinks>
       <maml:navigationLink>
-        <maml:linkText>https://sccm-zone.com</maml:linkText>
-        <maml:uri>https://sccm-zone.com</maml:uri>
+        <maml:linkText>https://MEM.Zone/PSWmiToolKit</maml:linkText>
+        <maml:uri>https://MEM.Zone/PSWmiToolKit</maml:uri>
       </maml:navigationLink>
       <maml:navigationLink>
-        <maml:linkText>https://github.com/JhonnyTerminus/SCCM</maml:linkText>
-        <maml:uri>https://github.com/JhonnyTerminus/SCCM</maml:uri>
+        <maml:linkText>https://MEM.Zone/PSWmiToolKit-ISSUES</maml:linkText>
+        <maml:uri>https://MEM.Zone/PSWmiToolKit-ISSUES</maml:uri>
       </maml:navigationLink>
     </command:relatedLinks>
   </command:command>
@@ -2361,12 +2361,12 @@
         <maml:title>-------------------------- EXAMPLE 1 --------------------------</maml:title>
         <dev:code>[hashtable]$Qualifiers = @{</dev:code>
         <dev:remarks>
-          <maml:para>Key = $true     Static = $true     Description = 'SCCMZone Blog' } New-WmiProperty -Namespace 'ROOT\SCCM' -ClassName 'SCCMZone' -PropertyName 'Website' -PropertyType 'String' -Qualifiers $Qualifiers</maml:para>
+          <maml:para>Key = $true     Static = $true     Description = 'MEMZone Blog' } New-WmiProperty -Namespace 'ROOT\ConfigMgr' -ClassName 'MEMZone' -PropertyName 'Website' -PropertyType 'String' -Qualifiers $Qualifiers</maml:para>
         </dev:remarks>
       </command:example>
       <command:example>
         <maml:title>-------------------------- EXAMPLE 2 --------------------------</maml:title>
-        <dev:code>"Key = $true `n Description = SCCMZone Blog" | New-WmiProperty -Namespace 'ROOT\SCCM' -ClassName 'SCCMZone' -PropertyName 'Website' -PropertyType 'String'</dev:code>
+        <dev:code>"Key = $true `n Description = MEMZone Blog" | New-WmiProperty -Namespace 'ROOT\ConfigMgr' -ClassName 'MEMZone' -PropertyName 'Website' -PropertyType 'String'</dev:code>
         <dev:remarks>
           <maml:para></maml:para>
         </dev:remarks>
@@ -2374,12 +2374,12 @@
     </command:examples>
     <command:relatedLinks>
       <maml:navigationLink>
-        <maml:linkText>https://sccm-zone.com</maml:linkText>
-        <maml:uri>https://sccm-zone.com</maml:uri>
+        <maml:linkText>https://MEM.Zone/PSWmiToolKit</maml:linkText>
+        <maml:uri>https://MEM.Zone/PSWmiToolKit</maml:uri>
       </maml:navigationLink>
       <maml:navigationLink>
-        <maml:linkText>https://github.com/JhonnyTerminus/SCCM</maml:linkText>
-        <maml:uri>https://github.com/JhonnyTerminus/SCCM</maml:uri>
+        <maml:linkText>https://MEM.Zone/PSWmiToolKit-ISSUES</maml:linkText>
+        <maml:uri>https://MEM.Zone/PSWmiToolKit-ISSUES</maml:uri>
       </maml:navigationLink>
     </command:relatedLinks>
   </command:command>
@@ -2510,7 +2510,7 @@
     <command:relatedLinks>
       <maml:navigationLink>
         <maml:linkText>Online Version:</maml:linkText>
-        <maml:uri>https://sccm-zone.com</maml:uri>
+        <maml:uri>https://MEM.Zone/PSWmiToolKit</maml:uri>
       </maml:navigationLink>
     </command:relatedLinks>
   </command:command>
@@ -2638,14 +2638,14 @@
     <command:examples>
       <command:example>
         <maml:title>-------------------------- EXAMPLE 1 --------------------------</maml:title>
-        <dev:code>Remove-WmiClassQualifier -Namespace 'ROOT' -ClassName 'SCCMZone' -QualifierName 'Description', 'Static'</dev:code>
+        <dev:code>Remove-WmiClassQualifier -Namespace 'ROOT' -ClassName 'MEMZone' -QualifierName 'Description', 'Static'</dev:code>
         <dev:remarks>
           <maml:para></maml:para>
         </dev:remarks>
       </command:example>
       <command:example>
         <maml:title>-------------------------- EXAMPLE 2 --------------------------</maml:title>
-        <dev:code>Remove-WmiClassQualifier -Namespace 'ROOT' -ClassName 'SCCMZone' -RemoveAll</dev:code>
+        <dev:code>Remove-WmiClassQualifier -Namespace 'ROOT' -ClassName 'MEMZone' -RemoveAll</dev:code>
         <dev:remarks>
           <maml:para></maml:para>
         </dev:remarks>
@@ -2653,12 +2653,12 @@
     </command:examples>
     <command:relatedLinks>
       <maml:navigationLink>
-        <maml:linkText>https://sccm-zone.com</maml:linkText>
-        <maml:uri>https://sccm-zone.com</maml:uri>
+        <maml:linkText>https://MEM.Zone/PSWmiToolKit</maml:linkText>
+        <maml:uri>https://MEM.Zone/PSWmiToolKit</maml:uri>
       </maml:navigationLink>
       <maml:navigationLink>
-        <maml:linkText>https://github.com/JhonnyTerminus/SCCM</maml:linkText>
-        <maml:uri>https://github.com/JhonnyTerminus/SCCM</maml:uri>
+        <maml:linkText>https://MEM.Zone/PSWmiToolKit-ISSUES</maml:linkText>
+        <maml:uri>https://MEM.Zone/PSWmiToolKit-ISSUES</maml:uri>
       </maml:navigationLink>
     </command:relatedLinks>
   </command:command>
@@ -2788,18 +2788,18 @@
         <maml:title>-------------------------- EXAMPLE 1 --------------------------</maml:title>
         <dev:code>[hashtable]$Property = @{</dev:code>
         <dev:remarks>
-          <maml:para>'ServerPort' = '80'     'ServerIP' = '10.10.10.11' } Remove-WmiInstance -Namespace 'ROOT' -ClassName 'SCCMZone' -Property $Property -RemoveAll</maml:para>
+          <maml:para>'ServerPort' = '80'     'ServerIP' = '10.10.10.11' } Remove-WmiInstance -Namespace 'ROOT' -ClassName 'MEMZone' -Property $Property -RemoveAll</maml:para>
         </dev:remarks>
       </command:example>
     </command:examples>
     <command:relatedLinks>
       <maml:navigationLink>
-        <maml:linkText>https://sccm-zone.com</maml:linkText>
-        <maml:uri>https://sccm-zone.com</maml:uri>
+        <maml:linkText>https://MEM.Zone/PSWmiToolKit</maml:linkText>
+        <maml:uri>https://MEM.Zone/PSWmiToolKit</maml:uri>
       </maml:navigationLink>
       <maml:navigationLink>
-        <maml:linkText>https://github.com/JhonnyTerminus/SCCM</maml:linkText>
-        <maml:uri>https://github.com/JhonnyTerminus/SCCM</maml:uri>
+        <maml:linkText>https://MEM.Zone/PSWmiToolKit-ISSUES</maml:linkText>
+        <maml:uri>https://MEM.Zone/PSWmiToolKit-ISSUES</maml:uri>
       </maml:navigationLink>
     </command:relatedLinks>
   </command:command>
@@ -2902,7 +2902,7 @@
     <command:examples>
       <command:example>
         <maml:title>-------------------------- EXAMPLE 1 --------------------------</maml:title>
-        <dev:code>Remove-WmiNamespace -Namespace 'ROOT\SCCM' -Force -Recurse</dev:code>
+        <dev:code>Remove-WmiNamespace -Namespace 'ROOT\ConfigMgr' -Force -Recurse</dev:code>
         <dev:remarks>
           <maml:para></maml:para>
         </dev:remarks>
@@ -2910,12 +2910,12 @@
     </command:examples>
     <command:relatedLinks>
       <maml:navigationLink>
-        <maml:linkText>https://sccm-zone.com</maml:linkText>
-        <maml:uri>https://sccm-zone.com</maml:uri>
+        <maml:linkText>https://MEM.Zone/PSWmiToolKit</maml:linkText>
+        <maml:uri>https://MEM.Zone/PSWmiToolKit</maml:uri>
       </maml:navigationLink>
       <maml:navigationLink>
-        <maml:linkText>https://github.com/JhonnyTerminus/SCCM</maml:linkText>
-        <maml:uri>https://github.com/JhonnyTerminus/SCCM</maml:uri>
+        <maml:linkText>https://MEM.Zone/PSWmiToolKit-ISSUES</maml:linkText>
+        <maml:uri>https://MEM.Zone/PSWmiToolKit-ISSUES</maml:uri>
       </maml:navigationLink>
     </command:relatedLinks>
   </command:command>
@@ -3066,14 +3066,14 @@
     <command:examples>
       <command:example>
         <maml:title>-------------------------- EXAMPLE 1 --------------------------</maml:title>
-        <dev:code>Remove-WmiProperty -Namespace 'ROOT' -ClassName 'SCCMZone' -Property 'SCCMZone','Blog'</dev:code>
+        <dev:code>Remove-WmiProperty -Namespace 'ROOT' -ClassName 'MEMZone' -Property 'MEMZone','Blog'</dev:code>
         <dev:remarks>
           <maml:para></maml:para>
         </dev:remarks>
       </command:example>
       <command:example>
         <maml:title>-------------------------- EXAMPLE 2 --------------------------</maml:title>
-        <dev:code>Remove-WmiProperty -Namespace 'ROOT' -ClassName 'SCCMZone' -RemoveAll -Force</dev:code>
+        <dev:code>Remove-WmiProperty -Namespace 'ROOT' -ClassName 'MEMZone' -RemoveAll -Force</dev:code>
         <dev:remarks>
           <maml:para></maml:para>
         </dev:remarks>
@@ -3081,12 +3081,12 @@
     </command:examples>
     <command:relatedLinks>
       <maml:navigationLink>
-        <maml:linkText>https://sccm-zone.com</maml:linkText>
-        <maml:uri>https://sccm-zone.com</maml:uri>
+        <maml:linkText>https://MEM.Zone/PSWmiToolKit</maml:linkText>
+        <maml:uri>https://MEM.Zone/PSWmiToolKit</maml:uri>
       </maml:navigationLink>
       <maml:navigationLink>
-        <maml:linkText>https://github.com/JhonnyTerminus/SCCM</maml:linkText>
-        <maml:uri>https://github.com/JhonnyTerminus/SCCM</maml:uri>
+        <maml:linkText>https://MEM.Zone/PSWmiToolKit-ISSUES</maml:linkText>
+        <maml:uri>https://MEM.Zone/PSWmiToolKit-ISSUES</maml:uri>
       </maml:navigationLink>
     </command:relatedLinks>
   </command:command>
@@ -3261,14 +3261,14 @@
     <command:examples>
       <command:example>
         <maml:title>-------------------------- EXAMPLE 1 --------------------------</maml:title>
-        <dev:code>Remove-WmiPropertyQualifier -Namespace 'ROOT' -ClassName 'SCCMZone' -PropertyName 'Source' -QualifierName 'Key','Description'</dev:code>
+        <dev:code>Remove-WmiPropertyQualifier -Namespace 'ROOT' -ClassName 'MEMZone' -PropertyName 'Source' -QualifierName 'Key','Description'</dev:code>
         <dev:remarks>
           <maml:para></maml:para>
         </dev:remarks>
       </command:example>
       <command:example>
         <maml:title>-------------------------- EXAMPLE 2 --------------------------</maml:title>
-        <dev:code>Remove-WmiPropertyQualifier -Namespace 'ROOT' -ClassName 'SCCMZone' -RemoveAll -Force</dev:code>
+        <dev:code>Remove-WmiPropertyQualifier -Namespace 'ROOT' -ClassName 'MEMZone' -RemoveAll -Force</dev:code>
         <dev:remarks>
           <maml:para></maml:para>
         </dev:remarks>
@@ -3276,12 +3276,12 @@
     </command:examples>
     <command:relatedLinks>
       <maml:navigationLink>
-        <maml:linkText>https://sccm-zone.com</maml:linkText>
-        <maml:uri>https://sccm-zone.com</maml:uri>
+        <maml:linkText>https://MEM.Zone/PSWmiToolKit</maml:linkText>
+        <maml:uri>https://MEM.Zone/PSWmiToolKit</maml:uri>
       </maml:navigationLink>
       <maml:navigationLink>
-        <maml:linkText>https://github.com/JhonnyTerminus/SCCM</maml:linkText>
-        <maml:uri>https://github.com/JhonnyTerminus/SCCM</maml:uri>
+        <maml:linkText>https://MEM.Zone/PSWmiToolKit-ISSUES</maml:linkText>
+        <maml:uri>https://MEM.Zone/PSWmiToolKit-ISSUES</maml:uri>
       </maml:navigationLink>
     </command:relatedLinks>
   </command:command>
@@ -3386,7 +3386,7 @@
     <command:examples>
       <command:example>
         <maml:title>-------------------------- EXAMPLE 1 --------------------------</maml:title>
-        <dev:code>Rename-WmiClass -Namespace 'ROOT\cimv2' -Name 'SCCM' -NewName 'SCCMZone'</dev:code>
+        <dev:code>Rename-WmiClass -Namespace 'ROOT\cimv2' -Name 'ConfigMgr' -NewName 'MEMZone'</dev:code>
         <dev:remarks>
           <maml:para></maml:para>
         </dev:remarks>
@@ -3394,12 +3394,12 @@
     </command:examples>
     <command:relatedLinks>
       <maml:navigationLink>
-        <maml:linkText>https://sccm-zone.com</maml:linkText>
-        <maml:uri>https://sccm-zone.com</maml:uri>
+        <maml:linkText>https://MEM.Zone/PSWmiToolKit</maml:linkText>
+        <maml:uri>https://MEM.Zone/PSWmiToolKit</maml:uri>
       </maml:navigationLink>
       <maml:navigationLink>
-        <maml:linkText>https://github.com/JhonnyTerminus/SCCM</maml:linkText>
-        <maml:uri>https://github.com/JhonnyTerminus/SCCM</maml:uri>
+        <maml:linkText>https://MEM.Zone/PSWmiToolKit-ISSUES</maml:linkText>
+        <maml:uri>https://MEM.Zone/PSWmiToolKit-ISSUES</maml:uri>
       </maml:navigationLink>
     </command:relatedLinks>
   </command:command>
@@ -3504,7 +3504,7 @@
     <command:examples>
       <command:example>
         <maml:title>-------------------------- EXAMPLE 1 --------------------------</maml:title>
-        <dev:code>Rename-WmiNamespace -Namespace 'ROOT\cimv2' -Name 'SCCM' -NewName 'SCCMZone'</dev:code>
+        <dev:code>Rename-WmiNamespace -Namespace 'ROOT\cimv2' -Name 'ConfigMgr' -NewName 'MEMZone'</dev:code>
         <dev:remarks>
           <maml:para></maml:para>
         </dev:remarks>
@@ -3512,12 +3512,12 @@
     </command:examples>
     <command:relatedLinks>
       <maml:navigationLink>
-        <maml:linkText>https://sccm-zone.com</maml:linkText>
-        <maml:uri>https://sccm-zone.com</maml:uri>
+        <maml:linkText>https://MEM.Zone/PSWmiToolKit</maml:linkText>
+        <maml:uri>https://MEM.Zone/PSWmiToolKit</maml:uri>
       </maml:navigationLink>
       <maml:navigationLink>
-        <maml:linkText>https://github.com/JhonnyTerminus/SCCM</maml:linkText>
-        <maml:uri>https://github.com/JhonnyTerminus/SCCM</maml:uri>
+        <maml:linkText>https://MEM.Zone/PSWmiToolKit-ISSUES</maml:linkText>
+        <maml:uri>https://MEM.Zone/PSWmiToolKit-ISSUES</maml:uri>
       </maml:navigationLink>
     </command:relatedLinks>
   </command:command>
@@ -3622,21 +3622,21 @@
     <command:examples>
       <command:example>
         <maml:title>-------------------------- EXAMPLE 1 --------------------------</maml:title>
-        <dev:code>Set-WmiClassQualifier -Namespace 'ROOT' -ClassName 'SCCMZone' -Qualifier @{ Name = 'Description'; Value = 'SCCMZone Blog' }</dev:code>
+        <dev:code>Set-WmiClassQualifier -Namespace 'ROOT' -ClassName 'MEMZone' -Qualifier @{ Name = 'Description'; Value = 'MEMZone Blog' }</dev:code>
         <dev:remarks>
           <maml:para></maml:para>
         </dev:remarks>
       </command:example>
       <command:example>
         <maml:title>-------------------------- EXAMPLE 2 --------------------------</maml:title>
-        <dev:code>Set-WmiClassQualifier -Namespace 'ROOT' -ClassName 'SCCMZone' -Qualifier "Name = Description `n Value = SCCMZone Blog"</dev:code>
+        <dev:code>Set-WmiClassQualifier -Namespace 'ROOT' -ClassName 'MEMZone' -Qualifier "Name = Description `n Value = MEMZone Blog"</dev:code>
         <dev:remarks>
           <maml:para></maml:para>
         </dev:remarks>
       </command:example>
       <command:example>
         <maml:title>-------------------------- EXAMPLE 3 --------------------------</maml:title>
-        <dev:code>"Name = Description `n Value = SCCMZone Blog" | Set-WmiClassQualifier -Namespace 'ROOT' -ClassName 'SCCMZone'</dev:code>
+        <dev:code>"Name = Description `n Value = MEMZone Blog" | Set-WmiClassQualifier -Namespace 'ROOT' -ClassName 'MEMZone'</dev:code>
         <dev:remarks>
           <maml:para></maml:para>
         </dev:remarks>
@@ -3644,12 +3644,12 @@
     </command:examples>
     <command:relatedLinks>
       <maml:navigationLink>
-        <maml:linkText>https://sccm-zone.com</maml:linkText>
-        <maml:uri>https://sccm-zone.com</maml:uri>
+        <maml:linkText>https://MEM.Zone/PSWmiToolKit</maml:linkText>
+        <maml:uri>https://MEM.Zone/PSWmiToolKit</maml:uri>
       </maml:navigationLink>
       <maml:navigationLink>
-        <maml:linkText>https://github.com/JhonnyTerminus/SCCM</maml:linkText>
-        <maml:uri>https://github.com/JhonnyTerminus/SCCM</maml:uri>
+        <maml:linkText>https://MEM.Zone/PSWmiToolKit-ISSUES</maml:linkText>
+        <maml:uri>https://MEM.Zone/PSWmiToolKit-ISSUES</maml:uri>
       </maml:navigationLink>
     </command:relatedLinks>
   </command:command>
@@ -3680,7 +3680,7 @@
             <maml:name>String</maml:name>
             <maml:uri />
           </dev:type>
-          <dev:defaultValue>SCCMZone</dev:defaultValue>
+          <dev:defaultValue>MEMZone</dev:defaultValue>
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="3" aliases="none">
           <maml:name>Key</maml:name>
@@ -3780,7 +3780,7 @@
           <maml:name>String</maml:name>
           <maml:uri />
         </dev:type>
-        <dev:defaultValue>SCCMZone</dev:defaultValue>
+        <dev:defaultValue>MEMZone</dev:defaultValue>
       </command:parameter>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="3" aliases="none">
         <maml:name>Key</maml:name>
@@ -3873,19 +3873,19 @@
         <maml:title>-------------------------- EXAMPLE 1 --------------------------</maml:title>
         <dev:code>[hashtable]$PropertySearch = @{</dev:code>
         <dev:remarks>
-          <maml:para>'ServerPort' = '99'     'ServerIP' = '10.10.10.10' } [hashtable]$Property = @{     'ServerPort' = '88'     'ServerIP' = '11.11.11.11'     'Source' = 'File1'     'Date' = $(Get-Date) } Set-WmiInstance -Namespace 'ROOT' -ClassName 'SCCMZone' -Key 'File1' -PropertySearch $PropertySearch -Property $Property</maml:para>
+          <maml:para>'ServerPort' = '99'     'ServerIP' = '10.10.10.10' } [hashtable]$Property = @{     'ServerPort' = '88'     'ServerIP' = '11.11.11.11'     'Source' = 'File1'     'Date' = $(Get-Date) } Set-WmiInstance -Namespace 'ROOT' -ClassName 'MEMZone' -Key 'File1' -PropertySearch $PropertySearch -Property $Property</maml:para>
         </dev:remarks>
       </command:example>
       <command:example>
         <maml:title>-------------------------- EXAMPLE 2 --------------------------</maml:title>
-        <dev:code>Set-WmiInstance -Namespace 'ROOT' -ClassName 'SCCMZone' -Key 'File1' -Property $Property</dev:code>
+        <dev:code>Set-WmiInstance -Namespace 'ROOT' -ClassName 'MEMZone' -Key 'File1' -Property $Property</dev:code>
         <dev:remarks>
           <maml:para></maml:para>
         </dev:remarks>
       </command:example>
       <command:example>
         <maml:title>-------------------------- EXAMPLE 3 --------------------------</maml:title>
-        <dev:code>Set-WmiInstance -Namespace 'ROOT' -ClassName 'SCCMZone' -Property $Property -CreateInstance</dev:code>
+        <dev:code>Set-WmiInstance -Namespace 'ROOT' -ClassName 'MEMZone' -Property $Property -CreateInstance</dev:code>
         <dev:remarks>
           <maml:para></maml:para>
         </dev:remarks>
@@ -3906,30 +3906,30 @@ __PATH                         : \\SYSTEM01\root\cimv2:Win32_WMISetting=@
 ASPScriptDefaultNamespace      : \\root\cimv2
 ASPScriptEnabled               : False
 AutorecoverMofs                : {%windir%\system32\wbem\cimwin32.mof, %windir%\system32\wbem\ncprov.mof, %windir%\syst
-em32\wbem\wmipcima.mof, %windir%\system32\wbem\secrcw32.mof...} 
-AutoStartWin9X                 : 
-BackupInterval                 : 
-BackupLastTime                 : 
+em32\wbem\wmipcima.mof, %windir%\system32\wbem\secrcw32.mof...}
+AutoStartWin9X                 :
+BackupInterval                 :
+BackupLastTime                 :
 BuildVersion                   : 6001.18000
-Caption                        : 
+Caption                        :
 DatabaseDirectory              : C:\Windows\system32\wbem\repository
-DatabaseMaxSize                : 
-Description                    : 
-EnableAnonWin9xConnections     : 
+DatabaseMaxSize                :
+Description                    :
+EnableAnonWin9xConnections     :
 EnableEvents                   : False
 EnableStartupHeapPreallocation : False
-HighThresholdOnClientObjects   : 
+HighThresholdOnClientObjects   :
 HighThresholdOnEvents          : 20000000
 InstallationDirectory          : C:\Windows\system32\wbem
-LastStartupHeapPreallocation   : 
+LastStartupHeapPreallocation   :
 LoggingDirectory               : C:\Windows\system32\wbem\Logs\
 LoggingLevel                   : 2
-LowThresholdOnClientObjects    : 
+LowThresholdOnClientObjects    :
 LowThresholdOnEvents           : 10000000
 MaxLogFileSize                 : 65536
-MaxWaitOnClientObjects         : 
+MaxWaitOnClientObjects         :
 MaxWaitOnEvents                : 2000
-MofSelfInstallDirectory        : 
+MofSelfInstallDirectory        :
 SettingID                      :</dev:code>
         <dev:remarks>
           <maml:para>This command sets the WMI logging level to 2. The command passes the property to be set and the value, together considered a value pair, in the argument parameter. The parameter takes a hash table that is defined by the @{property = value} construction. The class information that is returned reflects the new value.</maml:para>
@@ -3950,7 +3950,7 @@ __NAMESPACE      : root\cimv2
 __PATH           : \\SYSTEM01\root\cimv2:Win32_Environment.Name="testvar",UserName="&lt;SYSTEM&gt;"
 Caption          : &lt;SYSTEM&gt;\testvar
 Description      : &lt;SYSTEM&gt;\testvar
-InstallDate      : 
+InstallDate      :
 Name             : testvar
 Status           : OK
 SystemVariable   : True
@@ -3976,31 +3976,31 @@ __PATH                         : \\SYSTEM01\root\cimv2:Win32_WMISetting=@
 ASPScriptDefaultNamespace      : \\root\cimv2
 ASPScriptEnabled               : False
 AutorecoverMofs                : {%windir%\system32\wbem\cimwin32.mof, %windir%\system32\wbem\ncprov.mof, %windir%\syst
-em32\wbem\wmipcima.mof, %windir%\system32\wbem\secrcw32.mof...} 
-AutoStartWin9X                 : 
-BackupInterval                 : 
-BackupLastTime                 : 
+em32\wbem\wmipcima.mof, %windir%\system32\wbem\secrcw32.mof...}
+AutoStartWin9X                 :
+BackupInterval                 :
+BackupLastTime                 :
 BuildVersion                   : 6001.18000
-Caption                        : 
+Caption                        :
 DatabaseDirectory              : C:\Windows\system32\wbem\repository
-DatabaseMaxSize                : 
-Description                    : 
-EnableAnonWin9xConnections     : 
+DatabaseMaxSize                :
+Description                    :
+EnableAnonWin9xConnections     :
 EnableEvents                   : False
 EnableStartupHeapPreallocation : False
-HighThresholdOnClientObjects   : 
+HighThresholdOnClientObjects   :
 HighThresholdOnEvents          : 20000000
 InstallationDirectory          : C:\Windows\system32\wbem
-LastStartupHeapPreallocation   : 
+LastStartupHeapPreallocation   :
 LoggingDirectory               : C:\Windows\system32\wbem\Logs\
 LoggingLevel                   : 2
-LowThresholdOnClientObjects    : 
+LowThresholdOnClientObjects    :
 LowThresholdOnEvents           : 10000000
 MaxLogFileSize                 : 65536
-MaxWaitOnClientObjects         : 
+MaxWaitOnClientObjects         :
 MaxWaitOnEvents                : 2000
-MofSelfInstallDirectory        : 
-SettingID                      : 
+MofSelfInstallDirectory        :
+SettingID                      :
 ...</dev:code>
         <dev:remarks>
           <maml:para>This command sets the WMI logging level to 2. The command passes the property to be set and the value, together considered a value pair, in the argument parameter. The parameter takes a hash table that is defined by the @{property = value} construction. The returned class information reflects the new value.</maml:para>
@@ -4009,12 +4009,12 @@ SettingID                      :
     </command:examples>
     <command:relatedLinks>
       <maml:navigationLink>
-        <maml:linkText>https://sccm-zone.com</maml:linkText>
-        <maml:uri>https://sccm-zone.com</maml:uri>
+        <maml:linkText>https://MEM.Zone/PSWmiToolKit</maml:linkText>
+        <maml:uri>https://MEM.Zone/PSWmiToolKit</maml:uri>
       </maml:navigationLink>
       <maml:navigationLink>
-        <maml:linkText>https://github.com/JhonnyTerminus/SCCM</maml:linkText>
-        <maml:uri>https://github.com/JhonnyTerminus/SCCM</maml:uri>
+        <maml:linkText>https://MEM.Zone/PSWmiToolKit-ISSUES</maml:linkText>
+        <maml:uri>https://MEM.Zone/PSWmiToolKit-ISSUES</maml:uri>
       </maml:navigationLink>
       <maml:navigationLink>
         <maml:linkText>Online Version:</maml:linkText>
@@ -4159,21 +4159,21 @@ SettingID                      :
     <command:examples>
       <command:example>
         <maml:title>-------------------------- EXAMPLE 1 --------------------------</maml:title>
-        <dev:code>Set-WmiPropertyQualifier -Namespace 'ROOT\SCCM' -ClassName 'SCCMZone' -Property 'WebSite' -Qualifier @{ Name = 'Description' ; Value = 'SCCMZone Blog' }</dev:code>
+        <dev:code>Set-WmiPropertyQualifier -Namespace 'ROOT\ConfigMgr' -ClassName 'MEMZone' -Property 'WebSite' -Qualifier @{ Name = 'Description' ; Value = 'MEMZone Blog' }</dev:code>
         <dev:remarks>
           <maml:para></maml:para>
         </dev:remarks>
       </command:example>
       <command:example>
         <maml:title>-------------------------- EXAMPLE 2 --------------------------</maml:title>
-        <dev:code>Set-WmiPropertyQualifier -Namespace 'ROOT\SCCM' -ClassName 'SCCMZone' -Property 'WebSite' -Qualifier "Name = Description `n Value = SCCMZone Blog"</dev:code>
+        <dev:code>Set-WmiPropertyQualifier -Namespace 'ROOT\ConfigMgr' -ClassName 'MEMZone' -Property 'WebSite' -Qualifier "Name = Description `n Value = MEMZone Blog"</dev:code>
         <dev:remarks>
           <maml:para></maml:para>
         </dev:remarks>
       </command:example>
       <command:example>
         <maml:title>-------------------------- EXAMPLE 3 --------------------------</maml:title>
-        <dev:code>"Name = Description `n Value = SCCMZone Blog" | Set-WmiPropertyQualifier -Namespace 'ROOT\SCCM' -ClassName 'SCCMZone' -Property 'WebSite'</dev:code>
+        <dev:code>"Name = Description `n Value = MEMZone Blog" | Set-WmiPropertyQualifier -Namespace 'ROOT\ConfigMgr' -ClassName 'MEMZone' -Property 'WebSite'</dev:code>
         <dev:remarks>
           <maml:para></maml:para>
         </dev:remarks>
@@ -4181,12 +4181,12 @@ SettingID                      :
     </command:examples>
     <command:relatedLinks>
       <maml:navigationLink>
-        <maml:linkText>https://sccm-zone.com</maml:linkText>
-        <maml:uri>https://sccm-zone.com</maml:uri>
+        <maml:linkText>https://MEM.Zone/PSWmiToolKit</maml:linkText>
+        <maml:uri>https://MEM.Zone/PSWmiToolKit</maml:uri>
       </maml:navigationLink>
       <maml:navigationLink>
-        <maml:linkText>https://github.com/JhonnyTerminus/SCCM</maml:linkText>
-        <maml:uri>https://github.com/JhonnyTerminus/SCCM</maml:uri>
+        <maml:linkText>https://MEM.Zone/PSWmiToolKit-ISSUES</maml:linkText>
+        <maml:uri>https://MEM.Zone/PSWmiToolKit-ISSUES</maml:uri>
       </maml:navigationLink>
     </command:relatedLinks>
   </command:command>

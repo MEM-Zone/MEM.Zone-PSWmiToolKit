@@ -98,7 +98,7 @@
             Tags         = @('powershell', 'powershell-module', 'powershell-cmdlets', 'wmi', 'manage-wmi', 'microsoft', 'microsoft-windows', 'sccm', 'configmgr')
 
             # A URL to the license for this module.
-            LicenseUri   = 'https://MEM.Zone/PSWmiToolKit/LICENSE'
+            LicenseUri   = 'https://MEM.Zone/PSWmiToolKit-LICENSE'
 
             # A URL to the main website for this project.
             ProjectUri   = 'https://MEM.Zone/PSWmiToolKit'
@@ -107,14 +107,14 @@
             # IconUri = ''
 
             # ReleaseNotes of this module
-            ReleaseNotes = 'https://MEM.Zone/PSWmiToolKit/RELEASES'
+            ReleaseNotes = 'https://MEM.Zone/PSWmiToolKit-RELEASES'
 
         } # End of PSData hashtable
 
     } # End of PrivateData hashtable
 
     # HelpInfo URI of this module
-    HelpInfoURI           = 'https://MEM.Zone/PSWmiToolKit/UpdatableHelp'
+    HelpInfoURI           = 'https://MEM.Zone/PSWmiToolKit-UpdatableHelp'
 
     # Default prefix for commands exported from this module. Override the default prefix using Import-Module -Prefix.
     # DefaultCommandPrefix = ''
