@@ -30,7 +30,7 @@ deploy:
   description: '## $(APPVEYOR_BUILD_VERSION) - '
   auth_token:
     secure: E8T2wHruTFYq8Z5zf/ymcDKSDPSnJEeV3Ei7ijcV66qBBtNkVRYQuWs0Nyy7APhQ
-  repository: MEM-Zone/MEM-Zone-PSWmiToolkit
+  repository: MEM-Zone/MEM.Zone-PSWmiToolkit
   draft: true
   force_update: true
   on:
