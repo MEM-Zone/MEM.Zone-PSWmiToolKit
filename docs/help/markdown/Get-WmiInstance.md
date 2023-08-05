@@ -132,4 +132,5 @@ This is a module function and can typically be called directly.
 ## RELATED LINKS
 
 [MEM.Zone](https://MEM.Zone)
-[MEM.Zone/GIT](https://MEM.Zone/GIT)
+[PSWmiToolKit](https://MEM.Zone/PSWmiToolKit)
+[PSWmiToolKit-ISSUES](https://MEM.Zone/PSWmiToolKit-ISSUES)
