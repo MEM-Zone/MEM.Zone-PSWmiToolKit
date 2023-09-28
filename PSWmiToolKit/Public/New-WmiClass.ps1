@@ -34,7 +34,7 @@ Function New-WmiClass {
 .NOTES
     This is a module function and can typically be called directly.
 .LINK
-    https://MEM.Zone/
+    https://MEM.Zone
 .LINK
     https://MEM.Zone/PSWmiToolKit-RELEASES
 .LINK

@@ -24,7 +24,7 @@ Function Get-WmiNamespaceRecursive {
 
     This is an internal module function and should not typically be called directly.
 .LINK
-    https://MEM.Zone/
+    https://MEM.Zone
 .LINK
     https://MEM.Zone/PSWmiToolKit-RELEASES
 .LINK
