@@ -12,7 +12,7 @@
     RootModule = 'PSWmiToolKit.psm1'
 
     # Version number of this module.
-    ModuleVersion = '3.1.6'
+    ModuleVersion = '3.2.0'
 
     # Supported PSEditions
     # CompatiblePSEditions = @()
@@ -98,23 +98,23 @@
             Tags = @('powershell', 'powershell-module', 'powershell-cmdlets', 'wmi', 'manage-wmi', 'microsoft', 'microsoft-windows', 'sccm', 'configmgr')
 
             # A URL to the license for this module.
-            LicenseUri = 'https://MEM.Zone/PSWmiToolKit-LICENSE'
+            LicenseUri = 'https://MEMZ.one/PSWmiToolKit-LICENSE'
 
             # A URL to the main website for this project.
-            ProjectUri   = 'https://MEM.Zone/PSWmiToolKit'
+            ProjectUri   = 'https://MEMZ.one/PSWmiToolKit'
 
             # A URL to an icon representing this module.
             # IconUri = ''
 
             # ReleaseNotes of this module
-            ReleaseNotes = 'https://MEM.Zone/PSWmiToolKit-RELEASES'
+            ReleaseNotes = 'https://MEMZ.one/PSWmiToolKit-RELEASES'
 
         } # End of PSData hashtable
 
     } # End of PrivateData hashtable
 
     # HelpInfo URI of this module
-    HelpInfoURI = 'https://MEM.Zone/PSWmiToolKit-UpdatableHelp'
+    HelpInfoURI = 'https://MEMZ.one/PSWmiToolKit-UpdatableHelp'
 
     # Default prefix for commands exported from this module. Override the default prefix using Import-Module -Prefix.
     # DefaultCommandPrefix = ''

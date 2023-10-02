@@ -1,7 +1,7 @@
 ---
 external help file: PSWmiToolKit-help.xml
 Module Name: PSWmiToolKit
-online version: https://MEM.Zone/PSWmiToolKit
+online version: https://MEMZ.one/PSWmiToolKit
 schema: 2.0.0
 ---
 
@@ -143,5 +143,5 @@ This is a module function and can typically be called directly.
 ## RELATED LINKS
 
 [MEM.Zone](https://MEM.Zone)
-[PSWmiToolKit](https://MEM.Zone/PSWmiToolKit)
-[PSWmiToolKit-ISSUES](https://MEM.Zone/PSWmiToolKit-ISSUES)
+[PSWmiToolKit](https://MEMZ.one/PSWmiToolKit)
+[PSWmiToolKit-ISSUES](https://MEMZ.one/PSWmiToolKit-ISSUES)

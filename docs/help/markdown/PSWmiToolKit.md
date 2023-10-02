@@ -1,7 +1,7 @@
 ---
 Module Name: PSWmiToolKit
 Module Guid: a885bff3-c6d1-403f-92a9-a0ae74bcbbf6
-Download Help Link: https://MEM.Zone/PSWmiToolKit-UpdatableHelp
+Download Help Link: https://MEMZ.one/PSWmiToolKit-UpdatableHelp
 Help Version: 1.1.0
 Locale: en-US
 ---

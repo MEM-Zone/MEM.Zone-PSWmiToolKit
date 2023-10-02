@@ -32,11 +32,11 @@ Function Copy-WmiInstance {
 .LINK
     https://MEM.Zone
 .LINK
-    https://MEM.Zone/PSWmiToolKit-RELEASES
+    https://MEMZ.one/PSWmiToolKit-RELEASES
 .LINK
-    https://MEM.Zone/PSWmiToolKit-GIT
+    https://MEMZ.one/PSWmiToolKit-GIT
 .LINK
-    https://MEM.Zone/PSWmiToolKit-ISSUES
+    https://MEMZ.one/PSWmiToolKit-ISSUES
 #>
     [CmdletBinding()]
     Param (
