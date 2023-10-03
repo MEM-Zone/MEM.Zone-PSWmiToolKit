@@ -1,6 +1,11 @@
 # PSWmiToolkit release history
 
-## 3.2.0 - 2023-10-02
+## 3.1.8 - 2023-10-03
+
+* Shortlink domain bugfixes
+* Updated Repo name and links
+
+## 3.1.7 - 2023-10-02
 
 * Updated shorlink domain from `MEM.Zone` to `MEMZ.one`
 
