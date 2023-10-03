@@ -1,5 +1,9 @@
 # PSWmiToolkit release history
 
+## 3.1.9 - 2023-10-03
+
+* Fixed help link
+
 ## 3.1.8 - 2023-10-03
 
 * Shortlink domain bugfixes
