@@ -29,7 +29,7 @@ deploy:
   release: $(APPVEYOR_BUILD_VERSION) release of PSWmiToolkit
   description: '## $(APPVEYOR_BUILD_VERSION) - '
   auth_token:
-    secure: E8T2wHruTFYq8Z5zf/ymcDKSDPSnJEeV3Ei7ijcV66qBBtNkVRYQuWs0Nyy7APhQ
+    secure: qWuPvK2YZLHq3OYGNobWO5fm8fdgaNOxiS4sW2ZDmLO9AdpEjVkt/LLrZMFtg+rI
   repository: MEM-Zone/MEM.Zone-PSWmiToolkit
   draft: true
   force_update: true
@@ -38,4 +38,4 @@ deploy:
 notifications:
 - provider: GitHubPullRequest
   auth_token:
-    secure: E8T2wHruTFYq8Z5zf/ymcDKSDPSnJEeV3Ei7ijcV66qBBtNkVRYQuWs0Nyy7APhQ
+    secure: qWuPvK2YZLHq3OYGNobWO5fm8fdgaNOxiS4sW2ZDmLO9AdpEjVkt/LLrZMFtg+rI
