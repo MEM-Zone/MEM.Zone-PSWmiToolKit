@@ -25,3 +25,7 @@ You've found the GitHub repository that houses the source for the PSWmiToolKit P
 [release-date]: https://github.com/MEM-Zone/PSWmiToolKit/releases
 [commits-since-badge]: https://img.shields.io/github/commits-since/MEM-Zone/MEM.Zone-PSWmiToolKit/latest.svg
 [commits-since]: https://github.com/MEM-Zone/MEM.Zone-PSWmiToolKit/commits/master
+[discord-badge]: https://img.shields.io/discord/666618982844989460?logo=disco
+[discord]: https://discord.gg/WAapRYc
+[x-badge]: https://img.shields.io/twitter/follow/ioanpopovici?style=social&logo=x
+[x]: https://x.com/intent/follow?screen_name=ioanpopovici
